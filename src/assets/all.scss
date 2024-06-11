@@ -1,0 +1,8 @@
+@import "~bootstrap/scss/functions";
+@import "./helpers/variables"; // 替換為自行建立的variables檔案
+@import "~bootstrap/scss/variables-dark"; 
+@import "~bootstrap/scss/maps";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/root";
+
+@import "~bootstrap/scss/bootstrap" // 載入全部的bootstrap (也可以只載入部分)

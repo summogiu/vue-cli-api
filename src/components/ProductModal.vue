@@ -49,12 +49,13 @@
                 </div>
                 <div>
                   <button class="btn btn-outline-primary btn-sm d-block w-100"
-                  @click="uploadPost">
+                  @click="startUpload">
                     新增圖片
                   </button>
                 </div>
                 <div class="images">
-                  <img v-for="item in tempProduct.imagesUrl" :key="item" :src="item" alt="">
+                  <img v-for="item in tempProduct.imagesUrl" :key="item" :src="item"
+                  alt="" class="thumbnail">
                 </div>
               </div>
             </div>
@@ -135,10 +136,14 @@
     max-width: 300px;
     max-height: 300px;
   }
+  .thumbnail{
+    width: 200px;
+    height: 200px;
+  }
 </style>
 
 <script>
-import Modal from 'bootstrap/js/dist/modal'
+import modalMixin from '@/mixins/ModalMixin'
 
 export default {
   props: {
@@ -147,6 +152,7 @@ export default {
       default () { return {} }
     }
   },
+  mixins: [modalMixin],
   watch: {
     product () {
       this.tempProduct = this.product // 新增時透過將空值傳入this.tempProduct 清空前一筆資料紀錄 編輯時則帶入現有this.product資料
@@ -157,14 +163,12 @@ export default {
       modal: {},
       tempProduct: {
         imagesUrl: []
-      },
-      inputs: []
+      }
     }
   },
   methods: {
     showModal () {
       this.modal.show()
-      this.inputs = []
       this.clearInput(this.$refs.fileInputMain)
       this.clearInput(this.$refs.filesInput1)
       this.clearInput(this.$refs.filesInput2)
@@ -174,9 +178,6 @@ export default {
       if (input) {
         input.value = ''
       }
-    },
-    hideModal () {
-      this.modal.hide()
     },
     // 單圖上傳
     uploadFile () {
@@ -199,57 +200,42 @@ export default {
           console.log(error)
         })
     },
-    uploadFiles1 () {
-      this.inputs.push(this.$refs.filesInput1.files[0])
-      // this.uploadPost(uploadFiles1)
-    },
-    uploadFiles2 () {
-      this.inputs.push(this.$refs.filesInput2.files[0])
-      // this.uploadPost(uploadFiles2)
-    },
-    // 將圖片上傳並儲存至imagesUrl(多圖)
-    uploadPost () {
-      if (this.inputs.length === 0) {
-        alert('請選擇圖片')
-      } else {
-        const formData1 = new FormData()
-        formData1.append('file-to-upload', this.inputs[0])
-
-        const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
-        this.$http.post(api, formData1)
-          .then((res) => {
-            if (res.data.success) {
-              this.tempProduct.imagesUrl.push(res.data.imageUrl)
-              alert('上傳成功')
-            }
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-
-        if (this.inputs[1]) {
-          const formData2 = new FormData()
-          formData2.append('file-to-upload', this.inputs[1])
-
-          const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
-          this.$http.post(api, formData2)
-            .then((res) => {
-              if (res.data.success) {
-                this.tempProduct.imagesUrl.push(res.data.imageUrl)
-              }
-            })
-            .catch((error) => {
-              console.log(error)
-            })
-        }
+    // 將圖片上傳並儲存至imagesUrl(多圖用)
+    uploadPost (files) {
+      if (!files) {
+        return
       }
-      this.inputs = []
-      this.clearInput(this.$refs.filesInput1)
-      this.clearInput(this.$refs.filesInput2)
+      const formData = new FormData()
+      formData.append('file-to-upload', files)
+
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
+      this.$http.post(api, formData)
+        .then((res) => {
+          if (res.data.success) {
+            this.tempProduct.imagesUrl.push(res.data.imageUrl)
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+    // 等待所有圖上傳完後再回傳訊息
+    startUpload () {
+      Promise.all([
+        this.uploadPost(this.$refs.filesInput1.files[0]),
+        this.uploadPost(this.$refs.filesInput2.files[0])
+      ])
+        .then((res) => {
+          alert('上傳成功')
+          this.clearInput(this.$refs.filesInput1)
+          this.clearInput(this.$refs.filesInput2)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   },
   mounted () {
-    this.modal = new Modal(this.$refs.modal)
     this.tempProduct = this.product
   }
 }

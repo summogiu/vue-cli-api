@@ -29,6 +29,9 @@
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
     </ul>
   </div>
+  <div class="toLogin">
+    <router-link to="/login" class="login-link">進入登入頁面</router-link>
+  </div>
 </template>
 
 <script>
@@ -55,5 +58,10 @@ li {
 }
 a {
   color: #42b983;
+}
+.login-link{
+  color: white;
+  background: black;
+  font-size: 24px;
 }
 </style>

@@ -1,14 +1,19 @@
 <template>
   <Navbar></Navbar>
-  <div class="container-fluid"><router-view/></div>
+  <div class="container-fluid mt-3 position-relative">
+    <ToastMessages></ToastMessages>
+    <router-view/></div>
 </template>
 
 <script>
 import Navbar from '../components/NavBar.vue'
+import emitter from '@/methods/emitter'
+import ToastMessages from '@/components/ToastMessages.vue'
 
 export default {
   components: {
-    Navbar
+    Navbar,
+    ToastMessages
   },
   created () {
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1') // 取出cookie資料 並賦予到token變數
@@ -29,6 +34,11 @@ export default {
   data () {
     return {
 
+    }
+  },
+  provide () {
+    return {
+      emitter
     }
   }
 }

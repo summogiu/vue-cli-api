@@ -5,4 +5,6 @@
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/root";
 
-@import "~bootstrap/scss/bootstrap" // 載入全部的bootstrap (也可以只載入部分)
+@import "~bootstrap/scss/bootstrap"; // 載入全部的bootstrap (也可以只載入部分)
+
+@import "./helpers/product"

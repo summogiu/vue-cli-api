@@ -43,9 +43,9 @@
 </template>
 
 <script>
-import ProductModal from '../components/ProductModal.vue'
-import DeleteModal from '../components/DeleteModal.vue'
-import PaginationComponents from '../components/PaginationComponents.vue'
+import ProductModal from '@/components/backstage/ProductModal.vue'
+import DeleteModal from '@/components/backstage/DeleteModal.vue'
+import PaginationComponents from '@/components/backstage/PaginationComponents.vue'
 
 export default {
   data () {
@@ -53,7 +53,6 @@ export default {
       products: [],
       pagination: {},
       tempProduct: {
-        imagesUrl: []
       },
       isNew: false,
       isLoading: false
@@ -79,7 +78,6 @@ export default {
       this.isNew = isNew // 切換產品的新增/編輯狀態
       if (isNew) {
         this.tempProduct = {
-          imagesUrl: []
         }
       } else {
         this.tempProduct = JSON.parse(JSON.stringify(item))

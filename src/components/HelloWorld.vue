@@ -30,7 +30,8 @@
     </ul>
   </div>
   <div class="toLogin">
-    <router-link to="/login" class="login-link">進入登入頁面</router-link>
+    <router-link to="/login" class="login-link">進入登入頁面</router-link><br>
+    <router-link to="/user/productList" class="login-link">觀看產品列表</router-link>
   </div>
 </template>
 

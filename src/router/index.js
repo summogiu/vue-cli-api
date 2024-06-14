@@ -21,12 +21,26 @@ const routes = [
   },
   {
     path: '/dashboard',
-    component: () => import('../views/DashBoard.vue'),
+    component: () => import('../views/backstage/DashBoard.vue'),
     children: [
       {
         path: 'products',
-        component: () => import('../views/ProductsView.vue')
+        component: () => import('../views/backstage/ProductsView.vue')
       }]
+  },
+  {
+    path: '/user',
+    component: () => import('../views/user/UserBoard.vue'),
+    children: [
+      {
+        path: 'productList',
+        component: () => import('../views/user/UserProductList.vue')
+      },
+      {
+        path: 'product/:productid',
+        component: () => import('../views/user/UserProduct.vue')
+      }
+    ]
   }
 ]
 

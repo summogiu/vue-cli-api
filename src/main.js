@@ -3,6 +3,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios' // 將axios綁定到this.$http中 讓axios可在其他元件中透過this.$http呼叫
 import Loading from 'vue3-loading-overlay'
 import 'vue3-loading-overlay/dist/vue3-loading-overlay.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 import { currency } from './methods/filters'
 

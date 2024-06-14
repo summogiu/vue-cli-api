@@ -6,9 +6,9 @@
 </template>
 
 <script>
-import Navbar from '../components/NavBar.vue'
+import Navbar from '@/components/backstage/NavBar.vue'
 import emitter from '@/methods/emitter'
-import ToastMessages from '@/components/ToastMessages.vue'
+import ToastMessages from '@/components/backstage/ToastMessages.vue'
 
 export default {
   components: {
@@ -30,11 +30,6 @@ export default {
       .catch((error) => {
         console.log(error)
       })
-  },
-  data () {
-    return {
-
-    }
   },
   provide () {
     return {

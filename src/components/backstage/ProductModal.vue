@@ -131,17 +131,6 @@
   </div>
 </template>
 
-<style lang="scss">
-  .fileImg {
-    max-width: 300px;
-    max-height: 300px;
-  }
-  .thumbnail{
-    width: 200px;
-    height: 200px;
-  }
-</style>
-
 <script>
 import modalMixin from '@/mixins/ModalMixin'
 
@@ -156,6 +145,9 @@ export default {
   watch: {
     product () {
       this.tempProduct = this.product // 新增時透過將空值傳入this.tempProduct 清空前一筆資料紀錄 編輯時則帶入現有this.product資料
+      if (!this.tempProduct.imagesUrl) {
+        this.tempProduct.imagesUrl = []
+      }
     }
   },
   data () {
@@ -202,22 +194,27 @@ export default {
     },
     // 將圖片上傳並儲存至imagesUrl(多圖用)
     uploadPost (files) {
-      if (!files) {
-        return
-      }
-      const formData = new FormData()
-      formData.append('file-to-upload', files)
+      return new Promise((resolve, reject) => {
+        if (!files) {
+          return
+        }
+        const formData = new FormData()
+        formData.append('file-to-upload', files)
 
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
-      this.$http.post(api, formData)
-        .then((res) => {
-          if (res.data.success) {
-            this.tempProduct.imagesUrl.push(res.data.imageUrl)
-          }
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+        const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
+        this.$http.post(api, formData)
+          .then((res) => {
+            if (res.data.success) {
+              this.tempProduct.imagesUrl.push(res.data.imageUrl)
+              resolve(res.data)
+            } else {
+              reject(res.data.message)
+            }
+          })
+          .catch((error) => {
+            reject(error)
+          })
+      })
     },
     // 等待所有圖上傳完後再回傳訊息
     startUpload () {

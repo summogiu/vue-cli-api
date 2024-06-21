@@ -38,7 +38,7 @@
     </tbody>
   </table>
   <ProductModal ref="productModal" :product="tempProduct" @update-product="updateProduct"></ProductModal>
-  <DeleteModal ref="deleteModal" :product="tempProduct" @delete-product="deleteProduct"></DeleteModal>
+  <DeleteModal ref="deleteModal" :item="tempProduct" @delete-item="deleteProduct"></DeleteModal>
   <PaginationComponents :pages="pagination" @change-page="getProducts"></PaginationComponents>
 </template>
 
@@ -52,8 +52,7 @@ export default {
     return {
       products: [],
       pagination: {},
-      tempProduct: {
-      },
+      tempProduct: {},
       isNew: false,
       isLoading: false
     }
@@ -77,8 +76,7 @@ export default {
     openModal (isNew, item) {
       this.isNew = isNew // 切換產品的新增/編輯狀態
       if (isNew) {
-        this.tempProduct = {
-        }
+        this.tempProduct = {}
       } else {
         this.tempProduct = JSON.parse(JSON.stringify(item))
       }
@@ -99,19 +97,9 @@ export default {
 
       this.$http[httpMethod](api, { data: item })
         .then((res) => {
-          if (res.data.success) {
-            this.getProducts()
-            this.emitter.emit('push-message', {
-              style: 'success',
-              title: '更新成功'
-            })
-          } else {
-            this.emitter.emit('push-message', {
-              style: 'danger',
-              title: '更新失敗',
-              content: res.data.message.join('、')
-            })
-          }
+          this.getProducts()
+          this.$pushMessage(res)
+
           const productModal = this.$refs.productModal
           productModal.hideModal()
         })
@@ -124,6 +112,7 @@ export default {
       this.$http.delete(api)
         .then((res) => {
           this.getProducts()
+          this.$pushMessage(res, '刪除')
         })
         .catch((error) => {
           console.log(error)
@@ -145,7 +134,6 @@ export default {
     ProductModal,
     DeleteModal,
     PaginationComponents
-  },
-  inject: ['emitter']
+  }
 }
 </script>

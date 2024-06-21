@@ -2,11 +2,11 @@
   max-width: 300px;
   max-height: 300px;
 }
+// 商品列表
 .thumbnail{
   width: 200px;
   height: 200px;
 }
-
 .productTable{
   display: table;
   td{
@@ -17,7 +17,6 @@
     line-height: 14px;
   }
 }
-
 .origin_price{
   color: gray;
   text-decoration: line-through;
@@ -27,6 +26,7 @@
   font-size: 24px;
 }
 
+// 購物車
 .product-cart{
   position: fixed;
   z-index: 10;
@@ -35,8 +35,7 @@
   border-radius: 10px;
   background: white;
   box-shadow: 0 2px 2px gray;
-  height: 60%;
-  width: 300px;
+  width: 400px;
 
   thead, tbody tr {
     display:table;  
@@ -67,14 +66,65 @@
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+  .product-cart-delete{
+    width: 50px;
+  }
   
 }
-
 .product-cart-Total{
   text-align: right;
   padding-right: 1%;
+  border-bottom: 1px solid $gray-300;
+  margin: 24px 10px 0 10px;
 
   span{
-    margin-right: 1%;
+    margin-right: 10px;
+  }
+}
+
+.final-total{
+  color: $success;
+}
+
+.user-cart-couponCode{
+  width: 100%;
+  justify-content: center;
+}
+.user-cart-couponCode,.place-oder-box{
+  padding: 1%;
+}
+
+.useCoupon-tip{
+  color: $success;
+  font-size: 12px;
+}
+.place-oder-btn{
+  width: 100%;
+}
+.place-oder-a{
+  color: white;
+}
+
+// 收件人、結帳資訊頁
+.form-box{
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 60%;
+
+  h3{
+    text-align: end;
+  }
+  .ta-end{
+    text-align: end;
+  }
+  .region-select{
+    flex: 0.2 1 auto !important
+  }
+  .remark-message{
+    resize: none;
+  }
+  .isPay{
+    color: $success;
   }
 }

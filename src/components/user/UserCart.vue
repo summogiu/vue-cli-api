@@ -11,10 +11,20 @@
       </thead>
       <tbody>
         <tr v-for="item in carts" :key=item.id>
-          <td class="product-cart-title">{{ item.product.title }}</td>
+          <td class="product-cart-title">{{ item.product.title }}
+            <p v-if="isCoupon" class="useCoupon-tip">已套用優惠券</p>
+            </td>
           <td>{{ item.product.price }}</td>
-          <td>{{ item.qty }}</td>
           <td>
+            <div class="input-group">
+              <input type="number"  min="1" class="form-control"
+                      v-model.number="item.qty"
+                      @change="updateQty(item)"
+                      :disabled="loading === item.id">
+              <span class="input-group-text">/件</span>
+            </div>
+            </td>
+          <td class="product-cart-delete">
             <button type="button" class="btn btn-outline-danger btn-sm"
               @click="deleteItem(item.id)">
               <i class="bi bi-trash-fill"></i>
@@ -23,17 +33,30 @@
         </tr>
       </tbody>
     </table>
-    <p class="product-cart-Total"><span>總計</span><span>NT${{ $filters.currency(cartsData.finalTotal) }}</span></p>
+    <p class="product-cart-Total"><span>總計</span><span>NT${{ $filters.currency(cartsData.total) }}</span></p>
+    <p class="product-cart-Total final-total" v-if="isCoupon"><span>應付金額</span><span>NT${{ $filters.currency(cartsData.finalTotal) }}</span></p>
+    <div class="input-group user-cart-couponCode">
+      <input type="text" class="form-control"
+              placeholder="請輸入優惠碼" aria-label="Recipient's username"
+              v-model="couponCode">
+      <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+              @click="$emit('use-coupon', couponCode)">套用優惠碼</button>
+              </div>
+    <div class="id-grid gap-2 col-6 mx-auto place-oder-box">
+      <button type="button" class="btn btn-danger place-oder-btn">
+              <router-link to="/user/placeOder" class="nav-link place-oder-a">前往結帳</router-link>
+              </button></div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['cart', 'cartData'],
+  props: ['cart', 'cartData', 'loading', 'isCoupon'],
   data () {
     return {
       carts: [],
-      cartsData: {}
+      cartsData: {},
+      couponCode: ''
     }
   },
   watch: {
@@ -44,17 +67,14 @@ export default {
   methods: {
     deleteItem (id) {
       this.$emit('delete-one', id)
-      console.log('觸發刪除')
+    },
+    updateQty (item) {
+      this.$emit('update-qty', item)
     }
-    // getTotalQty () {
-    //   const qtys = this.carts.map(item => item.qty)
-    //   this.qty = qtys.reduce((a, b) => a + b, 0)
-    // }
   },
   mounted () {
     this.carts = this.cart
     this.cartsData = this.cartData
-    console.log('接收到的', this.carts)
   }
 }
 </script>

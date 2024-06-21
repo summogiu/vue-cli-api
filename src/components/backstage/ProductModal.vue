@@ -15,18 +15,15 @@
           <div class="row">
             <div class="col-sm-4">
               <div class="mb-3">
-                <label for="image" class="form-label">輸入圖片網址</label>
-                <input type="text" class="form-control" id="image"
-                        placeholder="請輸入圖片連結">
-              </div>
-              <div class="mb-3">
-                <label for="customFile" class="form-label">或 上傳圖片
-                  <i class="fas fa-spinner fa-spin"></i>
+                <label for="customFile" class="form-label">上傳圖片
+                  <div class="spinner-border spinner-border-sm" role="status" v-if="status.loadingItem">
+                  </div>
                 </label>
                 <form action="/api/thisismycourse2/admin/upload" enctype="multipart/form-data"
                             method="post">
                   <input type="file" id="customFile" class="form-control"
-                  @change="uploadFile" ref="fileInputMain">
+                  @change="uploadFile" ref="fileInputMain"
+                  :disabled="status.loadingItem">
                 </form>
                 <img :src="tempProduct.imageUrl" alt="" class="fileImg">
               </div>
@@ -153,8 +150,9 @@ export default {
   data () {
     return {
       modal: {},
-      tempProduct: {
-        imagesUrl: []
+      tempProduct: {},
+      status: {
+        loadingItem: false
       }
     }
   },
@@ -179,12 +177,14 @@ export default {
         return
       }
 
+      this.status.loadingItem = true
       const formData = new FormData()
       formData.append('file-to-upload', uploadFile) // 在formData表單新增一個欄位(api上傳檔案時需對應的欄位名稱,要傳送的內容)
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
       this.$http.post(api, formData)
         .then((res) => {
           if (res.data.success) {
+            this.status.loadingItem = false
             this.tempProduct.imageUrl = res.data.imageUrl
           }
         })
@@ -194,33 +194,41 @@ export default {
     },
     // 將圖片上傳並儲存至imagesUrl(多圖用)
     uploadPost (files) {
-      return new Promise((resolve, reject) => {
-        if (!files) {
-          return
-        }
-        const formData = new FormData()
-        formData.append('file-to-upload', files)
+      if (!files) {
+        return
+      }
+      const formData = new FormData()
+      formData.append('file-to-upload', files)
 
-        const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
-        this.$http.post(api, formData)
-          .then((res) => {
-            if (res.data.success) {
-              this.tempProduct.imagesUrl.push(res.data.imageUrl)
-              resolve(res.data)
-            } else {
-              reject(res.data.message)
-            }
-          })
-          .catch((error) => {
-            reject(error)
-          })
-      })
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
+      this.$http.post(api, formData)
+        .then((res) => {
+          if (res.data.success) {
+            this.tempProduct.imagesUrl.push(res.data.imageUrl)
+          } else {
+            console.log(res.data.message)
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     },
     // 等待所有圖上傳完後再回傳訊息
     startUpload () {
+      const file1 = this.$refs.filesInput1.files[0]
+      const file2 = this.$refs.filesInput2.files[0]
+
+      if (!file1 && !file2) {
+        alert('請選擇檔案')
+        return
+      }
+      // ↓即使其中一個內容不存在，也回報成功，使then可運行
+      const upload1 = file1 ? this.uploadPost(file1) : Promise.resolve('not file1')
+      const upload2 = file2 ? this.uploadPost(file2) : Promise.resolve('not file2')
+
       Promise.all([
-        this.uploadPost(this.$refs.filesInput1.files[0]),
-        this.uploadPost(this.$refs.filesInput2.files[0])
+        upload1,
+        upload2
       ])
         .then((res) => {
           alert('上傳成功')

@@ -1,6 +1,8 @@
 <template>
   <Loading :active="isLoading"></Loading>
-  <UserCart :cart="carts" :cartData="cartsData" @delete-one="deleteOne"></UserCart>
+  <UserCart :cart="carts" :cartData="cartsData" @delete-one="deleteOne"
+          @update-qty="updateOneQty" :loading="status.loadingItem"
+          @use-coupon="useCoupon" :isCoupon="isCoupon"></UserCart>
   <table class="productTable mt-4">
     <thead>
       <tr>
@@ -34,16 +36,16 @@
       </tr>
     </tbody>
   </table>
-  <Pagenation :pages="pagination" @change-page="getProducts"></Pagenation>
+  <PaginationComponents :pages="pagination" @change-page="getProducts"></PaginationComponents>
 </template>
 
 <script>
-import Pagenation from '@/components/user/ProductListPagination.vue'
+import PaginationComponents from '@/components/backstage/PaginationComponents.vue'
 import UserCart from '@/components/user/UserCart.vue'
 
 export default {
   components: {
-    Pagenation,
+    PaginationComponents,
     UserCart
   },
   data () {
@@ -57,8 +59,10 @@ export default {
       },
       carts: [],
       cartsData: {
+        total: 0,
         finalTotal: 0
-      }
+      },
+      isCoupon: false
     }
   },
   methods: {
@@ -86,15 +90,14 @@ export default {
       this.$http.post(api, { data: { product_id: id, qty: 1 } })
         .then((res) => {
           if (res.data.success) {
-            console.log('加到購物車', res.data)
             this.getCart()
             this.status.loadingItem = ''
           } else {
-            console.log('加到購物車', res.data.message)
+            console.log('加到購物車失敗', res.data.message)
           }
         })
         .catch((error) => {
-          console.log('加到購物車', error)
+          console.log('加到購物車失敗', error)
         })
     },
     getCart () {
@@ -103,10 +106,10 @@ export default {
         .then((res) => {
           this.carts = res.data.data.carts
           this.cartsData.finalTotal = res.data.data.final_total
-          console.log('取得列表', res.data.data)
+          this.cartsData.total = res.data.data.total
         })
         .catch((error) => {
-          console.log('取得列表', error)
+          console.log('取得列表失敗', error)
         })
     },
     deleteOne (id) {
@@ -114,7 +117,6 @@ export default {
       this.$http.delete(api)
         .then((res) => {
           if (res.data.success) {
-            console.log(res.data)
             this.getCart()
           } else {
             console.log(res.data.message)
@@ -122,6 +124,45 @@ export default {
         })
         .catch((error) => {
           console.log('取得列表', error)
+        })
+    },
+    updateOneQty (item) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`
+      const cart = {
+        product_id: item.id,
+        qty: item.qty
+      }
+      this.status.loadingItem = item.id
+      this.$http.put(api, { data: cart })
+        .then((res) => {
+          if (res.data.success) {
+            this.status.loadingItem = ''
+            this.getCart()
+          } else {
+            console.log('更新數量失敗', res.data.message)
+          }
+        })
+        .catch((error) => {
+          console.log('更新數量失敗', error)
+        })
+    },
+    useCoupon (couponCode) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`
+      const code = {
+        code: couponCode
+      }
+      this.$http.post(api, { data: code })
+        .then((res) => {
+          if (res.data.success) {
+            console.log(res.data)
+            this.isCoupon = true
+            this.getCart()
+          } else {
+            console.log('套用優惠券失敗', res.data.message)
+          }
+        })
+        .catch((error) => {
+          console.log('套用優惠券失敗', error)
         })
     }
   },

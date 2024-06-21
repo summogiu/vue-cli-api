@@ -1,0 +1,160 @@
+$mainColor:aquamarine;
+$subColor:white;
+$subColor2:black;
+$h2Color:rgb(46, 46, 46);
+$more-linkColor:rgb(158, 158, 158);
+//背景灰字
+.background-text{
+    position: absolute;
+    font-size: 300px;
+    color: #e7e7e7;;
+    z-index: -1;
+}
+@media (max-width:414px){
+    .background-text{
+        scale: 0.6;
+    }
+}
+//旋轉按鈕 :hover i{transition: all 1s;color: $mainColor;} :hover .circle {animation: circleRotate 10s infinite linear; scale:1.2; }
+.to-more-icon{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i{
+        position: absolute;        
+    }
+    .circle{
+        position: absolute;        
+        transition: scale 1s;
+        
+        
+        
+    }
+}
+
+//旋轉
+@keyframes circleRotate {
+    from{
+        rotate: 0deg;
+    }
+    to{
+        rotate: 360deg;
+    }
+}
+.more-link {
+    display: flex;
+    align-items: center;
+    color: $more-linkColor;
+    font-size: 24px;
+    justify-content: center;
+    width: 20%;
+    
+    &:hover i ,&:hover{
+        transition: all 1s;
+        color: $mainColor;
+    }&:hover .circle {
+        animation: circleRotate 10s infinite linear; scale:1.2;
+    }
+}
+@media (max-width:414px){
+    .more-link{
+        width: 50%;
+    }
+}
+
+h2,.about-content,.products-content{
+    font-weight: bold;
+    color: $h2Color;
+}
+h2{
+    white-space: nowrap;
+    font-size: 36px;
+    padding: 0 10px;
+}
+
+
+//標題動畫
+@keyframes slideOut {
+    from {
+        -webkit-transform: scalex(0);
+        transform-origin: left;
+        transform: scalex(0);
+        opacity: 0;
+    }
+    50% {
+        -webkit-transform: scalex(1);
+        transform-origin: left;
+        transform: scalex(1);
+        opacity: 1;
+    }
+    50.001% {
+        -webkit-transform-origin: right;
+        transform-origin: right;
+    }
+    to {
+        -webkit-transform-origin: right;
+        transform-origin: right;
+        -webkit-transform: scalex(0);
+        transform: scalex(0);
+        opacity: 1;
+    }
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes slideDown {
+    from {
+        transform: translateY(-10%);
+    }
+    to {
+        transform: translateY(0%);
+    }
+}
+@keyframes slideIn {
+    from {
+        -webkit-transform: scalex(1);
+        transform: scalex(1);
+        opacity: 1;
+    }
+    50% {
+        -webkit-transform: scalex(1);
+        transform: scalex(1);
+        opacity: 1;
+    }
+    50.001% {
+        -webkit-transform-origin: right;
+        transform-origin: right;
+    }
+    to {
+        -webkit-transform-origin: right;
+        transform-origin: right;
+        -webkit-transform: scalex(0);
+        transform: scalex(0);
+        opacity: 1;
+    }
+}
+
+// 向下淡出效果
+.fadeScale-enter-from{
+  opacity: 0;
+  transform: translateY(-50px);
+}
+.fadeScale-enter-active, .fadeScale-leave-active{
+  transition: all 0.5s;
+}
+.fadeScale-enter-to{
+  opacity: 1;
+}
+.fadeScale-leave-to {
+  opacity: 0;
+  transform: translateY(-50px);
+}

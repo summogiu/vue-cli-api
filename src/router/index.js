@@ -5,15 +5,30 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    component: HomeView,
+    redirect: 'frontPage',
+    children: [
+      {
+        path: 'frontPage',
+        component: () => import('../views/user/FrontPage.vue')
+      },
+      {
+        path: 'productList',
+        component: () => import('../views/user/UserProductList.vue')
+      },
+      {
+        path: 'product/:productid',
+        component: () => import('../views/user/UserProduct.vue')
+      },
+      {
+        path: 'placeOder',
+        component: () => import('../views/user/PlaceOder.vue')
+      },
+      {
+        path: 'checkout/:oderid',
+        component: () => import('../views/user/CheckoutView.vue')
+      }
+    ]
   },
   {
     path: '/login',
@@ -26,19 +41,10 @@ const routes = [
       {
         path: 'products',
         component: () => import('../views/backstage/ProductsView.vue')
-      }]
-  },
-  {
-    path: '/user',
-    component: () => import('../views/user/UserBoard.vue'),
-    children: [
-      {
-        path: 'productList',
-        component: () => import('../views/user/UserProductList.vue')
       },
       {
-        path: 'product/:productid',
-        component: () => import('../views/user/UserProduct.vue')
+        path: 'coupons',
+        component: () => import('../views/backstage/CouponsView.vue')
       }
     ]
   }

@@ -7,4 +7,6 @@
 
 @import "~bootstrap/scss/bootstrap"; // 載入全部的bootstrap (也可以只載入部分)
 
-@import "./helpers/product"
+@import "./helpers/reset";
+@import "./helpers/product";
+@import "./helpers/var"

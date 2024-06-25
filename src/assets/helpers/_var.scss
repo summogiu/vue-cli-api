@@ -8,9 +8,9 @@ $more-linkColor:rgb(158, 158, 158);
     position: absolute;
     font-size: 300px;
     color: #e7e7e7;;
-    z-index: -1;
+    z-index: 1;
 }
-@media (max-width:414px){
+@media (max-width:919px){
     .background-text{
         scale: 0.6;
     }
@@ -18,8 +18,8 @@ $more-linkColor:rgb(158, 158, 158);
 //旋轉按鈕 :hover i{transition: all 1s;color: $mainColor;} :hover .circle {animation: circleRotate 10s infinite linear; scale:1.2; }
 .to-more-icon{
     position: relative;
-    width: 60px;
-    height: 60px;
+    min-width: 50px;
+    min-height: 50px;
     margin-right: 20px;
     display: flex;
     justify-content: center;
@@ -74,6 +74,7 @@ h2{
     white-space: nowrap;
     font-size: 36px;
     padding: 0 10px;
+    z-index: 5;
 }
 
 
@@ -157,4 +158,69 @@ h2{
 .fadeScale-leave-to {
   opacity: 0;
   transform: translateY(-50px);
+}
+
+// 進場動畫
+@keyframes toUp {
+  from {
+    transform: translateY(30%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes toDown {
+  from {
+    transform: translateY(-30%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes toRigth {
+  from {
+    transform: translateX(-20%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+@keyframes toLeft {
+  from {
+    transform: translateX(20%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.fadeIn {
+  opacity: 1 !important;
+}
+.transform0 {
+  transform: translateY(0) translateX(0%) !important;
+}
+.toUp-1{
+  animation: toUp 1s;
+}
+.toUp-2{
+  animation: toUp 1s .2s;
+}
+.toDown-1{
+  animation: toDown 1s;
+}
+.toDown-2{
+  animation: toDown 1s .2s;
+}
+.toRigth-1{
+  animation: toRigth 1s;
+}
+.toRigth-2{
+  animation: toRigth 1s .2s;
+}
+.toLeft-1{
+  animation: toLeft 1s;
+}
+.toLeft-2{
+  animation: toLeft 1s .2s;
 }

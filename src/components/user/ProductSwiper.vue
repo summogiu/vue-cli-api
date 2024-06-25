@@ -1,5 +1,6 @@
 <template>
-  <div ref="swiper" class="swiper products-swiper">
+  <div ref="swiper" class="swiper products-swiper"
+          :class="{ 'toLeft-1' : scrollPosition >= sectionTops.productsTops/1.5 }">
     <ul class="swiper-wrapper products-wrapper">
       <li class="swiper-slide products-slide">
         <a href="#">
@@ -70,6 +71,7 @@
                 border-radius: 5px;
                 transition: scale 1s;
                 max-width: 200px;
+                max-height: 280px;
 
                 img{
                     border-radius: 5px 5px 0 0;
@@ -84,6 +86,7 @@
                     font-size: 26px;
                     color: $subColor;
                     transition: all 0.5s;
+                    text-shadow: 0 0 5px gray;
                 }
                 p{
                     color: $subColor2;
@@ -126,18 +129,16 @@
             position: relative;
             bottom: 0;
             left: 0;
-            width: 100%;
+            width: 250px;
             height: 1200px;
-            background: linear-gradient(to bottom, white, rgb(148, 196, 196), rgb(148, 196, 196), white);
 
             .products-wrapper{
                 width: 200px;
                 margin: 0 auto;
-                padding: 200px 0;
+                padding: 300px 0 100px 0;
                 top: -200px;
 
                 .products-slide{
-                    max-height: 280px;
                     margin-bottom: 6rem;
                     scale: 1.2;
                 }
@@ -152,15 +153,22 @@
 <script>
 import Swiper from 'swiper'
 import { Navigation } from 'swiper/modules'
+import scrollPosMixin from '@/mixins/scrollPosMixin'
 
 Swiper.use(Navigation)
 
 export default {
+  prop: ['prdTops'],
   data () {
     return {
-      swiper: ''
+      swiper: '',
+      scrollPosition: 0,
+      sectionTops: {
+        productsTops: 0
+      }
     }
   },
+  mixins: [scrollPosMixin],
   mounted () {
     this.swiper = new Swiper(this.$refs.swiper, {
       slidesPerView: 3,
@@ -177,6 +185,9 @@ export default {
         prevEl: '.swiper-button-prev'
       }
     })
+
+    this.sectionTops.productsTops = this.prdTops
+    console.log('這個', this.sectionTops.productsTops)
   }
 }
 </script>

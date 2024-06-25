@@ -20,7 +20,7 @@
                               </div>
                           </div>
                           <div class="to-more-icon">
-                            <router-link to="productList" class="nav-link">
+                            <router-link to="productList" class="more-link">
                               <img src="@/assets/images/circle.png" alt="" class="circle">
                               <i class="bi bi-arrow-right user-bar-more-icon"></i>
                             </router-link>
@@ -214,7 +214,6 @@
 
         a{
             display: flex;
-            justify-content: space-between;
             align-items: end;
 
             &:hover i{
@@ -243,9 +242,6 @@
                 scale: 0.9;
             }
         }
-      .user-bar-more-icon{
-        left: 65%;
-      }
     }
 }
 
@@ -344,7 +340,7 @@
         }
     }
 }
-@media (max-width:414px){
+@media (max-width:919px){
     .header-menu{
         display: none;
     }

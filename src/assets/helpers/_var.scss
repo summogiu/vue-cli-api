@@ -182,7 +182,7 @@ h2{
     transform: translateX(-20%);
   }
   to {
-    transform: translateY(0%);
+    transform: translateX(0%);
   }
 }
 @keyframes toLeft {
@@ -190,7 +190,7 @@ h2{
     transform: translateX(20%);
   }
   to {
-    transform: translateY(0%);
+    transform: translateX(0%);
   }
 }
 

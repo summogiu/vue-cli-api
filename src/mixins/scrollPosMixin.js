@@ -2,11 +2,11 @@ export default {
   methods: {
     updateScrollPosition () {
       this.scrollPosition = window.pageYOffset
-      console.log('update觸發', this.scrollPosition)
     }
   },
   mounted () {
     window.addEventListener('scroll', this.updateScrollPosition)
+    window.addEventListener('resize', this.getSectionTops)
   },
   beforeUnmount () {
     window.removeEventListener('scroll', this.updateScrollPosition)

@@ -1,47 +1,48 @@
 <template>
-  <div ref="swiper" class="swiper products-swiper"
-          :class="{ 'toLeft-1' : scrollPosition >= sectionTops.productsTops/1.5 }">
-    <ul class="swiper-wrapper products-wrapper">
-      <li class="swiper-slide products-slide">
-        <a href="#">
-                <img src="@/assets/images/home-si/cloth-si.jpg" alt="">
-            <h5>Cloth</h5>
-            <p>手做布藝：<br>柔軟又溫暖，賦予你的空間溫馨的氛圍。</p>
-        </a>
-      </li>
-      <li class="swiper-slide products-slide">
-        <a href="#">
-            <img src="@/assets/images/home-si/crystal-si.jpg" alt="">
-            <h5>Crystal</h5>
-            <p>水晶燈系列：<br>奢華又雅致，點綴專屬的品味生活。</p>
-        </a>
-      </li>
-      <li class="swiper-slide products-slide">
-        <a href="#">
-            <img src="@/assets/images/home-si/industrial-si.jpg" alt="">
-            <h5>Industrial</h5>
-            <p>工業風格：<br>堅固金屬，展現個性，營造獨特的時尚氛圍。</p>
-        </a>
-      </li>
-      <li class="swiper-slide products-slide">
-        <a href="#">
-            <img src="@/assets/images/home-si/Nordic-si.jpg" alt="">
-            <h5>Nordic</h5>
-            <p>北歐現代系：<br>清新純淨，俐落簡約，最流行的時尚風格。</p>
-        </a>
-      </li>
-      <li class="swiper-slide products-slide">
-        <a href="#">
-            <img src="@/assets/images/home-si/Light-bulb-si.jpg" alt="">
-            <h5>Light-bulb</h5>
-            <p>光源專區：<br>挑選合用燈泡，成就您的光影藝術。</p>
-        </a>
-      </li>
-      <li></li>
-    </ul>
+<div>
+  <div ref="swiper" class="swiper products-swiper"  :fade="isProductsFade">
+      <ul class="swiper-wrapper products-wrapper">
+        <li class="swiper-slide products-slide">
+          <a href="#">
+                  <img src="@/assets/images/home-si/cloth-si.jpg" alt="">
+              <h5>Cloth</h5>
+              <p>手做布藝：<br>柔軟又溫暖，賦予你的空間溫馨的氛圍。</p>
+          </a>
+        </li>
+        <li class="swiper-slide products-slide">
+          <a href="#">
+              <img src="@/assets/images/home-si/crystal-si.jpg" alt="">
+              <h5>Crystal</h5>
+              <p>水晶燈系列：<br>奢華又雅致，點綴專屬的品味生活。</p>
+          </a>
+        </li>
+        <li class="swiper-slide products-slide">
+          <a href="#">
+              <img src="@/assets/images/home-si/industrial-si.jpg" alt="">
+              <h5>Industrial</h5>
+              <p>工業風格：<br>堅固金屬，展現個性，營造獨特的時尚氛圍。</p>
+          </a>
+        </li>
+        <li class="swiper-slide products-slide">
+          <a href="#">
+              <img src="@/assets/images/home-si/Nordic-si.jpg" alt="">
+              <h5>Nordic</h5>
+              <p>北歐現代系：<br>清新純淨，俐落簡約，最流行的時尚風格。</p>
+          </a>
+        </li>
+        <li class="swiper-slide products-slide">
+          <a href="#">
+              <img src="@/assets/images/home-si/Light-bulb-si.jpg" alt="">
+              <h5>Light-bulb</h5>
+              <p>光源專區：<br>挑選合用燈泡，成就您的光影藝術。</p>
+          </a>
+        </li>
+        <li></li>
+      </ul>
   </div>
   <div class="swiper-button-prev products-swiper-button-prev"></div>
   <div class="swiper-button-next products-swiper-button-next"></div>
+</div>
 </template>
 
 <style lang="scss">
@@ -158,14 +159,20 @@ import scrollPosMixin from '@/mixins/scrollPosMixin'
 Swiper.use(Navigation)
 
 export default {
-  prop: ['prdTops'],
+  props: ['prdTops', 'fade'],
   data () {
     return {
       swiper: '',
       scrollPosition: 0,
       sectionTops: {
         productsTops: 0
-      }
+      },
+      isProductsFade: false
+    }
+  },
+  watch: {
+    fade () {
+      this.isProductsFade = this.fade
     }
   },
   mixins: [scrollPosMixin],
@@ -187,7 +194,6 @@ export default {
     })
 
     this.sectionTops.productsTops = this.prdTops
-    console.log('這個', this.sectionTops.productsTops)
   }
 }
 </script>

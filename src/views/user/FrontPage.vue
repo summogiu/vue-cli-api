@@ -7,14 +7,14 @@
           </div>
       </div>
 
-      <div class="about" ref="about" :class="[ scrollPosition >= sectionTops.aboutTops/2 ? 'fadeIn transform0' : '' ]">
+      <div class="about" ref="about" :class="[ isAboutFade ? 'fadeIn transform0' : '' ]">
           <img src="@/assets/images/background/about.jpg" alt="">
-          <h4 class="background-text" :class="[ scrollPosition >= sectionTops.aboutTops/2 ? 'fadeIn toRigth-1' : '' ]">About</h4>
+          <h4 class="background-text" :class="[isAboutFade ? 'fadeIn toRigth-1' : '' ]">About</h4>
           <div class="about-text">
-              <h2 :class="[ scrollPosition >= sectionTops.aboutTops/2 ? 'fadeIn toLeft-1' : '' ]">
+              <h2 :class="[ isAboutFade ? 'fadeIn toLeft-1' : '' ]">
                 照亮生活 ,<br>將美好帶入您的空間 ,<br>探索 "In My Light"。</h2>
               <div class="about-content">
-                  <p :class="[ scrollPosition >= sectionTops.aboutTops/2 ? 'fadeIn toLeft-2' : '' ]">
+                  <p :class="[ isAboutFade ? 'fadeIn toLeft-2' : '' ]">
                       在In My Light，<br>我們相信每一盞燈都是一個故事的開始，<br>一個氛圍的創造者，<br>以及家居美學的靈感來源。<br>
                       我們是一家專業的燈具店，<br>致力於為您的空間帶來獨特而精心設計的照明解決方案。
                   </p>
@@ -30,14 +30,14 @@
           </div>
       </div>
 
-      <div class="products-frame" ref="products" :class="[ scrollPosition >= sectionTops.productsTops/1.5 ? 'fadeIn transform0' : '' ]">
+      <div class="products-frame" ref="products" :class="[ isProductsFade ? 'fadeIn transform0' : '' ]">
           <div class="products">
-            <h4 class="background-text" :class="{ 'toRigth-1' : scrollPosition >= sectionTops.productsTops/1.5 }">Products</h4>
+            <h4 class="background-text" :class="{ 'toRigth-1' : isProductsFade }">Products</h4>
               <div class="products-content">
-                  <h2 :class="{ 'toLeft-1' : scrollPosition >= sectionTops.productsTops/1.5 }">
+                  <h2 :class="{ 'toLeft-1' : isProductsFade }">
                       "In My Light "的燈具<br>每一件都由設計師團隊精心打造,<br>旨在為您的空間注入個人的獨特風格。
                   </h2>
-                  <p :class="{ 'toLeft-2' : scrollPosition >= sectionTops.productsTops/1.5 }">
+                  <p :class="{ 'toLeft-2' : isProductsFade }">
                       我們的產品包括吊燈、壁燈、臺燈和地燈等各種類型，<br>涵蓋了現代、古典、工業風等多種風格，<br>滿足您的不同需求和喜好。<br>無論是為家居、辦公室還是商業空間，<br>
                       In My Light 系列燈具都能提供出色的照明效果，<br>同時為您的空間增添藝術氣息和舒適感。<br>選擇 In My Light，讓您的空間更加煥然一新！
                   </p>
@@ -50,22 +50,22 @@
                   </a>
               </div>
               <img src="@/assets/images/background/products01.jpg" alt="" class="products-show-image1"
-                       :class="{ 'toDown-1' : scrollPosition >= sectionTops.productsTops/1.5 }">
+                       :class="{ 'toDown-1' : isProductsFade }">
               <img src="@/assets/images/background/products02.jpg" alt="" class="products-show-image2"
-                       :class="{ 'toUp-1' : scrollPosition >= sectionTops.productsTops/1.5 }">
+                       :class="{ 'toUp-1' : isProductsFade }">
               <img src="@/assets/images/background/products03.jpg" alt=""
-                       :class="{ 'toDown-1' : scrollPosition >= sectionTops.productsTops/1.5 }">
+                       :class="{ 'toDown-1' : isProductsFade }">
           </div>
-          <ProductSwiper :prdTops="sectionTops.productsTops" />
+          <ProductSwiper :prdTops="sectionTops.productsTops" :fade="isProductsFade"  :class="[ isProductsFade ? 'toLeft-1' : '' ]"/>
       </div>
 
-      <div class="customized" ref="customized" :class="[ scrollPosition >= sectionTops.customizedTops/1.2 ? 'fadeIn transform0' : '' ]">
+      <div class="customized" ref="customized" :class="[ isCustomizedFade ? 'fadeIn transform0' : '' ]">
           <img src="@/assets/images/background/customized.jpg" alt="">
-          <div class="customized-content"  :class="{ 'fadeIn customized-content-in' : scrollPosition >= sectionTops.customizedTops/1.2 }">
-              <h4 class="background-text" :class="{ 'toLeft-1' : scrollPosition >= sectionTops.customizedTops/1.2 }">Customized</h4>
-              <h2 :class="[ scrollPosition >= sectionTops.customizedTops/1.2 ? 'fadeIn toDown-2' : '' ]">
+          <div class="customized-content"  :class="{ 'fadeIn customized-content-in' : isCustomizedFade }">
+              <h4 class="background-text" :class="{ 'toLeft-1' : isCustomizedFade }">Customized</h4>
+              <h2 :class="[ isCustomizedFade ? 'fadeIn toDown-2' : '' ]">
                         在In My Light，<br>我們理解每個空間都是獨一無二的。</h2>
-              <p :class="{ 'toUp-2' : scrollPosition >= sectionTops.customizedTops/1.2 }">
+              <p :class="{ 'toUp-2' : isCustomizedFade }">
                   我們提供訂製專欄服務，<br>讓您能夠打造符合您獨特需求和風格的照明解決方案。<br>無論您需要定制尺寸、特定材料或特別設計，<br>我們的專業團隊將與您合作，<br>
                   以確保您得到完美的訂製燈具，<br>讓您的空間煥然一新，與眾不同。<br>與In My Light合作，<br>將您的想象變成現實！
               </p>
@@ -80,8 +80,8 @@
       </div>
 
       <div class="company" ref="company">
-      <h4 class="background-text" :class="[ scrollPosition >= sectionTops.companyTops/1.2 ? 'toRigth-1' : '' ]">Company</h4>
-      <ul :class="[ scrollPosition >= sectionTops.companyTops/1.2 ? 'fadeIn toLeft-2' : '' ]">
+      <h4 class="background-text" :class="[ isCompanyFade ? 'toRigth-1' : '' ]">Company</h4>
+      <ul :class="[ isCompanyFade ? 'fadeIn toLeft-2' : '' ]">
           <li>聯絡資訊</li>
           <li>地址：123台灣台北市中山區光復北路100號</li>
           <li>電話：+886-2-1234-5678</li>
@@ -89,7 +89,7 @@
           <li>網站：www.inmylight.com</li>
       </ul>
       <p>在您有任何疑問、建議或合作意向時，請隨時通過上述聯絡方式與我們取得聯繫。我們的專業團隊將竭誠為您提供最優質的服務，並解答您的所有疑問。期待與您的溝通與合作！</p>
-      <img src="@/assets/images/background/company1.jpg" alt="" :class="[ scrollPosition >= sectionTops.companyTops/1.2 ? 'fadeIn transform0' : '' ]">
+      <img src="@/assets/images/background/company1.jpg" alt="" :class="[ isCompanyFade ? 'fadeIn transform0' : '' ]">
       </div>
   </div>
 </template>
@@ -536,6 +536,20 @@ export default {
       }
     }
   },
+  computed: {
+    isAboutFade () {
+      return this.scrollPosition >= this.sectionTops.aboutTops / 2
+    },
+    isProductsFade () {
+      return this.scrollPosition >= this.sectionTops.productsTops / 1.5
+    },
+    isCustomizedFade () {
+      return this.scrollPosition >= this.sectionTops.customizedTops / 1.5
+    },
+    isCompanyFade () {
+      return this.scrollPosition >= this.sectionTops.companyTops / 1.5
+    }
+  },
   mixins: [scrollPosMixin],
   methods: {
     getSectionTops () {
@@ -548,7 +562,7 @@ export default {
   },
   mounted () {
     this.getSectionTops()
-    console.log('父', this.sectionTops.productsTops)
+    console.log('products位置', this.sectionTops.productsTops)
   }
 }
 </script>

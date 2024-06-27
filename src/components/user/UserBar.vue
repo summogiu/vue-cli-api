@@ -1,60 +1,62 @@
 <template>
-  <div class="header">
-      <ul class="header-menu">
-          <li><a href="#"><p>ABOUT</p> <p class="subtitle">關於我們</p></a></li>
-          <li class="open-products-style-box">
-              <a href="#" ><p>PRODUCTS</p> <p class="subtitle">產品資訊</p></a>
-              <div class="products-style-box">
-                  <ul class="products-style">
-                      <li><a href=""><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">水晶燈系列</span><span class="replace-text">水晶燈系列</span></div></a></li>
-                      <li><a href=""><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">工業風格</span><span class="replace-text">工業風格</span></div></a></li>
-                      <li><a href=""><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">北歐現代系</span><span class="replace-text">北歐現代系</span></div></a></li>
-                      <li><a href=""><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">手做布藝</span><span class="replace-text">手做布藝</span></div></a></li>
-                  </ul>
-                  <div class="all-products">
-                      <a href="">
-                          <div class="photo">
-                              <img src="@/assets/images/background/products.jpg" alt="">
-                              <div class="photo-cont">
-                                  <h3>PRODUCTS</h3><p>產品資訊</p>
-                              </div>
-                          </div>
-                          <div class="to-more-icon">
-                            <router-link to="productList" class="more-link">
-                              <img src="@/assets/images/circle.png" alt="" class="circle">
-                              <i class="bi bi-arrow-right user-bar-more-icon"></i>
-                            </router-link>
-                          </div>
-                      </a>
-                  </div>
-              </div>
-          </li>
-          <li><a href="#"><p>CUSTOMIZED</p> <p class="subtitle">專屬訂製</p></a></li>
-          <li><a href="#"><p>COMPANY</p> <p class="subtitle">公司資訊</p></a></li>
-          <li><a href="#"><p>CONSULT</p> <p class="subtitle">線上諮詢</p></a></li>
-      </ul>
-      <a href="#" class="open-MBmenu" @click.prevent="openMBMenu">
-        <transition name="rotate"><i class="bi bi-list" v-if="!MBmenuIsOpen"></i></transition>
-        <transition name="rotate"><i class="bi bi-x-lg" v-if="MBmenuIsOpen"></i></transition>
-        </a>
-      <transition name="fadeScale">
-        <ul class="MBmenu" v-if="MBmenuIsOpen">
-            <li><a href="#"><span>ABOUT</span><span class="MB-subtitle">關於我們</span></a></li>
-            <li>
-                <a href="#"><span>PRODUCTS</span><span class="MB-subtitle">產品資訊</span></a>
-                <ul class="MBproducts-menu">
-                    <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">水晶燈系列</span><span class="MB-replace-text">水晶燈系列</span></div></a></li>
-                    <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">工業風格</span><span class="MB-replace-text">工業風格</span></div></a></li>
-                    <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">北歐現代系</span><span class="MB-replace-text">北歐現代系</span></div></a></li>
-                    <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">手做布藝</span><span class="MB-replace-text">手做布藝</span></div></a></li>
-                    <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">光源專區</span><span class="MB-replace-text">光源專區</span></div></a></li>
-                </ul>
+  <div>
+    <div class="header">
+        <ul class="header-menu">
+            <li><router-link to="about"><p>ABOUT</p> <p class="subtitle">關於我們</p></router-link></li>
+            <li class="open-products-style-box">
+                <a href="#" ><p>PRODUCTS</p> <p class="subtitle">產品資訊</p></a>
+                <div class="products-style-box">
+                    <ul class="products-style">
+                        <li><a href=""><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">水晶燈系列</span><span class="replace-text">水晶燈系列</span></div></a></li>
+                        <li><a href=""><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">工業風格</span><span class="replace-text">工業風格</span></div></a></li>
+                        <li><a href=""><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">北歐現代系</span><span class="replace-text">北歐現代系</span></div></a></li>
+                        <li><a href=""><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">手做布藝</span><span class="replace-text">手做布藝</span></div></a></li>
+                    </ul>
+                    <div class="all-products">
+                        <a href="">
+                            <div class="photo">
+                                <img src="@/assets/images/background/products.jpg" alt="">
+                                <div class="photo-cont">
+                                    <h3>PRODUCTS</h3><p>產品資訊</p>
+                                </div>
+                            </div>
+                            <div class="to-more-icon">
+                              <router-link to="productList" class="more-link">
+                                <img src="@/assets/images/circle.png" alt="" class="circle">
+                                <i class="bi bi-arrow-right user-bar-more-icon"></i>
+                              </router-link>
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </li>
-            <li><a href="#"><span>CUSTOMIZED</span><span class="MB-subtitle">專屬訂製</span></a></li>
-            <li><a href="#"><span>COMPANY</span><span class="MB-subtitle">公司資訊</span></a></li>
-            <li><a href="#"><span>CONSULT</span><span class="MB-subtitle">線上諮詢</span></a></li>
+            <li><a href="#"><p>CUSTOMIZED</p> <p class="subtitle">專屬訂製</p></a></li>
+            <li><a href="#"><p>COMPANY</p> <p class="subtitle">公司資訊</p></a></li>
+            <li><a href="#"><p>CONSULT</p> <p class="subtitle">線上諮詢</p></a></li>
         </ul>
-      </transition>
+        <a href="#" class="open-MBmenu" @click.prevent="openMBMenu">
+          <transition name="rotate"><i class="bi bi-list" v-if="!MBmenuIsOpen"></i></transition>
+          <transition name="rotate"><i class="bi bi-x-lg" v-if="MBmenuIsOpen"></i></transition>
+          </a>
+        <transition name="fadeScale">
+          <ul class="MBmenu" v-if="MBmenuIsOpen">
+              <li><a href="#"><span>ABOUT</span><span class="MB-subtitle">關於我們</span></a></li>
+              <li>
+                  <a href="#"><span>PRODUCTS</span><span class="MB-subtitle">產品資訊</span></a>
+                  <ul class="MBproducts-menu">
+                      <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">水晶燈系列</span><span class="MB-replace-text">水晶燈系列</span></div></a></li>
+                      <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">工業風格</span><span class="MB-replace-text">工業風格</span></div></a></li>
+                      <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">北歐現代系</span><span class="MB-replace-text">北歐現代系</span></div></a></li>
+                      <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">手做布藝</span><span class="MB-replace-text">手做布藝</span></div></a></li>
+                      <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">光源專區</span><span class="MB-replace-text">光源專區</span></div></a></li>
+                  </ul>
+              </li>
+              <li><a href="#"><span>CUSTOMIZED</span><span class="MB-subtitle">專屬訂製</span></a></li>
+              <li><a href="#"><span>COMPANY</span><span class="MB-subtitle">公司資訊</span></a></li>
+              <li><a href="#"><span>CONSULT</span><span class="MB-subtitle">線上諮詢</span></a></li>
+          </ul>
+        </transition>
+    </div>
   </div>
 </template>
 
@@ -68,6 +70,8 @@
     right: 0;
     top: 0;
     z-index: 50;
+    background: linear-gradient(to left,rgba(0, 0, 0, 0.75) 50%,rgba(0, 0, 0, 0));
+    padding-left: 20px;
     >li{
         margin-right: 20px;
         position: relative;
@@ -184,25 +188,19 @@
             transition: transform 0.5s;
             }
             /*底線彈出*/
-            &::before,
-            &::after {
+            &::before{
                 content: '';
                 position: absolute;
                 bottom: -2px;
                 width: 0;
                 height: 1px;
-                background-color: rgba(255,255,255,0.3);
+                background-color: rgba(255,255,255,0.5);
                 transition: width 0.3s;
             }
             &::before {
                 left: 15%;
             }
-            &::after {
-                right: 85%;
-                transform: translateX(100%);
-            }
-            &:hover::before,
-            &:hover::after {
+            &:hover::before{
                 width: 90%;
             }
         }
@@ -257,15 +255,13 @@
   color: $subColor;
   border-radius: 50%;
   z-index: 50;
-  transition: all 0.5s ;
+  transition: all 0.5s;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
 
   i{
     position: absolute;
     top: 2px;
-  }
-  &:hover{
-      color: $mainColor;
-      border: 2px solid $mainColor;
+    text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.8);
   }
 }
 .MBmenu{

@@ -1,6 +1,7 @@
 $mainColor:aquamarine;
 $subColor:white;
 $subColor2:black;
+$subColor3:rgb(142, 199, 179);
 $h2Color:rgb(46, 46, 46);
 $more-linkColor:rgb(158, 158, 158);
 //背景灰字
@@ -77,6 +78,22 @@ h2{
     z-index: 5;
 }
 
+// 當前路徑
+.current-path{
+  display: flex;
+  justify-content: end;
+  align-items: center;
+
+  li{
+    margin: 0 5px;
+  }
+  i{
+    color: $subColor3;
+  }
+  .home-i{
+    font-size: 26px;
+  }
+}
 
 //標題動畫
 @keyframes slideOut {
@@ -177,7 +194,7 @@ h2{
     transform: translateY(0);
   }
 }
-@keyframes toRigth {
+@keyframes toRight {
   from {
     transform: translateX(-20%);
   }
@@ -193,34 +210,69 @@ h2{
     transform: translateX(0%);
   }
 }
+@keyframes swiperToLeft {
+  from {
+    transform: translate3d(20%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes lineDowm {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  50%{
+    transform: scaleY(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
 
 .fadeIn {
   opacity: 1 !important;
 }
 .transform0 {
-  transform: translateY(0) translateX(0%) !important;
+  transform: translateY(0) translateX(0) !important;
 }
 .toUp-1{
-  animation: toUp 1s;
+  animation: toUp 1s forwards;
 }
 .toUp-2{
-  animation: toUp 1s .2s;
+  animation: toUp 1s .2s forwards;
 }
 .toDown-1{
-  animation: toDown 1s;
+  animation: toDown 1s forwards;
 }
 .toDown-2{
-  animation: toDown 1s .2s;
+  animation: toDown 1s .2s forwards;
 }
-.toRigth-1{
-  animation: toRigth 1s;
+.toRight-1{
+  animation: toRight 1s forwards;
 }
-.toRigth-2{
-  animation: toRigth 1s .2s;
+.toRight-2{
+  animation: toRight 1s .2s forwards;
 }
 .toLeft-1{
-  animation: toLeft 1s;
+  animation: toLeft 1s forwards;
 }
 .toLeft-2{
-  animation: toLeft 1s .2s;
+  animation: toLeft 1s .2s forwards;
+}
+.swiperToLeft{
+  animation: swiperToLeft 1s .2s;
+  transform-origin: center;
+}
+
+// 背景動畫
+@keyframes round {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg) translate(100px) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg) translate(100px) rotate(-360deg);
+  }
 }

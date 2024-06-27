@@ -1,7 +1,8 @@
 <template>
   <div class="fram">
     <div class="banner" ref="banner">
-          <div class="h1-animation">
+          <div class="h1-animation" ref="titleLogo"
+          :class="[ isTitleLogoFade ? 'h1-animation-fadeOut' : '' ]">
               <div class="circle-background"></div>
               <h1>In My Light</h1>
           </div>
@@ -9,7 +10,7 @@
 
       <div class="about" ref="about" :class="[ isAboutFade ? 'fadeIn transform0' : '' ]">
           <img src="@/assets/images/background/about.jpg" alt="">
-          <h4 class="background-text" :class="[isAboutFade ? 'fadeIn toRigth-1' : '' ]">About</h4>
+          <h4 class="background-text" :class="[isAboutFade ? 'fadeIn toRight-1' : '' ]">About</h4>
           <div class="about-text">
               <h2 :class="[ isAboutFade ? 'fadeIn toLeft-1' : '' ]">
                 照亮生活 ,<br>將美好帶入您的空間 ,<br>探索 "In My Light"。</h2>
@@ -19,20 +20,20 @@
                       我們是一家專業的燈具店，<br>致力於為您的空間帶來獨特而精心設計的照明解決方案。
                   </p>
                   <br>
-                  <a href="#" class="more-link">
-                      more
+                  <router-link to="about" class="more-link">
+                    more
                       <div class="to-more-icon">
                           <img src="@/assets/images/circle.png" alt="" class="circle">
                           <i class="bi bi-arrow-right"></i>
                       </div>
-                  </a>
+                  </router-link>
               </div>
           </div>
       </div>
 
       <div class="products-frame" ref="products" :class="[ isProductsFade ? 'fadeIn transform0' : '' ]">
           <div class="products">
-            <h4 class="background-text" :class="{ 'toRigth-1' : isProductsFade }">Products</h4>
+            <h4 class="background-text" :class="{ 'toRight-1' : isProductsFade }">Products</h4>
               <div class="products-content">
                   <h2 :class="{ 'toLeft-1' : isProductsFade }">
                       "In My Light "的燈具<br>每一件都由設計師團隊精心打造,<br>旨在為您的空間注入個人的獨特風格。
@@ -56,7 +57,9 @@
               <img src="@/assets/images/background/products03.jpg" alt=""
                        :class="{ 'toDown-1' : isProductsFade }">
           </div>
-          <ProductSwiper :prdTops="sectionTops.productsTops" :fade="isProductsFade"  :class="[ isProductsFade ? 'toLeft-1' : '' ]"/>
+          <div :class="[ isProductsFade ? 'swiperToLeft' : '' ]">
+            <ProductSwiper/>
+          </div>
       </div>
 
       <div class="customized" ref="customized" :class="[ isCustomizedFade ? 'fadeIn transform0' : '' ]">
@@ -80,8 +83,8 @@
       </div>
 
       <div class="company" ref="company">
-      <h4 class="background-text" :class="[ isCompanyFade ? 'toRigth-1' : '' ]">Company</h4>
-      <ul :class="[ isCompanyFade ? 'fadeIn toLeft-2' : '' ]">
+      <h4 class="background-text" :class="[ isCompanyFade ? 'toRight-1' : '' ]">Company</h4>
+      <ul :class="[ isCompanyFade ? 'fadeIn toLeft-1' : '' ]">
           <li>聯絡資訊</li>
           <li>地址：123台灣台北市中山區光復北路100號</li>
           <li>電話：+886-2-1234-5678</li>
@@ -92,6 +95,7 @@
       <img src="@/assets/images/background/company1.jpg" alt="" :class="[ isCompanyFade ? 'fadeIn transform0' : '' ]">
       </div>
   </div>
+  <ToPageTop :class="[ isTitleLogoFade ? 'fadeIn' : '' ]" />
 </template>
 
 <style lang="scss">
@@ -107,7 +111,6 @@
     display: block;
     height: auto;
     z-index: 1;
-    width: 100vw;
     height: 100vh;
 
     .h1-animation{
@@ -116,6 +119,8 @@
         transform: translateY(-50%);
         left: 20%;
         scale: 1.5;
+        opacity: 1;
+        transition: all .5s;
     }
     .h1-animation::before {
         content: "";
@@ -150,6 +155,12 @@
         border-radius: 50%;
         background-color: rgba(255,255,255,0.7);
         animation: fadeIn 2s .2s, slideDown 1s .2s forwards;
+    }
+
+    .h1-animation-fadeOut{
+      scale: 0;
+      opacity: 0;
+      top: 80%;
     }
 }
 
@@ -492,25 +503,18 @@
 }
 
 @media (max-width:414px){
-    .company{
+        .company{
+          .background-text{
+            color: $subColor;
+            left: -50px;
+            font-size: 150px;
+        }
         ul{
             position: absolute;
-            width: 100%;
-            top: 50;
-            margin: 0;
-
-            li{
-                width: 100%;
-                color: $subColor;
-                background: linear-gradient(to right, rgba(0, 0, 0, 0.7)60%, rgba(255, 0, 0, 0));
-                margin-bottom: 10px;
-                padding: 0 5px;
-            }
+            padding: 0 20px;
         }
         img{
-            opacity: 0.6;
-            z-index: -1;
-            width: 100%;
+          width: 100%;
         }
     }
 }
@@ -518,16 +522,19 @@
 
 <script>
 import ProductSwiper from '@/components/user/ProductSwiper.vue'
-import scrollPosMixin from '@/mixins/scrollPosMixin'
+import scrollPosMixin from '@/mixins/scrollPosMixin' // 監聽滾動事件
+import ToPageTop from '@/components/user/ToPageTop.vue'
 
 export default {
   components: {
-    ProductSwiper
+    ProductSwiper,
+    ToPageTop
   },
   data () {
     return {
       scrollPosition: 0,
       sectionTops: {
+        titleLogoTops: 0,
         bannerTops: 0,
         aboutTops: 0,
         productsTops: 0,
@@ -537,6 +544,9 @@ export default {
     }
   },
   computed: {
+    isTitleLogoFade () {
+      return this.scrollPosition >= this.sectionTops.titleLogoTops / 2
+    },
     isAboutFade () {
       return this.scrollPosition >= this.sectionTops.aboutTops / 2
     },
@@ -547,12 +557,14 @@ export default {
       return this.scrollPosition >= this.sectionTops.customizedTops / 1.5
     },
     isCompanyFade () {
-      return this.scrollPosition >= this.sectionTops.companyTops / 1.5
+      return this.scrollPosition >= this.sectionTops.companyTops / 1.2
     }
   },
   mixins: [scrollPosMixin],
   methods: {
+    // 取得區塊定位
     getSectionTops () {
+      this.sectionTops.titleLogoTops = this.$refs.titleLogo.getBoundingClientRect().top + window.pageYOffset
       this.sectionTops.bannerTops = this.$refs.banner.getBoundingClientRect().top + window.pageYOffset
       this.sectionTops.aboutTops = this.$refs.about.getBoundingClientRect().top + window.pageYOffset
       this.sectionTops.productsTops = this.$refs.products.getBoundingClientRect().top + window.pageYOffset
@@ -562,7 +574,6 @@ export default {
   },
   mounted () {
     this.getSectionTops()
-    console.log('products位置', this.sectionTops.productsTops)
   }
 }
 </script>

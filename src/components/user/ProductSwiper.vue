@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div ref="swiper" class="swiper products-swiper"  :fade="isProductsFade">
+  <div ref="swiper" class="swiper products-swiper">
       <ul class="swiper-wrapper products-wrapper">
         <li class="swiper-slide products-slide">
           <a href="#">
@@ -48,10 +48,10 @@
 <style lang="scss">
 @import 'swiper/css';
 @import 'swiper/css/navigation';
+@import 'swiper/css/autoplay';
 
   .products-swiper{
         position: absolute;
-        bottom: -180px;
         left: 5%;
         width: 90%;
 
@@ -153,38 +153,28 @@
 
 <script>
 import Swiper from 'swiper'
-import { Navigation } from 'swiper/modules'
-import scrollPosMixin from '@/mixins/scrollPosMixin'
+import { Navigation, Autoplay } from 'swiper/modules'
 
 Swiper.use(Navigation)
+Swiper.use(Autoplay)
 
 export default {
-  props: ['prdTops', 'fade'],
   data () {
     return {
-      swiper: '',
-      scrollPosition: 0,
-      sectionTops: {
-        productsTops: 0
-      },
-      isProductsFade: false
+      swiper: ''
     }
   },
-  watch: {
-    fade () {
-      this.isProductsFade = this.fade
-    }
-  },
-  mixins: [scrollPosMixin],
   mounted () {
     this.swiper = new Swiper(this.$refs.swiper, {
       slidesPerView: 3,
       direction: 'vertical',
+      speed: 2000,
       breakpoints: {
         919: {
-          slidesPerView: 3,
+          slidesPerView: 4,
           spaceBetween: 50,
-          direction: 'horizontal'
+          direction: 'horizontal',
+          autoplay: false
         }
       },
       navigation: {
@@ -192,8 +182,6 @@ export default {
         prevEl: '.swiper-button-prev'
       }
     })
-
-    this.sectionTops.productsTops = this.prdTops
   }
 }
 </script>

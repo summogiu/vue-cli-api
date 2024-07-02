@@ -398,6 +398,7 @@
 
     .MB-btn{
       display: block;
+      transition: all 0.5s;
     }
     .PC-btn{
       display: none;

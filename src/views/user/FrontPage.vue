@@ -1,5 +1,6 @@
 <template>
   <div class="fram">
+    <div class="bg"></div>
     <div class="banner" ref="banner">
           <div class="h1-animation" ref="titleLogo"
           :class="[ isTitleLogoFade ? 'h1-animation-fadeOut' : '' ]">
@@ -51,11 +52,11 @@
                   </a>
               </div>
               <img src="@/assets/images/background/products01.jpg" alt="" class="products-show-image1"
-                       :class="{ 'toDown-1' : isProductsFade }">
+                      :class="{ 'toDown-1' : isProductsFade }">
               <img src="@/assets/images/background/products02.jpg" alt="" class="products-show-image2"
-                       :class="{ 'toUp-1' : isProductsFade }">
+                      :class="{ 'toUp-1' : isProductsFade }">
               <img src="@/assets/images/background/products03.jpg" alt=""
-                       :class="{ 'toDown-1' : isProductsFade }">
+                      :class="{ 'toDown-1' : isProductsFade }">
           </div>
           <div :class="[ isProductsFade ? 'swiperToLeft' : '' ]">
             <ProductSwiper/>
@@ -100,10 +101,17 @@
 
 <style lang="scss">
 .fram{
-  background-image: url('@/assets/images/banner/index-banner.jpg');
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center right;
+  overflow: hidden;
+  .bg{
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    background-image: url('@/assets/images/banner/index-banner.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center right;
+    animation: slowScale 100s infinite alternate both;
+  }
 }
 
 .banner{

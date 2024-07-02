@@ -2,30 +2,6 @@
   max-width: 300px;
   max-height: 300px;
 }
-// 商品列表
-.thumbnail{
-  width: 200px;
-  height: 200px;
-}
-.productTable{
-  display: table;
-  td{
-    border-top: 1px solid rgb(173, 173, 173);
-    padding: 3% 10px 3% 0;
-  }
-  .price-box{
-    line-height: 14px;
-  }
-}
-.origin_price{
-  color: gray;
-  text-decoration: line-through;
-}
-.price{
-  color: rgb(179, 47, 47);
-  font-size: 24px;
-}
-
 // 購物車
 .product-cart{
   position: fixed;

@@ -4,7 +4,7 @@
         <ul class="header-menu">
             <li><router-link to="about"><p>ABOUT</p> <p class="subtitle">關於我們</p></router-link></li>
             <li class="open-products-style-box">
-                <a href="#" ><p>PRODUCTS</p> <p class="subtitle">產品資訊</p></a>
+                <router-link to="productList"><p>PRODUCTS</p> <p class="subtitle">產品資訊</p></router-link>
                 <div class="products-style-box">
                     <ul class="products-style">
                         <li><a href=""><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">水晶燈系列</span><span class="replace-text">水晶燈系列</span></div></a></li>
@@ -39,10 +39,11 @@
           <transition name="rotate"><i class="bi bi-x-lg" v-if="MBmenuIsOpen"></i></transition>
           </a>
         <transition name="fadeScale">
-          <ul class="MBmenu" v-if="MBmenuIsOpen">
-              <li><a href="#"><span>ABOUT</span><span class="MB-subtitle">關於我們</span></a></li>
+          <ul class="MBmenu" v-if="MBmenuIsOpen" @click="closeMBmenu">
+              <li><router-link to="/"><span><i class="bi bi-house"></i>HOME</span><span class="MB-subtitle">回到首頁</span></router-link></li>
+              <li><router-link to="about"><span>ABOUT</span><span class="MB-subtitle">關於我們</span></router-link></li>
               <li>
-                  <a href="#"><span>PRODUCTS</span><span class="MB-subtitle">產品資訊</span></a>
+                  <router-link to="productList"><span>PRODUCTS</span><span class="MB-subtitle">產品資訊</span></router-link>
                   <ul class="MBproducts-menu">
                       <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">水晶燈系列</span><span class="MB-replace-text">水晶燈系列</span></div></a></li>
                       <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">工業風格</span><span class="MB-replace-text">工業風格</span></div></a></li>
@@ -249,12 +250,13 @@
   display: none;
   position: fixed;
   right: 0;
+  top: 0;
   margin: 5px;
   padding: 5px;
   border: 2px solid $subColor;
   color: $subColor;
   border-radius: 50%;
-  z-index: 50;
+  z-index: 100;
   transition: all 0.5s;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
 
@@ -266,7 +268,8 @@
 }
 .MBmenu{
     position: fixed;
-    z-index: 49;
+    top: 0;
+    z-index: 90;
     background: rgba(0,0,0,0.75);
     height: 100%;
     width: 100%;
@@ -281,6 +284,10 @@
 
         span{
             font-size: 24px;
+
+            i{
+              padding-right: 5px;
+            }
         }
         .MB-subtitle{
             font-size: 16px;
@@ -385,6 +392,13 @@ export default {
         this.MBmenuIsOpen = true
       } else {
         this.MBmenuIsOpen = false
+      }
+    },
+    closeMBmenu (event) {
+      console.log('點擊到', event.target.tagName)
+      if (event.target.tagName !== 'UL') {
+        this.MBmenuIsOpen = false
+        console.log('關閉選單', this.MBmenuIsOpen)
       }
     }
   }

@@ -2,6 +2,7 @@ $mainColor:aquamarine;
 $subColor:white;
 $subColor2:black;
 $subColor3:rgb(142, 199, 179);
+$disabledColor:gray;
 $h2Color:rgb(46, 46, 46);
 $more-linkColor:rgb(158, 158, 158);
 //背景灰字
@@ -31,21 +32,9 @@ $more-linkColor:rgb(158, 158, 158);
     .circle{
         position: absolute;        
         transition: scale 1s;
-        
-        
-        
     }
 }
 
-//旋轉
-@keyframes circleRotate {
-    from{
-        rotate: 0deg;
-    }
-    to{
-        rotate: 360deg;
-    }
-}
 .more-link {
     display: flex;
     align-items: center;
@@ -76,23 +65,6 @@ h2{
     font-size: 36px;
     padding: 0 10px;
     z-index: 5;
-}
-
-// 當前路徑
-.current-path{
-  display: flex;
-  justify-content: end;
-  align-items: center;
-
-  li{
-    margin: 0 5px;
-  }
-  i{
-    color: $subColor3;
-  }
-  .home-i{
-    font-size: 26px;
-  }
 }
 
 //標題動畫
@@ -268,11 +240,48 @@ h2{
 }
 
 // 背景動畫
+@keyframes slowScale {
+  from {
+    scale: 1;
+  }
+  to {
+    scale: 1.5;
+  }
+}
 @keyframes round {
   from {
     transform: translate(-50%, -50%) rotate(0deg) translate(100px) rotate(0deg);
   }
   to {
     transform: translate(-50%, -50%) rotate(360deg) translate(100px) rotate(-360deg);
+  }
+}
+
+//hover動畫
+@keyframes circleRotate {
+  from{
+      rotate: 0deg;
+  }
+  to{
+      rotate: 360deg;
+  }
+}
+@keyframes floatUp {
+  from{
+    transform: translateY(0);
+  }
+  to{
+    transform: translateY(-5%);
+  }
+}
+@keyframes flash {
+  from{
+    opacity: 1;
+  }
+  50%{
+    opacity: 0.5;
+  }
+  to{
+    opacity: 1;
   }
 }

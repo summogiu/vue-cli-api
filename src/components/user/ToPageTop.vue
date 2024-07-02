@@ -12,7 +12,7 @@
 <style lang="scss">
 .to-page-top{
   position: fixed;
-  z-index: 50;
+  z-index: 100;
   line-height: 0;
   bottom: 20px;
   left: 20px;

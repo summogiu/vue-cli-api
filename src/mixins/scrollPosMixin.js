@@ -7,6 +7,7 @@ export default {
   mounted () {
     window.addEventListener('scroll', this.updateScrollPosition)
     window.addEventListener('resize', this.getSectionTops)
+    window.scrollTo(0, 0)
   },
   beforeUnmount () {
     window.removeEventListener('scroll', this.updateScrollPosition)

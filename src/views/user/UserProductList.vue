@@ -8,102 +8,123 @@
               ref="productListHeader">
         <ul class="productList-header-nav">
           <li>
-            <button type="button" class="tab-bottom"
+            <button type="button" class="tab-bottom PC-btn"
                     @mouseover="changeSearchTabOpen"
                     :class="[ isSearchTabOpen ? 'tab-bottom-active' : '' ]">
                     關鍵字搜尋</button>
-            <div class="tab-bottom-pullDown-box"
+            <button type="button" class="tab-bottom MB-btn"
+                    @click="changeSearchTabOpen"
+                    :class="[ isSearchTabOpen ? 'tab-bottom-active' : '' ]">
+                    關鍵字搜尋</button>
+            <div class="pullDown-frame"
+                    :class="[ isSearchTabOpen ? 'pullDown-frame-100' : '' ]">
+              <div class="tab-bottom-pullDown-box"
                    :class="[ isSearchTabOpen ? 'tab-bottom-pullDown-box-open' : '' ]"
                    @mouseleave="changeSearchTabOpen">
-              <div class="tab-bottom-pullDown-SearchTab">
-                <input type="text" placeholder="請輸入內容" class="search-input">
-                <button type="button" class="search-btn"><i class="bi bi-search"></i></button>
+                <div class="tab-bottom-pullDown-SearchTab">
+                  <input type="text" placeholder="請輸入內容" class="search-input">
+                  <button type="button" class="search-btn"><i class="bi bi-search"></i></button>
+                </div>
               </div>
-            </div>
-            </li>
-          <li>
-            <button type="button" class="tab-bottom"
-                    @mouseover="changeStyleTabOpen"
-                    :class="[ isStyleTabOpen ? 'tab-bottom-active' : '' ]">
-                    依風格搜尋</button>
-            <div class="tab-bottom-pullDown-box"
-                   :class="[ isStyleTabOpen ? 'tab-bottom-pullDown-box-open' : '' ]"
-                   @mouseleave="changeStyleTabOpen">
-              <ul class="tab-bottom-pullDown-Tab">
-                <li>
-                  <a href="#">
-                    <img src="@/assets/images/products/header/tab-img-Cloth.jpg" alt="tab-img-Cloth" class="style-img">
-                    <p>Cloth | <span>手做布罩</span></p>
-                    </a>
-                  </li>
-                <li>
-                  <a href="#">
-                    <img src="@/assets/images/products/header/tab-img-Crystal.jpg" alt="tab-img-Crystal" class="style-img">
-                    <p>Crystal | <span>水晶燈</span></p>
-                    </a>
-                  </li>
-                <li>
-                  <a href="#">
-                    <img src="@/assets/images/products/header/tab-img-Industrial.jpg" alt="tab-img-Industrial" class="style-img">
-                    <p>Industrial | <span>工業風</span></p>
-                    </a>
-                  </li>
-                <li>
-                  <a href="#">
-                    <img src="@/assets/images/products/header/tab-img-Nordic.jpg" alt="tab-img-Nordic" class="style-img">
-                    <p>Nordic | <span>北歐風</span></p>
-                    </a>
-                  </li>
-              </ul>
             </div>
           </li>
           <li>
-            <button type="button" class="tab-bottom"
+            <button type="button" class="tab-bottom PC-btn"
+                    @mouseover="changeStyleTabOpen"
+                    :class="[ isStyleTabOpen ? 'tab-bottom-active' : '' ]">
+                    依風格搜尋</button>
+            <button type="button" class="tab-bottom MB-btn"
+                    @click="changeStyleTabOpen"
+                    :class="[ isStyleTabOpen ? 'tab-bottom-active' : '' ]">
+                    依風格搜尋</button>
+            <div class="pullDown-frame"
+                    :class="[ isStyleTabOpen ? 'pullDown-frame-100' : '' ]">
+              <div class="tab-bottom-pullDown-box"
+                   :class="[ isStyleTabOpen ? 'tab-bottom-pullDown-box-open' : '' ]"
+                   @mouseleave="changeStyleTabOpen">
+                <ul class="tab-bottom-pullDown-Tab">
+                  <li>
+                    <a href="#">
+                      <img src="@/assets/images/products/header/tab-img-Cloth.jpg" alt="tab-img-Cloth" class="style-img">
+                      <p>Cloth | <span>手做布罩</span></p>
+                      </a>
+                    </li>
+                  <li>
+                    <a href="#">
+                      <img src="@/assets/images/products/header/tab-img-Crystal.jpg" alt="tab-img-Crystal" class="style-img">
+                      <p>Crystal | <span>水晶燈</span></p>
+                      </a>
+                    </li>
+                  <li>
+                    <a href="#">
+                      <img src="@/assets/images/products/header/tab-img-Industrial.jpg" alt="tab-img-Industrial" class="style-img">
+                      <p>Industrial | <span>工業風</span></p>
+                      </a>
+                    </li>
+                  <li>
+                    <a href="#">
+                      <img src="@/assets/images/products/header/tab-img-Nordic.jpg" alt="tab-img-Nordic" class="style-img">
+                      <p>Nordic | <span>北歐風</span></p>
+                      </a>
+                    </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li>
+            <button type="button" class="tab-bottom PC-btn"
                     @mouseover="changeTypeTabOpen"
                     :class="[ isTypeTabOpen ? 'tab-bottom-active' : '' ]">
                     依種類搜尋</button>
-            <div class="tab-bottom-pullDown-box"
+            <button type="button" class="tab-bottom MB-btn"
+                    @click="changeTypeTabOpen"
+                    :class="[ isTypeTabOpen ? 'tab-bottom-active' : '' ]">
+                    依種類搜尋</button>
+             <div class="pullDown-frame"
+                    :class="[ isTypeTabOpen ? 'pullDown-frame-100' : '' ]">
+              <div class="tab-bottom-pullDown-box"
                     :class="[ isTypeTabOpen ? 'tab-bottom-pullDown-box-open' : '' ]"
                     @mouseleave="changeTypeTabOpen">
-              <ul class="tab-bottom-pullDown-Tab">
-                <li>
-                  <a href="">
-                    <img src="@/assets/images/products/header/type-chandelier.png" alt="type-chandelier" class="type-img">
-                    <p>Chandelier | <span>吊燈</span></p>
-                  </a>
-                  </li>
-                <li>
-                  <a href="">
-                    <img src="@/assets/images/products/header/type-wall-lamp.png" alt="type-chandelier" class="type-img">
-                    <p>Wall Lamp | <span>壁燈</span></p>
-                  </a>
-                  </li>
-                <li>
-                  <a href="">
-                    <img src="@/assets/images/products/header/type-desk-lamp.png" alt="type-chandelier" class="type-img">
-                    <p>Desk Lamp | <span>檯燈</span></p>
-                  </a>
-                  </li>
-                <li>
-                  <a href="">
-                    <img src="@/assets/images/products/header/type-ceiling-lamp.png" alt="type-chandelier" class="type-img">
-                    <p>DeskCeiling Lamp | <span>吸頂燈</span></p>
-                  </a>
-                  </li>
-                <li>
-                  <a href="">
-                    <img src="@/assets/images/products/header/type-standing-lamp.png" alt="type-chandelier" class="type-img">
-                    <p>Standing Lamp | <span>落地燈</span></p>
-                  </a>
-                  </li>
-                <li>
-                  <a href="">
-                    <img src="@/assets/images/products/header/type-light-bulb.png" alt="type-chandelier" class="type-img">
-                    <p>Light Bulb | <span>燈泡</span></p>
-                  </a>
-                  </li>
-              </ul>
-            </div>
+                <ul class="tab-bottom-pullDown-Tab">
+                  <li>
+                    <a href="">
+                      <img src="@/assets/images/products/header/type-chandelier.png" alt="type-chandelier" class="type-img">
+                      <p>Chandelier | <span>吊燈</span></p>
+                    </a>
+                    </li>
+                  <li>
+                    <a href="">
+                      <img src="@/assets/images/products/header/type-wall-lamp.png" alt="type-chandelier" class="type-img">
+                      <p>Wall Lamp | <span>壁燈</span></p>
+                    </a>
+                    </li>
+                  <li>
+                    <a href="">
+                      <img src="@/assets/images/products/header/type-desk-lamp.png" alt="type-chandelier" class="type-img">
+                      <p>Desk Lamp | <span>檯燈</span></p>
+                    </a>
+                    </li>
+                  <li>
+                    <a href="">
+                      <img src="@/assets/images/products/header/type-ceiling-lamp.png" alt="type-chandelier" class="type-img">
+                      <p>DeskCeiling Lamp | <span>吸頂燈</span></p>
+                    </a>
+                    </li>
+                  <li>
+                    <a href="">
+                      <img src="@/assets/images/products/header/type-standing-lamp.png" alt="type-chandelier" class="type-img">
+                      <p>Standing Lamp | <span>落地燈</span></p>
+                    </a>
+                    </li>
+                  <li>
+                    <a href="">
+                      <img src="@/assets/images/products/header/type-light-bulb.png" alt="type-chandelier" class="type-img">
+                      <p>Light Bulb | <span>燈泡</span></p>
+                    </a>
+                    </li>
+                </ul>
+              </div>
+             </div>
             </li>
         </ul>
         <div class="productList-header-logo">
@@ -162,6 +183,10 @@
 
     .productList-header-nav{
       display: flex;
+
+      .MB-btn{
+        display: none;
+      }
 
       li{
 
@@ -362,7 +387,71 @@
 }
 @media (max-width:919px){
 .productList-header{
+  flex-direction: column;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  padding: 50px 0;
 
+  .productList-header-nav{
+    flex-direction: column;
+
+    .MB-btn{
+      display: block;
+    }
+    .PC-btn{
+      display: none;
+    }
+
+    li{
+      .pullDown-frame{
+        height: 0;
+        transition: height 0.5s;
+      }
+      .pullDown-frame-100{
+        height: 100%;
+      }
+      .tab-bottom-pullDown-box{
+        position: relative;
+
+        .tab-bottom-pullDown-Tab{
+          width: 100%;
+          justify-content: space-around;
+
+          li{
+            width: 40%;
+
+            .style-img{
+              width: 140px;
+              height: 97px;
+            }
+            .type-img{
+              width: 100px;
+              height: 100px;
+            }
+            p{
+              font-size: 14px;
+
+              span{
+                font-size: 14px;
+              }
+            }
+          }
+        }
+      }
+    }
+}
+
+  .productList-header-logo{
+    z-index: 66;
+
+    &::before{
+      width: 100%;
+    }
+    p{
+      opacity: 1;
+    }
+  }
 }
 }
 

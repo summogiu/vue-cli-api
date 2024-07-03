@@ -72,6 +72,7 @@ export default {
   methods: {
     changePage (page) {
       this.$emit('change-page', page)
+      window.scrollTo(0, 0)
     }
   }
 }

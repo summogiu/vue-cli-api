@@ -4,7 +4,8 @@
       <Loading :active="isLoading"></Loading>
       <div class="productList-header toDown-1"
               :class="[ scrollPosition > 0 ? 'productList-header-close' : '',
-              isHeaderSlide ? 'productList-header-slide' : '' ]"
+              isHeaderSlide ? 'productList-header-slide' : '',
+              isMBMenuOpen ? 'MB-productList-menu-open' : '' ]"
               ref="productListHeader">
         <ul class="productList-header-nav">
           <li>
@@ -22,7 +23,8 @@
                    :class="[ isSearchTabOpen ? 'tab-bottom-pullDown-box-open' : '' ]"
                    @mouseleave="changeSearchTabOpen">
                 <div class="tab-bottom-pullDown-SearchTab">
-                  <input type="text" placeholder="請輸入內容" class="search-input">
+                  <input type="text" placeholder="請輸入內容" class="search-input"
+                        v-model="searchContent">
                   <button type="button" class="search-btn"><i class="bi bi-search"></i></button>
                 </div>
               </div>
@@ -133,12 +135,23 @@
         </div>
         <CurrentPath :name="name" :curPaths="currentPaths"/>
       </div>
+      <div class="open-MB-productList-menu-btn">
+        <button type="button"
+                @click="changeMBMenuOpen">
+                <transition name="rotate"><i class="bi bi-filter-left" v-if="!isMBMenuOpen"></i></transition>
+                <transition name="rotate"><i class="bi bi-x-lg" v-if="isMBMenuOpen"></i></transition>
+                </button>
+      </div>
+      <div class="MB-title">
+          <h2>In My Light</h2>
+          <p>產品資訊</p>
+        </div>
       <UserCart :cart="carts" :cartData="cartsData" @delete-one="deleteOne"
               @update-qty="updateOneQty" :loading="status.loadingItem"
               @use-coupon="useCoupon" :isCoupon="isCoupon"></UserCart>
       <div class="product-list-box">
         <ul class="product-list-ul toRight-1">
-          <li v-for="(item, i) in products" :key="item.id"
+          <li v-for="(item, i) in showProducts" :key="item.id"
                   :class="{ 'big-size-li' : i === 0 || i === products.length-1 }">
             <div class="product-content" @click="openMore(item.id)">
               <img :src="item.imageUrl" alt="" class="thumbnail">
@@ -159,6 +172,7 @@
       </div>
       <PaginationComponents :pages="pagination" @change-page="getProducts"></PaginationComponents>
     </div>
+    <ToPageTop :class="[ isHeaderSlide ? 'fadeIn' : '' ]" />
   </div>
 </template>
 
@@ -169,210 +183,238 @@
   background-color: white;
   overflow: hidden;
 }
-  .productList-header{
-    position: absolute;
-    z-index: 65;
-    top: 0;
+.productList-header{
+  position: absolute;
+  z-index: 65;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 200px;
+  width: 100%;
+  padding: 0 50px;
+  background-color: white;
+
+  .productList-header-nav{
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 200px;
-    width: 100%;
-    padding: 0 50px;
-    background-color: white;
 
-    .productList-header-nav{
-      display: flex;
+    .MB-btn{
+      display: none;
+    }
 
-      .MB-btn{
-        display: none;
+    li{
+
+      .tab-bottom{
+        position: relative;
+        background-color: transparent;
+        border: none;
+        font-size: 20px;
+        margin: 0 10px;
+        padding: 10px 0;
+        z-index: 80;
+
+        &::before{
+          content:'';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 0;
+          height: 3px;
+          background-color: $subColor3;
+          border-radius: 5px;
+          transition: all .5s;
+          transform-origin: center;
+        }
+      }
+      .tab-bottom-active{
+        &::before{
+          width: 100%;
+        }
       }
 
-      li{
+      .tab-bottom-pullDown-box{
+        position: absolute;
+        z-index: 70;
+        left: 0;
+        width: 100%;
+        padding: 50px 0;
+        background-color: white;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10%);
+        transition: transform 0.5s, opacity 0.5s;
+        border-bottom: 3px solid $subColor3;
+      }
+      .tab-bottom-pullDown-Tab{
+        display: flex;
+        justify-content: start;
+        flex-wrap: wrap;
+        width: 920px;
+        margin: 0 auto;
 
-        .tab-bottom{
-          position: relative;
-          background-color: transparent;
-          border: none;
-          font-size: 20px;
-          margin: 0 10px;
-          padding: 10px 0;
-          z-index: 80;
-
-          &::before{
-            content:'';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 3px;
-            background-color: $subColor3;
-            border-radius: 5px;
-            transition: all .5s;
-            transform-origin: center;
-          }
-        }
-        .tab-bottom-active{
-          &::before{
-            width: 100%;
-          }
-        }
-
-        .tab-bottom-pullDown-box{
-          position: absolute;
-          z-index: 70;
-          left: 0;
-          width: 100%;
-          padding: 50px 0;
-          background-color: white;
-          opacity: 0;
-          visibility: hidden;
-          transform: translateY(-10%);
-          transition: transform 0.5s, opacity 0.5s;
-          border-bottom: 3px solid $subColor3;
-        }
-        .tab-bottom-pullDown-Tab{
+        li{
+          font-size: 24px;
           display: flex;
-          justify-content: start;
-          flex-wrap: wrap;
-          width: 920px;
-          margin: 0 auto;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          margin-bottom: 20px;
+          margin: 0 12px 20px 12px;
+          width: 280px;
 
-          li{
-            font-size: 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            margin-bottom: 20px;
-            margin: 0 12px 20px 12px;
+          a{
+            color: $subColor2;
+          }
+          .style-img{
             width: 280px;
+            height: 195px;
+            object-fit: cover;
+            transition: all 0.5s;
+          }
+          .type-img{
+            width: 200px;
+            height: 200px;
+          }
+          p{
+            opacity: 1;
+            transition: all 0.5s;
 
-            a{
-              color: $subColor2;
-            }
-            .style-img{
-              width: 280px;
-              height: 195px;
-              object-fit: cover;
-              transition: all 0.5s;
-            }
-            .type-img{
-              width: 200px;
-              height: 200px;
-            }
-            p{
-              opacity: 1;
-              transition: all 0.5s;
-
-              span{
-                font-size: 20px;
-              }
-            }
-
-            &:hover img{
-              animation: flash 0.2s ease-out;
-            }
-            &:hover p{
-              opacity: 0.7;
+            span{
+              font-size: 20px;
             }
           }
 
-        }
-
-        .tab-bottom-pullDown-box-open{
-          opacity: 1;
-          transform: translateY(0);
-          visibility: visible;
-        }
-
-        .tab-bottom-pullDown-SearchTab{
-          display: flex;
-          justify-content: center;
-
-          .search-input{
-            font-size: 20px;
-            padding: 10px;
-            border-radius: 25px;
-            border: 1px solid gray;
+          &:hover img{
+            animation: flash 0.2s ease-out;
           }
-          .search-btn{
-            background: transparent;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: 1px solid gray;
-            margin-left: 10px;
+          &:hover p{
+            opacity: 0.7;
+          }
+        }
 
+      }
+
+      .tab-bottom-pullDown-box-open{
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+      }
+
+      .tab-bottom-pullDown-SearchTab{
+        display: flex;
+        justify-content: center;
+
+        .search-input{
+          font-size: 20px;
+          padding: 10px;
+          border-radius: 25px;
+          border: 1px solid gray;
+        }
+        .search-btn{
+          background: transparent;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          border: 1px solid gray;
+          margin-left: 10px;
+
+          i{
+            font-size: 24px;
+          }
+          &:active{
+            box-shadow: 0px 0px 5px gray inset;
             i{
-              font-size: 24px;
-            }
-            &:active{
-              box-shadow: 0px 0px 5px gray inset;
-              i{
-                color: $subColor3;
-              }
+              color: $subColor3;
             }
           }
         }
       }
     }
+  }
+  .productList-header-logo{
+    position: absolute;
+    z-index: 70;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
 
-    .productList-header-logo{
+    &::before{
+      content: '';
       position: absolute;
-      z-index: 70;
-      top: 50px;
+      bottom: -10px;
       left: 50%;
       transform: translateX(-50%);
-      cursor: pointer;
+      width: 0%;
+      height: 3px;
+      background-color: black;
+      transition: all .5s;
+    }
+    h1{
+      font-size: 50px;
+    }
+    p{
+      position: absolute;
+      bottom: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: all .5s;
+    }
 
-      &::before{
-        content: '';
-        position: absolute;
-        bottom: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 0%;
-        height: 3px;
-        background-color: black;
-        transition: all .5s;
-      }
-      h1{
-        font-size: 50px;
-      }
-      p{
-        position: absolute;
-        bottom: -50px;
-        left: 50%;
-        transform: translateX(-50%);
-        opacity: 0;
-        transition: all .5s;
-      }
-
-      &:hover::before{
-        width: 100%;
-      }
-      &:hover p{
-        opacity: 1;
-      }
+    &:hover::before{
+      width: 100%;
+    }
+    &:hover p{
+      opacity: 1;
     }
   }
-  .productList-header-close{
-    position: fixed;
-    top: -200px;
-    left: 0;
-    z-index: 90;
-    transition: top 0.5s;
-  }
-  .productList-header-slide{
-    top: 0;
-    transition: all 0.5s;
-  }
-  .productList-MB-header{
-    height: 100%;
-    background-color: white;
+}
+.productList-header-close{
+  position: fixed;
+  top: -200px;
+  left: 0;
+  z-index: 90;
+  transition: top 0.5s;
+}
+.productList-header-slide{
+  top: 0;
+  transition: all 0.5s;
+}
 
+ .open-MB-productList-menu-btn{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: none;
+
+    button{
+      background-color: transparent;
+      border: none;
+
+      i{
+        font-size: 50px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        line-height: 0;
+      }
+    }
+ }
+ .MB-title{
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+
+    h2{
+      font-size: 50px;
+      border-bottom: 3px solid black;
+      margin-bottom: 5px;
+    }
   }
 @media (max-width:1100px){
   .productList-header{
@@ -386,77 +428,89 @@
   }
 }
 @media (max-width:919px){
-.productList-header{
-  flex-direction: column;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  padding: 50px 0;
-
-  .productList-header-nav{
+  .productList-header{
     flex-direction: column;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    padding: 50px 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s;
 
-    .MB-btn{
-      display: block;
-      transition: all 0.5s;
-    }
-    .PC-btn{
-      display: none;
-    }
+    .productList-header-nav{
+      flex-direction: column;
 
-    li{
-      .pullDown-frame{
-        height: 0;
-        transition: height 0.5s;
-      }
-      .pullDown-frame-100{
-        height: 100%;
-      }
-      .tab-bottom-pullDown-box{
-        position: relative;
+      li{
+        .MB-btn{
+          display: block;
+          margin: 0 auto;
+        }
+        .PC-btn{
+          display: none;
+        }
+        .pullDown-frame{
+          max-height: 0;
+          transition: all 0.3s;
+        }
+        .pullDown-frame-100{
+          max-height: 900px;
+        }
+        .tab-bottom-pullDown-box{
+          position: relative;
 
-        .tab-bottom-pullDown-Tab{
-          width: 100%;
-          justify-content: space-around;
+          .tab-bottom-pullDown-Tab{
+            width: 100%;
+            justify-content: space-around;
 
-          li{
-            width: 40%;
+            li{
+              width: 40%;
 
-            .style-img{
-              width: 140px;
-              height: 97px;
-            }
-            .type-img{
-              width: 100px;
-              height: 100px;
-            }
-            p{
-              font-size: 14px;
-
-              span{
+              .style-img{
+                width: 140px;
+                height: 97px;
+              }
+              .type-img{
+                width: 100px;
+                height: 100px;
+              }
+              p{
                 font-size: 14px;
+
+                span{
+                  font-size: 14px;
+                }
               }
             }
           }
         }
       }
     }
-}
 
-  .productList-header-logo{
-    z-index: 66;
+    .productList-header-logo{
+      z-index: 66;
 
-    &::before{
-      width: 100%;
-    }
-    p{
-      opacity: 1;
+      &::before{
+        width: 100%;
+      }
+      p{
+        opacity: 1;
+      }
     }
   }
-}
+  .MB-productList-menu-open{
+    visibility: visible;
+    opacity: 1;
+  }
+  .open-MB-productList-menu-btn{
+    display: block;
+  }
+  .MB-title{
+    display: flex;
+  }
 }
 
-  .product-list-box{
+.product-list-box{
     margin-top: 200px;
     animation: fadeIn 1s;
 
@@ -510,18 +564,39 @@
       }
     }
   }
+@media (max-width:919px){
+  .product-list-box{
+    margin: 0 auto;
+
+    .product-list-ul{
+      width: 90%;
+
+      li{
+        width: 400px;
+
+        .thumbnail{
+          width: 400px;
+          height: 400px;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+  }
 </style>
 <script>
 import scrollPosMixin from '@/mixins/scrollPosMixin'
 import PaginationComponents from '@/components/backstage/PaginationComponents.vue'
 import UserCart from '@/components/user/UserCart.vue'
 import CurrentPath from '@/components/user/CurrentPath.vue'
+import ToPageTop from '@/components/user/ToPageTop.vue'
 
 export default {
   components: {
     PaginationComponents,
     UserCart,
-    CurrentPath
+    CurrentPath,
+    ToPageTop
   },
   data () {
     return {
@@ -543,11 +618,13 @@ export default {
         total: 0,
         finalTotal: 0
       },
-      isHeaderSlide: false,
       isCoupon: false,
+      isHeaderSlide: false,
       isStyleTabOpen: false,
       isTypeTabOpen: false,
-      isSearchTabOpen: false
+      isSearchTabOpen: false,
+      isMBMenuOpen: false,
+      searchContent: ''
     }
   },
   watch: {
@@ -557,6 +634,16 @@ export default {
       } else {
         this.isHeaderSlide = false
       }
+    }
+  },
+  computed: {
+    showProducts () {
+      if (this.searchContent === '') {
+        return this.products
+      } else if (this.searchContent !== '') {
+        return this.products.filter(item => item.title.includes(this.searchContent))
+      }
+      return []
     }
   },
   mixins: [scrollPosMixin],
@@ -570,6 +657,7 @@ export default {
           if (res.data.success) {
             this.products = res.data.products
             this.pagination = res.data.pagination
+            console.log(this.pagination)
           }
         })
         .catch((error) => {
@@ -677,6 +765,9 @@ export default {
     },
     getSectionTops () {
       this.sectionTops.productListHeaderPosition = this.$refs.productListHeader.getBoundingClientRect().top + window.pageYOffset
+    },
+    changeMBMenuOpen () {
+      this.isMBMenuOpen = !this.isMBMenuOpen
     }
   },
   created () {

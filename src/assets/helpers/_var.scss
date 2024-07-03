@@ -148,6 +148,37 @@ h2{
   opacity: 0;
   transform: translateY(-50px);
 }
+//向上縮放
+.upScale-enter-from{
+  scale: 0;
+  transform: translateY(50px);
+}
+.upScale-enter-active, .upScale-leave-active{
+  transition: all 0.5s;
+}
+.upScale-enter-to{
+  scale: 1;
+}
+.upScale-leave-to {
+  scale: 0;
+  transform: translateY(50px);
+}
+//縮放
+.Scale-enter-from{
+  opacity: 0;
+  scale: 0;
+}
+.Scale-enter-active, .Scale-leave-active{
+  transition: all 0.5s;
+}
+.Scale-enter-to{
+  opacity: 1;
+  scale: 1;
+}
+.Scale-leave-to {
+  opacity: 0;
+  scale: 0;
+}
 
 // 進場動畫
 @keyframes toUp {

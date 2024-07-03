@@ -150,6 +150,7 @@ h2{
 }
 //向上縮放
 .upScale-enter-from{
+  opacity: 0;
   scale: 0;
   transform: translateY(50px);
 }
@@ -157,9 +158,11 @@ h2{
   transition: all 0.5s;
 }
 .upScale-enter-to{
+  opacity: 1;
   scale: 1;
 }
 .upScale-leave-to {
+  opacity: 0;
   scale: 0;
   transform: translateY(50px);
 }

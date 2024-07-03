@@ -24,8 +24,10 @@
                    @mouseleave="changeSearchTabOpen">
                 <div class="tab-bottom-pullDown-SearchTab">
                   <input type="text" placeholder="請輸入內容" class="search-input"
-                        v-model="searchContent">
-                  <button type="button" class="search-btn"><i class="bi bi-search"></i></button>
+                        ref="searchContent">
+                  <button type="button" class="search-btn" @click="search">
+                    <i class="bi bi-search"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -152,7 +154,7 @@
       <div class="product-list-box">
         <ul class="product-list-ul toRight-1">
           <li v-for="(item, i) in showProducts" :key="item.id"
-                  :class="{ 'big-size-li' : i === 0 || i === products.length-1 }">
+                  :class="{ 'big-size-li' : i === 0 || i === showProducts.length-1 }">
             <div class="product-content" @click="openMore(item.id)">
               <img :src="item.imageUrl" alt="" class="thumbnail">
               <p>{{ item.title }}</p>
@@ -608,7 +610,13 @@ export default {
       },
       products: [],
       product: {},
-      pagination: {},
+      pagination: {
+        current_page: 1,
+        has_next: '',
+        has_pre: '',
+        total_pages: 0
+      },
+      perpage: 10,
       isLoading: false,
       status: {
         loadingItem: '' // 對應品項ID 製作讀取效果
@@ -634,14 +642,26 @@ export default {
       } else {
         this.isHeaderSlide = false
       }
+    },
+    showProducts () {
+      if (this.searchContent !== '') {
+        this.pagination.total_pages = Math.ceil(this.showProducts.length / this.perpage)
+        this.getPagination()
+      } else {
+        this.pagination.total_pages = Math.ceil(this.products.length / this.perpage)
+      }
     }
   },
   computed: {
     showProducts () {
+      const minData = (this.pagination.current_page * this.perpage) - this.perpage + 1
+      const maxData = (this.pagination.current_page * this.perpage)
+
       if (this.searchContent === '') {
-        return this.products
+        return this.products.filter((item, i) => i + 1 >= minData && i + 1 <= maxData)
       } else if (this.searchContent !== '') {
-        return this.products.filter(item => item.title.includes(this.searchContent))
+        const includesList = this.products.filter(item => item.title.includes(this.searchContent))
+        return includesList.filter((item, i) => i + 1 >= minData && i + 1 <= maxData)
       }
       return []
     }
@@ -649,20 +669,28 @@ export default {
   mixins: [scrollPosMixin],
   methods: {
     getProducts (page = 1) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
       this.isLoading = true
       this.$http.get(api)
         .then((res) => {
           this.isLoading = false
           if (res.data.success) {
             this.products = res.data.products
-            this.pagination = res.data.pagination
-            console.log(this.pagination)
+            this.getTotlePage()
+            this.getPagination(page)
           }
         })
         .catch((error) => {
           console.log(error)
         })
+    },
+    getTotlePage () {
+      this.pagination.total_pages = Math.ceil(this.products.length / this.perpage)
+    },
+    getPagination (page = 1) {
+      this.pagination.current_page = page
+      this.pagination.has_next = this.pagination.current_page < this.pagination.total_pages
+      this.pagination.has_pre = this.pagination.current_page > 1
     },
     openMore (id) {
       this.$router.push(`product/${id}`)
@@ -768,6 +796,11 @@ export default {
     },
     changeMBMenuOpen () {
       this.isMBMenuOpen = !this.isMBMenuOpen
+    },
+    search () {
+      this.searchContent = this.$refs.searchContent.value
+      this.isSearchTabOpen = false
+      this.isMBMenuOpen = false
     }
   },
   created () {

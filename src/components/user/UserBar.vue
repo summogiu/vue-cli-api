@@ -2,9 +2,9 @@
   <div>
     <div class="header">
         <ul class="header-menu">
-            <li><router-link to="about"><p>ABOUT</p> <p class="subtitle">關於我們</p></router-link></li>
+            <li><router-link to="/about"><p>ABOUT</p> <p class="subtitle">關於我們</p></router-link></li>
             <li class="open-products-style-box">
-                <router-link to="productList"><p>PRODUCTS</p> <p class="subtitle">產品資訊</p></router-link>
+                <router-link to="/products/productslist/all"><p>PRODUCTS</p> <p class="subtitle">產品資訊</p></router-link>
                 <div class="products-style-box">
                     <ul class="products-style">
                         <li><a href=""><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">水晶燈系列</span><span class="replace-text">水晶燈系列</span></div></a></li>
@@ -13,7 +13,7 @@
                         <li><a href=""><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">手做布藝</span><span class="replace-text">手做布藝</span></div></a></li>
                     </ul>
                     <div class="all-products">
-                        <a href="">
+                        <router-link to="/products/productslist/all">
                             <div class="photo">
                                 <img src="@/assets/images/background/products.jpg" alt="">
                                 <div class="photo-cont">
@@ -21,12 +21,12 @@
                                 </div>
                             </div>
                             <div class="to-more-icon">
-                              <router-link to="productList" class="more-link">
+                              <router-link to="/products/productslist/all" class="more-link">
                                 <img src="@/assets/images/circle.png" alt="" class="circle">
                                 <i class="bi bi-arrow-right user-bar-more-icon"></i>
                               </router-link>
                             </div>
-                        </a>
+                        </router-link>
                     </div>
                 </div>
             </li>
@@ -40,10 +40,10 @@
           </a>
         <transition name="fadeScale">
           <ul class="MBmenu" v-if="MBmenuIsOpen" @click="closeMBmenu">
-              <li><router-link to="/"><span><i class="bi bi-house"></i>HOME</span><span class="MB-subtitle">回到首頁</span></router-link></li>
-              <li><router-link to="about"><span>ABOUT</span><span class="MB-subtitle">關於我們</span></router-link></li>
+              <li><router-link to="/frontPage"><span><i class="bi bi-house"></i>HOME</span><span class="MB-subtitle">回到首頁</span></router-link></li>
+              <li><router-link to="/about"><span>ABOUT</span><span class="MB-subtitle">關於我們</span></router-link></li>
               <li>
-                  <router-link to="productList"><span>PRODUCTS</span><span class="MB-subtitle">產品資訊</span></router-link>
+                  <router-link to="/products/productslist/all"><span>PRODUCTS</span><span class="MB-subtitle">產品資訊</span></router-link>
                   <ul class="MBproducts-menu">
                       <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">水晶燈系列</span><span class="MB-replace-text">水晶燈系列</span></div></a></li>
                       <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">工業風格</span><span class="MB-replace-text">工業風格</span></div></a></li>

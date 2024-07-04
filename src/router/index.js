@@ -17,12 +17,19 @@ const routes = [
         component: () => import('../views/user/AboutView.vue')
       },
       {
-        path: 'productList',
-        component: () => import('../views/user/UserProductList.vue')
-      },
-      {
-        path: 'product/:productid',
-        component: () => import('../views/user/UserProduct.vue')
+        path: 'products',
+        component: () => import('../views/user/ProductsView.vue'),
+        redirect: 'products/productslist',
+        children: [
+          {
+            path: 'productslist/:category',
+            component: () => import('../components/user/ProductsList.vue')
+          },
+          {
+            path: 'product/:productid',
+            component: () => import('../views/user/ProductMore.vue')
+          }
+        ]
       },
       {
         path: 'placeOder',

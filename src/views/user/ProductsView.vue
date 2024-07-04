@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="productList-frame">
-      <Loading :active="isLoading"></Loading>
       <div class="productList-header toDown-1"
               :class="[ scrollPosition > 0 ? 'productList-header-close' : '',
               isHeaderSlide ? 'productList-header-slide' : '',
@@ -48,25 +47,25 @@
                    @mouseleave="changeStyleTabOpen">
                 <ul class="tab-bottom-pullDown-Tab">
                   <li>
-                    <a href="#">
+                    <a href="#" @click.prevent="toCategory('布罩')">
                       <img src="@/assets/images/products/header/tab-img-Cloth.jpg" alt="tab-img-Cloth" class="style-img">
-                      <p>Cloth | <span>手做布罩</span></p>
+                      <p>Cloth | <span>手作布罩</span></p>
                       </a>
                     </li>
                   <li>
-                    <a href="#">
+                    <a href="#" @click.prevent="toCategory('水晶')">
                       <img src="@/assets/images/products/header/tab-img-Crystal.jpg" alt="tab-img-Crystal" class="style-img">
                       <p>Crystal | <span>水晶燈</span></p>
                       </a>
                     </li>
                   <li>
-                    <a href="#">
+                    <a href="#" @click.prevent="toCategory('工業風')">
                       <img src="@/assets/images/products/header/tab-img-Industrial.jpg" alt="tab-img-Industrial" class="style-img">
                       <p>Industrial | <span>工業風</span></p>
                       </a>
                     </li>
                   <li>
-                    <a href="#">
+                    <a href="#" @click.prevent="toCategory('北歐風')">
                       <img src="@/assets/images/products/header/tab-img-Nordic.jpg" alt="tab-img-Nordic" class="style-img">
                       <p>Nordic | <span>北歐風</span></p>
                       </a>
@@ -91,37 +90,37 @@
                     @mouseleave="changeTypeTabOpen">
                 <ul class="tab-bottom-pullDown-Tab">
                   <li>
-                    <a href="">
+                    <a href="#" @click.prevent="toCategory('吊燈')">
                       <img src="@/assets/images/products/header/type-chandelier.png" alt="type-chandelier" class="type-img">
                       <p>Chandelier | <span>吊燈</span></p>
                     </a>
                     </li>
                   <li>
-                    <a href="">
+                    <a href="#" @click.prevent="toCategory('壁燈')">
                       <img src="@/assets/images/products/header/type-wall-lamp.png" alt="type-chandelier" class="type-img">
                       <p>Wall Lamp | <span>壁燈</span></p>
                     </a>
                     </li>
                   <li>
-                    <a href="">
+                    <a href="#" @click.prevent="toCategory('檯燈')">
                       <img src="@/assets/images/products/header/type-desk-lamp.png" alt="type-chandelier" class="type-img">
                       <p>Desk Lamp | <span>檯燈</span></p>
                     </a>
                     </li>
                   <li>
-                    <a href="">
+                    <a href="#" @click.prevent="toCategory('吸頂燈')">
                       <img src="@/assets/images/products/header/type-ceiling-lamp.png" alt="type-chandelier" class="type-img">
                       <p>DeskCeiling Lamp | <span>吸頂燈</span></p>
                     </a>
                     </li>
                   <li>
-                    <a href="">
+                    <a href="#" @click.prevent="toCategory('落地燈')">
                       <img src="@/assets/images/products/header/type-standing-lamp.png" alt="type-chandelier" class="type-img">
                       <p>Standing Lamp | <span>落地燈</span></p>
                     </a>
                     </li>
                   <li>
-                    <a href="">
+                    <a href="#" @click.prevent="toCategory('燈泡')">
                       <img src="@/assets/images/products/header/type-light-bulb.png" alt="type-chandelier" class="type-img">
                       <p>Light Bulb | <span>燈泡</span></p>
                     </a>
@@ -131,7 +130,7 @@
              </div>
             </li>
         </ul>
-        <div class="productList-header-logo">
+        <div class="productList-header-logo" @click="backProductList">
           <h1>In My Light</h1>
           <p>返回所有商品</p>
         </div>
@@ -151,28 +150,7 @@
       <UserCart :cart="carts" :cartData="cartsData" @delete-one="deleteOne"
               @update-qty="updateOneQty" :loading="status.loadingItem"
               @use-coupon="useCoupon" :isCoupon="isCoupon"></UserCart>
-      <div class="product-list-box">
-        <ul class="product-list-ul toRight-1">
-          <li v-for="(item, i) in showProducts" :key="item.id"
-                  :class="{ 'big-size-li' : i === 0 || i === showProducts.length-1 }">
-            <div class="product-content" @click="openMore(item.id)">
-              <img :src="item.imageUrl" alt="" class="thumbnail">
-              <p>{{ item.title }}</p>
-              <p>
-                <span class="origin_price">NT${{ $filters.currency(item.origin_price) }}</span>
-                <span class="price">NT${{ $filters.currency(item.price) }}</span>
-              </p>
-            </div>
-            <button class="btn btn-outline-danger cart-plus-btn"
-                @click="addCart(item.id)"
-                        :disabled="this.status.loadingItem === item.id">
-                        <div class="spinner-border text-danger spinner-border-sm" role="status"
-                        v-if="this.status.loadingItem === item.id"></div>
-                        <i class="bi bi-cart-plus cart-plus-i" v-else></i></button>
-          </li>
-        </ul>
-      </div>
-      <PaginationComponents :pages="pagination" @change-page="getProducts"></PaginationComponents>
+      <router-view @getCart="getCart"></router-view>
     </div>
     <ToPageTop :class="[ isHeaderSlide ? 'fadeIn' : '' ]" />
   </div>
@@ -184,6 +162,7 @@
   z-index: 60;
   background-color: white;
   overflow: hidden;
+  min-height: 100vh;
 }
 .productList-header{
   position: absolute;
@@ -200,10 +179,12 @@
   .productList-header-nav{
     display: flex;
 
+    .PC-btn{
+      cursor: default;
+    }
     .MB-btn{
       display: none;
     }
-
     li{
 
       .tab-bottom{
@@ -512,90 +493,17 @@
   }
 }
 
-.product-list-box{
-    margin-top: 200px;
-    animation: fadeIn 1s;
-
-    .product-list-ul{
-      display: flex;
-      flex-wrap: wrap;
-      width: 920px;
-      justify-content: space-around;
-      margin: 0 auto;
-
-      li{
-        width: 200px;
-        margin-bottom: 30px;
-
-        .product-content{
-          cursor: pointer;
-        }
-        .thumbnail{
-          width: 200px;
-          height: 200px;
-        }
-        .origin_price{
-          color: gray;
-          text-decoration: line-through;
-        }
-        .price{
-          color: rgb(179, 47, 47);
-          font-size: 24px;
-        }
-        .cart-plus-btn{
-          padding: 0;
-          width: 30px;
-          height: 30px;
-
-          .cart-plus-i{
-            font-size: 20px;
-          }
-        }
-
-        &:hover .thumbnail{
-          animation: flash 0.2s ease-out;
-        }
-      }
-      .big-size-li{
-        width: 400px;
-
-        .thumbnail{
-          width: 400px;
-          height: 400px;
-        }
-      }
-    }
-  }
-@media (max-width:919px){
-  .product-list-box{
-    margin: 0 auto;
-
-    .product-list-ul{
-      width: 90%;
-
-      li{
-        width: 400px;
-
-        .thumbnail{
-          width: 400px;
-          height: 400px;
-          object-fit: cover;
-        }
-      }
-    }
-  }
-  }
 </style>
+
 <script>
 import scrollPosMixin from '@/mixins/scrollPosMixin'
-import PaginationComponents from '@/components/backstage/PaginationComponents.vue'
 import UserCart from '@/components/user/UserCart.vue'
 import CurrentPath from '@/components/user/CurrentPath.vue'
 import ToPageTop from '@/components/user/ToPageTop.vue'
+import emitter from '@/methods/emitter'
 
 export default {
   components: {
-    PaginationComponents,
     UserCart,
     CurrentPath,
     ToPageTop
@@ -608,19 +516,6 @@ export default {
       sectionTops: {
         productListHeaderPosition: 0
       },
-      products: [],
-      product: {},
-      pagination: {
-        current_page: 1,
-        has_next: '',
-        has_pre: '',
-        total_pages: 0
-      },
-      perpage: 10,
-      isLoading: false,
-      status: {
-        loadingItem: '' // 對應品項ID 製作讀取效果
-      },
       carts: [],
       cartsData: {
         total: 0,
@@ -632,7 +527,10 @@ export default {
       isTypeTabOpen: false,
       isSearchTabOpen: false,
       isMBMenuOpen: false,
-      searchContent: ''
+      searchContent: '',
+      status: {
+        loadingItem: ''
+      }
     }
   },
   watch: {
@@ -642,75 +540,10 @@ export default {
       } else {
         this.isHeaderSlide = false
       }
-    },
-    showProducts () {
-      if (this.searchContent !== '') {
-        this.pagination.total_pages = Math.ceil(this.showProducts.length / this.perpage)
-        this.getPagination()
-      } else {
-        this.pagination.total_pages = Math.ceil(this.products.length / this.perpage)
-      }
     }
   },
-  computed: {
-    showProducts () {
-      const minData = (this.pagination.current_page * this.perpage) - this.perpage + 1
-      const maxData = (this.pagination.current_page * this.perpage)
-
-      if (this.searchContent === '') {
-        return this.products.filter((item, i) => i + 1 >= minData && i + 1 <= maxData)
-      } else if (this.searchContent !== '') {
-        const includesList = this.products.filter(item => item.title.includes(this.searchContent))
-        return includesList.filter((item, i) => i + 1 >= minData && i + 1 <= maxData)
-      }
-      return []
-    }
-  },
-  mixins: [scrollPosMixin],
+  mixins: [scrollPosMixin, emitter],
   methods: {
-    getProducts (page = 1) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
-      this.isLoading = true
-      this.$http.get(api)
-        .then((res) => {
-          this.isLoading = false
-          if (res.data.success) {
-            this.products = res.data.products
-            this.getTotlePage()
-            this.getPagination(page)
-          }
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    },
-    getTotlePage () {
-      this.pagination.total_pages = Math.ceil(this.products.length / this.perpage)
-    },
-    getPagination (page = 1) {
-      this.pagination.current_page = page
-      this.pagination.has_next = this.pagination.current_page < this.pagination.total_pages
-      this.pagination.has_pre = this.pagination.current_page > 1
-    },
-    openMore (id) {
-      this.$router.push(`product/${id}`)
-    },
-    addCart (id) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
-      this.status.loadingItem = id
-      this.$http.post(api, { data: { product_id: id, qty: 1 } })
-        .then((res) => {
-          if (res.data.success) {
-            this.getCart()
-            this.status.loadingItem = ''
-          } else {
-            console.log('加到購物車失敗', res.data.message)
-          }
-        })
-        .catch((error) => {
-          console.log('加到購物車失敗', error)
-        })
-    },
     getCart () {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
       this.$http.get(api)
@@ -799,12 +632,22 @@ export default {
     },
     search () {
       this.searchContent = this.$refs.searchContent.value
+      emitter.emit('search', this.searchContent)
       this.isSearchTabOpen = false
       this.isMBMenuOpen = false
+      this.$refs.searchContent.value = ''
+    },
+    backProductList () { // 回到所有產品
+      this.isMBMenuOpen = false
+      this.$router.push('/products/productslist/all')
+      window.scrollTo(0, 0)
+    },
+    toCategory (category) { // 前往產品分類
+      this.isMBMenuOpen = false
+      this.$router.push(`/products/productslist/${category}`)
     }
   },
   created () {
-    this.getProducts()
     this.getCart()
   },
   mounted () {

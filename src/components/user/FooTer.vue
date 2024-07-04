@@ -10,12 +10,12 @@
       <p class="business-time">營業時間：<br>平日 10:00 - 19:00，<br>週六 10:00 - 17:00。</p>
 
       <ul class="footer-menu">
-        <li class="first-li"><router-link to="about">關於我們</router-link></li>
-        <li><router-link to="productList">產品資訊</router-link></li>
-        <li><router-link to="about">專屬訂製</router-link></li>
-        <li><router-link to="about">公司資訊</router-link></li>
-        <li><router-link to="about">線上諮詢</router-link></li>
-        <li><router-link to="/">回首頁</router-link></li>
+        <li class="first-li"><router-link to="/about">關於我們</router-link></li>
+        <li><router-link to="/products/productslist/all">產品資訊</router-link></li>
+        <li><router-link to="/about">專屬訂製</router-link></li>
+        <li><router-link to="/about">公司資訊</router-link></li>
+        <li><router-link to="/about">線上諮詢</router-link></li>
+        <li><router-link to="/frontPage">回首頁</router-link></li>
       </ul>
 
       <p class="copyright-notice">© 2024 In My Light 燈具有限公司. 保留所有權利。</p>

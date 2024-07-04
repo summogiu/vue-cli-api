@@ -1,12 +1,12 @@
 <template>
   <div>
-    <ul v-for="(item, i) in currentPaths" :key="i" class="current-path">
+    <ul class="current-path">
         <li><router-link to="/frontPage"><i class="bi bi-house home-i"></i></router-link></li>
-        <li>
-          <i class="bi bi-chevron-right"></i>
-          <router-link :to="item.path" v-if="i !== currentPaths.length - 1">{{item.name}}
+        <li v-for="(item, i) in currentPaths" :key="i" >
+          <i class="bi bi-chevron-right" v-if="i !== 0"></i>
+          <router-link :to="item.path" v-if="i !== currentPaths.length - 1 && i !== 0">{{item.name}}
           </router-link></li>
-        <li><span v-if="i === currentPaths.length - 1">{{ item.name }}</span></li>
+        <li><span>{{ this.$route.name }}</span></li>
       </ul>
   </div>
 </template>
@@ -31,7 +31,6 @@
 
 <script>
 export default {
-  props: ['name', 'curPaths'],
   data () {
     return {
       currentPath: {
@@ -41,13 +40,23 @@ export default {
       currentPaths: []
     }
   },
+  watch: {
+    '$route.params.category': {
+      handler (category) {
+        if (category === 'all') {
+          this.$router.currentRoute.value.name = '所有產品'
+        } else {
+          this.$router.currentRoute.value.name = this.$route.params.category
+        }
+        this.getCurrentPath()
+      },
+      immediate: true
+    }
+  },
   methods: {
     getCurrentPath () {
-      this.currentPath.name = this.name
-      this.currentPath.path = this.$route.path
-      this.currentPaths = this.curPaths
-      this.currentPaths.push(this.currentPath)
-      console.log(this.currentPath)
+      this.currentPaths = this.$route.matched
+      console.dir(this.$route)
     }
   },
   created () {

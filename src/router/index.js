@@ -14,12 +14,14 @@ const routes = [
       },
       {
         path: 'about',
+        name: '關於我們',
         component: () => import('../views/user/AboutView.vue')
       },
       {
         path: 'products',
+        name: '所有產品',
         component: () => import('../views/user/ProductsView.vue'),
-        redirect: 'products/productslist',
+        redirect: 'products/productslist/all',
         children: [
           {
             path: 'productslist/:category',

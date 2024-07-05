@@ -134,7 +134,10 @@
           <h1>In My Light</h1>
           <p>返回所有商品</p>
         </div>
-        <CurrentPath :name="name" :curPaths="currentPaths"/>
+        <div class="productList-header-right">
+          <a href="#" @click.prevent="toCategory('正在關注')" class="productList-header-follow">關注的產品</a>
+          <CurrentPath :name="name" :curPaths="currentPaths"/>
+        </div>
       </div>
       <div class="open-MB-productList-menu-btn">
         <button type="button"
@@ -351,6 +354,21 @@
     }
     &:hover p{
       opacity: 1;
+    }
+  }
+  .productList-header-right{
+    display: flex;
+    align-items: center;
+
+    a{
+      color: black;
+
+      &:hover{
+        color: $subColor3;
+      }
+    }
+    .productList-header-follow{
+      margin-right: 50px;
     }
   }
 }
@@ -632,19 +650,31 @@ export default {
     },
     search () {
       this.searchContent = this.$refs.searchContent.value
+      if (this.$route.params.productid) {
+        console.log('準備跳轉')
+        this.backProductList()
+        console.log('跳轉完畢')
+      }
+      console.log('準備發送', this.searchContent)
       emitter.emit('search', this.searchContent)
+      console.log('發送完畢', this.searchContent)
       this.isSearchTabOpen = false
       this.isMBMenuOpen = false
       this.$refs.searchContent.value = ''
     },
     backProductList () { // 回到所有產品
       this.isMBMenuOpen = false
-      this.$router.push('/products/productslist/all')
+      this.$router.push('/products/productslist')
+      this.searchContent = ''
+      emitter.emit('search', this.searchContent)
       window.scrollTo(0, 0)
     },
     toCategory (category) { // 前往產品分類
       this.isMBMenuOpen = false
       this.$router.push(`/products/productslist/${category}`)
+      this.searchContent = ''
+      emitter.emit('search', this.searchContent)
+      window.scrollTo(0, 0)
     }
   },
   created () {

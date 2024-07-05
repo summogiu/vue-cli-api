@@ -43,7 +43,7 @@
                       我們的產品包括吊燈、壁燈、臺燈和地燈等各種類型，<br>涵蓋了現代、古典、工業風等多種風格，<br>滿足您的不同需求和喜好。<br>無論是為家居、辦公室還是商業空間，<br>
                       In My Light 系列燈具都能提供出色的照明效果，<br>同時為您的空間增添藝術氣息和舒適感。<br>選擇 In My Light，讓您的空間更加煥然一新！
                   </p>
-                  <router-link to="products" class="more-link">
+                  <router-link to="products/productslist" class="more-link">
                       more
                       <div class="to-more-icon">
                           <img src="@/assets/images/circle.png" alt="" class="circle">

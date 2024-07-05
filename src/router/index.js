@@ -18,13 +18,13 @@ const routes = [
         component: () => import('../views/user/AboutView.vue')
       },
       {
-        path: 'products',
+        path: 'products/productslist',
         name: '所有產品',
         component: () => import('../views/user/ProductsView.vue'),
-        redirect: 'products/productslist/all',
         children: [
           {
-            path: 'productslist/:category',
+            path: ':category?',
+            name: '所有產品',
             component: () => import('../components/user/ProductsList.vue')
           },
           {

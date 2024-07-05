@@ -15,10 +15,15 @@
               </div>
               <button class="btn btn-outline-danger cart-plus-btn"
                   @click="addCart(item.id)"
-                          :disabled="this.status.loadingItem === item.id">
-                          <div class="spinner-border text-danger spinner-border-sm" role="status"
+                      :disabled="this.status.loadingItem === item.id">
+                      <div class="spinner-border text-danger spinner-border-sm" role="status"
                           v-if="this.status.loadingItem === item.id"></div>
                           <i class="bi bi-cart-plus cart-plus-i" v-else></i></button>
+              <button class="btn follow-plus-btn"
+                      @click="addFollow(item)">
+                          <i class="bi bi-heart" v-if="!isFollowed(item)"></i>
+                          <i class="bi bi-heart-fill" v-else></i>
+                          </button>
             </li>
           </ul>
         </div>
@@ -58,12 +63,21 @@
           color: rgb(179, 47, 47);
           font-size: 24px;
         }
-        .cart-plus-btn{
+        .cart-plus-btn,.follow-plus-btn{
           padding: 0;
           width: 30px;
           height: 30px;
 
           .cart-plus-i{
+            font-size: 20px;
+          }
+        }
+        .follow-plus-btn{
+          border: none;
+          color: rgb(209, 83, 104);
+          background-color: transparent;
+
+          i{
             font-size: 20px;
           }
         }
@@ -120,6 +134,7 @@ export default {
     return {
       products: [],
       product: {},
+      followProducts: [],
       searchContent: '',
       pagination: {
         current_page: 1,
@@ -138,7 +153,7 @@ export default {
     '$route.params.category' () {
       this.getProducts()
     },
-    showProducts () {
+    showProducts () { // 控制頁數
       if (this.searchContent !== '') {
         this.pagination.total_pages = Math.ceil(this.showProducts.length / this.perpage)
         this.getPagination()
@@ -152,9 +167,11 @@ export default {
       const minData = (this.pagination.current_page * this.perpage) - this.perpage + 1
       const maxData = (this.pagination.current_page * this.perpage)
 
-      if (this.searchContent === '') {
+      if (!this.searchContent) {
+        console.log('沒有關鍵字', this.searchContent)
         return this.products.filter((item, i) => i + 1 >= minData && i + 1 <= maxData)
       } else if (this.searchContent !== '') {
+        console.log('篩選關鍵字', this.searchContent)
         const includesList = this.products.filter(item => item.title.includes(this.searchContent))
         return includesList.filter((item, i) => i + 1 >= minData && i + 1 <= maxData)
       }
@@ -179,8 +196,10 @@ export default {
         .then((res) => {
           this.isLoading = false
           if (res.data.success) { // 篩選產品分類
-            if (this.$route.params.category === 'all') {
+            if (!this.$route.params.category) {
               this.products = res.data.products
+            } else if (this.$route.params.category === '正在關注') {
+              this.products = this.followProducts
             } else {
               const categoryList = res.data.products.filter(item => item.title.includes(this.$route.params.category))
               this.products = categoryList
@@ -202,7 +221,7 @@ export default {
       this.pagination.has_pre = this.pagination.current_page > 1
     },
     openMore (id) {
-      this.$router.push(`/products/product/${id}`)
+      this.$router.push(`/products/productslist/product/${id}`)
     },
     addCart (id) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
@@ -222,10 +241,25 @@ export default {
     },
     searchKey (key) {
       this.searchContent = key
+    },
+    addFollow (item) { // 增加、移除關注
+      if (this.followProducts.includes(item)) {
+        const index = this.followProducts.indexOf(item)
+        if (index > -1) {
+          this.followProducts.splice(index, 1)
+        }
+      } else {
+        this.followProducts.push(item)
+      }
+      localStorage.setItem('followArray', JSON.stringify(this.followProducts))
+    },
+    isFollowed (item) { // 判斷是否為關注狀態
+      return this.followProducts.some(followedItem => followedItem.id === item.id)
     }
   },
   created () {
     this.getProducts()
+    this.followProducts = JSON.parse(localStorage.getItem('followArray'))
   },
   mounted () {
     emitter.on('search', this.searchKey)

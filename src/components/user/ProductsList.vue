@@ -155,7 +155,8 @@ export default {
     },
     showProducts () { // 控制頁數
       if (this.searchContent !== '') {
-        this.pagination.total_pages = Math.ceil(this.showProducts.length / this.perpage)
+        const includesList = this.products.filter(item => item.title.includes(this.searchContent))
+        this.pagination.total_pages = Math.ceil(includesList.length / this.perpage)
         this.getPagination()
       } else {
         this.pagination.total_pages = Math.ceil(this.products.length / this.perpage)
@@ -196,11 +197,14 @@ export default {
         .then((res) => {
           this.isLoading = false
           if (res.data.success) { // 篩選產品分類
-            if (!this.$route.params.category) {
+            if (!this.$route.params.category) { // 不分類
               this.products = res.data.products
             } else if (this.$route.params.category === '正在關注') {
               this.products = this.followProducts
-            } else {
+            } else if (res.data.products.some(item => item.category.includes(this.$route.params.category))) { // 風格
+              const categoryList = res.data.products.filter(item => item.category.includes(this.$route.params.category))
+              this.products = categoryList
+            } else { // 種類
               const categoryList = res.data.products.filter(item => item.title.includes(this.$route.params.category))
               this.products = categoryList
             }

@@ -47,13 +47,13 @@
                    @mouseleave="changeStyleTabOpen">
                 <ul class="tab-bottom-pullDown-Tab">
                   <li>
-                    <a href="#" @click.prevent="toCategory('布罩')">
+                    <a href="#" @click.prevent="toCategory('手作布罩燈')">
                       <img src="@/assets/images/products/header/tab-img-Cloth.jpg" alt="tab-img-Cloth" class="style-img">
                       <p>Cloth | <span>手作布罩</span></p>
                       </a>
                     </li>
                   <li>
-                    <a href="#" @click.prevent="toCategory('水晶')">
+                    <a href="#" @click.prevent="toCategory('水晶燈')">
                       <img src="@/assets/images/products/header/tab-img-Crystal.jpg" alt="tab-img-Crystal" class="style-img">
                       <p>Crystal | <span>水晶燈</span></p>
                       </a>
@@ -153,7 +153,7 @@
       <UserCart :cart="carts" :cartData="cartsData" @delete-one="deleteOne"
               @update-qty="updateOneQty" :loading="status.loadingItem"
               @use-coupon="useCoupon" :isCoupon="isCoupon"></UserCart>
-      <router-view @getCart="getCart"></router-view>
+      <router-view @getCart="getCart" @toCategory="toCategory"></router-view>
     </div>
     <ToPageTop :class="[ isHeaderSlide ? 'fadeIn' : '' ]" />
   </div>
@@ -649,12 +649,12 @@ export default {
       this.isMBMenuOpen = !this.isMBMenuOpen
     },
     search () {
-      this.searchContent = this.$refs.searchContent.value
       if (this.$route.params.productid) {
         console.log('準備跳轉')
         this.backProductList()
         console.log('跳轉完畢')
       }
+      this.searchContent = this.$refs.searchContent.value
       console.log('準備發送', this.searchContent)
       emitter.emit('search', this.searchContent)
       console.log('發送完畢', this.searchContent)

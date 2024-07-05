@@ -73,6 +73,7 @@ export default {
     changePage (page) {
       this.$emit('change-page', page)
       window.scrollTo(0, 0)
+      console.log('前往頁數', page)
     }
   }
 }

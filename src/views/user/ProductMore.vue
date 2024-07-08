@@ -5,17 +5,23 @@
       <div class="img-box">
         <img :src="product.imageUrl" alt="" class="main-img">
       </div>
-      <a @click.prevent="$emit('toCategory', product.category)">{{ product.category }}</a>
-      <h2>{{ product.title }}</h2>
-      <button class="btn btn-outline-danger btn-sm"
+      <div class="content-title-box">
+        <a href="#" @click.prevent="$emit('toCategory', product.category)" class="category-link">{{ product.category }}</a>
+        <h2 class="product-name">{{ product.title }}</h2>
+        <p>{{ product.description }}</p>
+      </div>
+      <div class="content-center-box">
+        <div class="price-box">
+          <span class="price">NT${{ product.price }}</span>
+          <span class="origin_price">NT${{ product.origin_price }}</span>
+        </div>
+         <button class="cart-plus-btn"
               @click="addCart(product.id)"
               :disabled="status.loadingItem">
               <div class="spinner-border text-danger spinner-border-sm" role="status"
               v-if="status.loadingItem"></div>
-              加到購物車</button><br>
-      <p>{{ product.description }}</p>
-      <span class="origin_price">原價：NT${{ product.origin_price }}</span>
-      <span class="price">售價：NT${{ product.price }}</span>
+              加到購物車</button>
+      </div>
       <img v-for="item in product.imagesUrl" :key="item" :src="item"
               alt="" class="thumbnail">
       <p>{{ product.content }}</p>
@@ -32,6 +38,44 @@
     display: flex;
     justify-content: center;
     margin-bottom: 100px;
+  }
+
+  .content-title-box{
+    padding-bottom: 25px;
+    border-bottom: 1px solid rgb(197, 197, 197);
+
+    .category-link{
+      color: black;
+
+      &:hover{
+        opacity: 0.8;
+      }
+    }
+    .product-name{
+      padding: 0;
+    }
+  }
+  .content-center-box{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 0;
+
+    .price-box{
+      .price{
+        margin-right: 5px;
+        font-size: 36px;
+      }
+    }
+    .cart-plus-btn{
+      background-color: black;
+      color: white;
+      border: 1px solid black;
+      border-radius: 50px;
+      height: 60px;
+      padding: 0 30px;
+    }
   }
 }
 </style>

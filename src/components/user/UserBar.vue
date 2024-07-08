@@ -7,10 +7,10 @@
                 <router-link to="/products/productslist"><p>PRODUCTS</p> <p class="subtitle">產品資訊</p></router-link>
                 <div class="products-style-box">
                     <ul class="products-style">
-                        <li><a href=""><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">水晶燈系列</span><span class="replace-text">水晶燈系列</span></div></a></li>
-                        <li><a href=""><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">工業風格</span><span class="replace-text">工業風格</span></div></a></li>
-                        <li><a href=""><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">北歐現代系</span><span class="replace-text">北歐現代系</span></div></a></li>
-                        <li><a href=""><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">手做布藝</span><span class="replace-text">手做布藝</span></div></a></li>
+                        <li><a href="#" @click.prevent="toCategory('水晶燈')"><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">水晶燈系列</span><span class="replace-text">水晶燈系列</span></div></a></li>
+                        <li><a href="#" @click.prevent="toCategory('工業風')"><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">工業風格</span><span class="replace-text">工業風格</span></div></a></li>
+                        <li><a href="#" @click.prevent="toCategory('北歐風')"><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">北歐現代系</span><span class="replace-text">北歐現代系</span></div></a></li>
+                        <li><a href="#" @click.prevent="toCategory('手作布罩燈')"><i class="fa-solid fa-caret-down"></i> <div class="replace-anim"><span class="original-text">手做布藝</span><span class="replace-text">手做布藝</span></div></a></li>
                     </ul>
                     <div class="all-products">
                         <router-link to="/products/productslist">
@@ -45,11 +45,11 @@
               <li>
                   <router-link to="/products/productslist"><span>PRODUCTS</span><span class="MB-subtitle">產品資訊</span></router-link>
                   <ul class="MBproducts-menu">
-                      <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">水晶燈系列</span><span class="MB-replace-text">水晶燈系列</span></div></a></li>
-                      <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">工業風格</span><span class="MB-replace-text">工業風格</span></div></a></li>
-                      <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">北歐現代系</span><span class="MB-replace-text">北歐現代系</span></div></a></li>
-                      <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">手做布藝</span><span class="MB-replace-text">手做布藝</span></div></a></li>
-                      <li><a href="#"><div class="MB-replace-anim">- <span class="MB-original-text">光源專區</span><span class="MB-replace-text">光源專區</span></div></a></li>
+                      <li><a href="#" @click.prevent="toCategory('水晶燈')"><div class="MB-replace-anim">- <span class="MB-original-text">水晶燈系列</span><span class="MB-replace-text">水晶燈系列</span></div></a></li>
+                      <li><a href="#" @click.prevent="toCategory('工業風')"><div class="MB-replace-anim">- <span class="MB-original-text">工業風格</span><span class="MB-replace-text">工業風格</span></div></a></li>
+                      <li><a href="#" @click.prevent="toCategory('北歐風')"><div class="MB-replace-anim">- <span class="MB-original-text">北歐現代系</span><span class="MB-replace-text">北歐現代系</span></div></a></li>
+                      <li><a href="#" @click.prevent="toCategory('手作布罩燈')"><div class="MB-replace-anim">- <span class="MB-original-text">手做布藝</span><span class="MB-replace-text">手做布藝</span></div></a></li>
+                      <li><a href="#" @click.prevent="toCategory('燈泡')"><div class="MB-replace-anim">- <span class="MB-original-text">光源專區</span><span class="MB-replace-text">光源專區</span></div></a></li>
                   </ul>
               </li>
               <li><a href="#"><span>CUSTOMIZED</span><span class="MB-subtitle">專屬訂製</span></a></li>
@@ -400,6 +400,11 @@ export default {
         this.MBmenuIsOpen = false
         console.log('關閉選單', this.MBmenuIsOpen)
       }
+    },
+    toCategory (category) {
+      this.isMBMenuOpen = false
+      this.$router.push(`/products/productslist/${category}`)
+      window.scrollTo(0, 0)
     }
   }
 }

@@ -5,12 +5,22 @@ $subColor3:rgb(142, 199, 179);
 $disabledColor:gray;
 $h2Color:rgb(46, 46, 46);
 $more-linkColor:rgb(158, 158, 158);
+
 //背景灰字
 .background-text{
     position: absolute;
     font-size: 300px;
     color: #e7e7e7;;
     z-index: 1;
+}
+// 價格
+.origin_price{
+  color: gray;
+  text-decoration: line-through;
+}
+.price{
+  color: rgb(179, 47, 47);
+  font-size: 24px;
 }
 @media (max-width:919px){
     .background-text{

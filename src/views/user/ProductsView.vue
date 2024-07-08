@@ -22,7 +22,7 @@
                    :class="[ isSearchTabOpen ? 'tab-bottom-pullDown-box-open' : '' ]"
                    @mouseleave="changeSearchTabOpen">
                 <div class="tab-bottom-pullDown-SearchTab">
-                  <input type="text" placeholder="請輸入內容" class="search-input"
+                  <input type="text" :placeholder="searchInputTit" class="search-input"
                         ref="searchContent">
                   <button type="button" class="search-btn" @click="search">
                     <i class="bi bi-search"></i>
@@ -498,6 +498,15 @@
         opacity: 1;
       }
     }
+
+    .productList-header-right{
+      flex-direction: column;
+
+      .productList-header-follow{
+        margin-right: 0;
+        margin-bottom: 50px;
+      }
+    }
   }
   .MB-productList-menu-open{
     visibility: visible;
@@ -557,6 +566,15 @@ export default {
         this.isHeaderSlide = true
       } else {
         this.isHeaderSlide = false
+      }
+    }
+  },
+  computed: {
+    searchInputTit () { // 搜尋欄位提示
+      if (this.$route.params.category) {
+        return '在此類別中搜尋'
+      } else {
+        return '在所有類別中搜尋'
       }
     }
   },
@@ -649,15 +667,18 @@ export default {
       this.isMBMenuOpen = !this.isMBMenuOpen
     },
     search () {
-      if (this.$route.params.productid) {
-        console.log('準備跳轉')
-        this.backProductList()
-        console.log('跳轉完畢')
-      }
       this.searchContent = this.$refs.searchContent.value
-      console.log('準備發送', this.searchContent)
-      emitter.emit('search', this.searchContent)
-      console.log('發送完畢', this.searchContent)
+      if (this.$route.params.productid) {
+        this.$router.push({
+          path: '/products/productslist',
+          query: {
+            searchContent: this.searchContent
+          }
+        })
+      } else {
+        emitter.emit('search', this.searchContent)
+      }
+
       this.isSearchTabOpen = false
       this.isMBMenuOpen = false
       this.$refs.searchContent.value = ''

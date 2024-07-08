@@ -3,35 +3,35 @@
   <div ref="swiper" class="swiper products-swiper">
       <ul class="swiper-wrapper products-wrapper">
         <li class="swiper-slide products-slide">
-          <a href="#">
+          <a href="#" @click.prevent="toCategory('手作布罩燈')">
                   <img src="@/assets/images/home-si/cloth-si.jpg" alt="">
               <h5>Cloth</h5>
-              <p>手做布藝：<br>柔軟又溫暖，賦予你的空間溫馨的氛圍。</p>
+              <p>手作布藝：<br>柔軟又溫暖，賦予你的空間溫馨的氛圍。</p>
           </a>
         </li>
         <li class="swiper-slide products-slide">
-          <a href="#">
+          <a href="#" @click.prevent="toCategory('水晶燈')">
               <img src="@/assets/images/home-si/crystal-si.jpg" alt="">
               <h5>Crystal</h5>
               <p>水晶燈系列：<br>奢華又雅致，點綴專屬的品味生活。</p>
           </a>
         </li>
         <li class="swiper-slide products-slide">
-          <a href="#">
+          <a href="#" @click.prevent="toCategory('工業風')">
               <img src="@/assets/images/home-si/industrial-si.jpg" alt="">
               <h5>Industrial</h5>
               <p>工業風格：<br>堅固金屬，展現個性，營造獨特的時尚氛圍。</p>
           </a>
         </li>
         <li class="swiper-slide products-slide">
-          <a href="#">
+          <a href="#" @click.prevent="toCategory('北歐風')">
               <img src="@/assets/images/home-si/Nordic-si.jpg" alt="">
               <h5>Nordic</h5>
               <p>北歐現代系：<br>清新純淨，俐落簡約，最流行的時尚風格。</p>
           </a>
         </li>
         <li class="swiper-slide products-slide">
-          <a href="#">
+          <a href="#" @click.prevent="toCategory('燈泡')">
               <img src="@/assets/images/home-si/Light-bulb-si.jpg" alt="">
               <h5>Light-bulb</h5>
               <p>光源專區：<br>挑選合用燈泡，成就您的光影藝術。</p>
@@ -162,6 +162,13 @@ export default {
   data () {
     return {
       swiper: ''
+    }
+  },
+  methods: {
+    toCategory (category) { // 前往產品分類
+      this.isMBMenuOpen = false
+      this.$router.push(`/products/productslist/${category}`)
+      window.scrollTo(0, 0)
     }
   },
   mounted () {

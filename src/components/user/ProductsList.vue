@@ -55,14 +55,6 @@
           width: 200px;
           height: 200px;
         }
-        .origin_price{
-          color: gray;
-          text-decoration: line-through;
-        }
-        .price{
-          color: rgb(179, 47, 47);
-          font-size: 24px;
-        }
         .cart-plus-btn,.follow-plus-btn{
           padding: 0;
           width: 30px;
@@ -154,7 +146,7 @@ export default {
       this.getProducts()
     },
     showProducts () { // 控制頁數
-      if (this.searchContent !== '') {
+      if (this.searchContent) {
         const includesList = this.products.filter(item => item.title.includes(this.searchContent))
         this.pagination.total_pages = Math.ceil(includesList.length / this.perpage)
         this.getPagination()
@@ -171,7 +163,7 @@ export default {
       if (!this.searchContent) {
         console.log('沒有關鍵字', this.searchContent)
         return this.products.filter((item, i) => i + 1 >= minData && i + 1 <= maxData)
-      } else if (this.searchContent !== '') {
+      } else if (this.searchContent) {
         console.log('篩選關鍵字', this.searchContent)
         const includesList = this.products.filter(item => item.title.includes(this.searchContent))
         return includesList.filter((item, i) => i + 1 >= minData && i + 1 <= maxData)
@@ -179,9 +171,9 @@ export default {
       return []
     },
     nowProductsTotle () {
-      if (this.searchContent === '') {
+      if (!this.searchContent) {
         return this.products.length
-      } else if (this.searchContent !== '') {
+      } else if (this.searchContent) {
         const includesList = this.products.filter(item => item.title.includes(this.searchContent))
         return includesList.length
       }
@@ -215,6 +207,7 @@ export default {
         .catch((error) => {
           console.log(error)
         })
+      console.log('產品資料', this.showProducts)
     },
     getTotlePage () {
       this.pagination.total_pages = Math.ceil(this.products.length / this.perpage)
@@ -263,10 +256,11 @@ export default {
   },
   created () {
     this.getProducts()
+    this.searchContent = this.$route.query.searchContent // 接收全類搜尋結果
     this.followProducts = JSON.parse(localStorage.getItem('followArray'))
   },
   mounted () {
-    emitter.on('search', this.searchKey)
+    emitter.on('search', this.searchKey) // 接收分類搜尋結果
   }
 }
 </script>

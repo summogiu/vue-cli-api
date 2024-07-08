@@ -256,7 +256,7 @@ export default {
   created () {
     this.getProducts()
     this.searchContent = this.$route.query.searchContent // 接收全類搜尋結果
-    this.followProducts = JSON.parse(localStorage.getItem('followArray'))
+    // this.followProducts = JSON.parse(localStorage.getItem('followArray'))
   },
   mounted () {
     emitter.on('search', this.searchKey) // 接收分類搜尋結果

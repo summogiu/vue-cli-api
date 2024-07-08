@@ -158,12 +158,9 @@ export default {
     showProducts () {
       const minData = (this.pagination.current_page * this.perpage) - this.perpage + 1
       const maxData = (this.pagination.current_page * this.perpage)
-      console.log(minData + '~' + maxData)
       if (!this.searchContent) {
-        console.log('沒有關鍵字', this.searchContent)
         return this.products.filter((item, i) => i + 1 >= minData && i + 1 <= maxData)
       } else if (this.searchContent) {
-        console.log('篩選關鍵字', this.searchContent)
         const includesList = this.products.filter(item => item.title.includes(this.searchContent))
         return includesList.filter((item, i) => i + 1 >= minData && i + 1 <= maxData)
       }
@@ -206,7 +203,6 @@ export default {
         .catch((error) => {
           console.log(error)
         })
-      console.log('產品資料', this.showProducts)
     },
     getTotlePage () {
       this.pagination.total_pages = Math.ceil(this.products.length / this.perpage)
@@ -236,16 +232,18 @@ export default {
         })
     },
     searchKey (key) {
+      this.getPagination() // 先換回第一頁 在進行篩選 避免篩選解果只有一頁導致顯示錯誤
       this.searchContent = key
     },
     addFollow (item) { // 增加、移除關注
-      if (this.followProducts.includes(item)) {
-        const index = this.followProducts.indexOf(item)
-        if (index > -1) {
-          this.followProducts.splice(index, 1)
-        }
+      const index = this.followProducts.findIndex(followedItem => followedItem.id === item.id)
+      console.log('index', index)
+      if (index !== -1) {
+        console.log('相同id', item.id === this.followProducts[index].id)
+        this.followProducts.splice(index, 1)
       } else {
         this.followProducts.push(item)
+        console.log('不同id，已加入')
       }
       localStorage.setItem('followArray', JSON.stringify(this.followProducts))
     },
@@ -256,7 +254,7 @@ export default {
   created () {
     this.getProducts()
     this.searchContent = this.$route.query.searchContent // 接收全類搜尋結果
-    // this.followProducts = JSON.parse(localStorage.getItem('followArray'))
+    this.followProducts = JSON.parse(localStorage.getItem('followArray')) || []
   },
   mounted () {
     emitter.on('search', this.searchKey) // 接收分類搜尋結果

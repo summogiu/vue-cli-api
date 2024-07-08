@@ -27,7 +27,7 @@
             </li>
           </ul>
         </div>
-        <PaginationComponents :pages="pagination" @change-page="getProducts"></PaginationComponents>
+        <PaginationComponents :pages="pagination" @change-page="getPagination"></PaginationComponents>
         <p class="totle-item-num">共{{ this.nowProductsTotle }}項產品</p>
   </div>
 </template>
@@ -149,7 +149,6 @@ export default {
       if (this.searchContent) {
         const includesList = this.products.filter(item => item.title.includes(this.searchContent))
         this.pagination.total_pages = Math.ceil(includesList.length / this.perpage)
-        this.getPagination()
       } else {
         this.pagination.total_pages = Math.ceil(this.products.length / this.perpage)
       }
@@ -159,7 +158,7 @@ export default {
     showProducts () {
       const minData = (this.pagination.current_page * this.perpage) - this.perpage + 1
       const maxData = (this.pagination.current_page * this.perpage)
-
+      console.log(minData + '~' + maxData)
       if (!this.searchContent) {
         console.log('沒有關鍵字', this.searchContent)
         return this.products.filter((item, i) => i + 1 >= minData && i + 1 <= maxData)
@@ -182,7 +181,7 @@ export default {
   },
   mixins: [emitter],
   methods: {
-    getProducts (page = 1) {
+    getProducts () {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
       this.isLoading = true
       this.$http.get(api)
@@ -201,7 +200,7 @@ export default {
               this.products = categoryList
             }
             this.getTotlePage()
-            this.getPagination(page)
+            this.getPagination()
           }
         })
         .catch((error) => {

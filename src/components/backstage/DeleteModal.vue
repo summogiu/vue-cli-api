@@ -4,7 +4,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel" v-if="!item.percent">即將刪除商品</h5>
+          <h5 class="modal-title" id="exampleModalLabel" v-if="!item.percent">即將刪除內容</h5>
           <h5 class="modal-title" id="exampleModalLabel" v-else>即將刪除優惠券</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>

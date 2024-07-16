@@ -34,12 +34,22 @@ const routes = [
         ]
       },
       {
-        path: 'placeOder',
-        component: () => import('../views/user/PlaceOder.vue')
-      },
-      {
-        path: 'checkout/:oderid',
-        component: () => import('../views/user/CheckoutView.vue')
+        path: 'paymentPage',
+        name: '付款頁面',
+        redirect: 'placeOder',
+        component: () => import('../views/user/PaymentPage.vue'),
+        children: [
+          {
+            path: 'placeOder',
+            name: '填寫收件資訊頁面',
+            component: () => import('../components/user/PlaceOder.vue')
+          },
+          {
+            path: 'checkout/:oderid',
+            name: '訂單成立頁面',
+            component: () => import('../components/user/CheckoutView.vue')
+          }
+        ]
       }
     ]
   },
@@ -58,8 +68,16 @@ const routes = [
       {
         path: 'coupons',
         component: () => import('../views/backstage/CouponsView.vue')
+      },
+      {
+        path: 'article',
+        component: () => import('../views/backstage/ArticleView.vue')
       }
     ]
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    component: () => import('../views/ErrorPage.vue')
   }
 ]
 

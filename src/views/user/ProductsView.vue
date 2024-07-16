@@ -135,8 +135,9 @@
           <p>返回所有商品</p>
         </div>
         <div class="productList-header-right">
-          <a href="#" @click.prevent="toCategory('正在關注')" class="productList-header-follow">關注的產品</a>
-          <CurrentPath :name="name" :curPaths="currentPaths"/>
+          <a href="#" @click.prevent="toCategory('正在關注')" class="productList-header-follow">
+            <i class="bi bi-heart-fill follow-plus-btn isFollow-icon"></i>關注的產品
+          </a>
         </div>
       </div>
       <div class="open-MB-productList-menu-btn">
@@ -153,7 +154,101 @@
       <UserCart :cart="carts" :cartData="cartsData" @delete-one="deleteOne"
               @update-qty="updateOneQty" :loading="status.loadingItem"
               @use-coupon="useCoupon" :isCoupon="isCoupon"></UserCart>
-      <router-view @getCart="getCart" @toCategory="toCategory"></router-view>
+      <router-view @getCart="getCart" @toCategory="toCategory"
+              @addRecentlyViewed="addRecentlyViewed"></router-view>
+      <div class="follow-box" v-if="followProducts.length !== 0">
+        <h3>關注的產品</h3>
+        <ul class="follow-list">
+          <li v-for="item in followProducts.slice(0, 6)" :key="item.id">
+            <div class="follow-content" @click="toProducts(item)">
+              <img :src="item.imageUrl" :alt="item.title" class="follow-thumbnail">
+              <h4>{{ item.title }}</h4>
+              <p class="price">NT${{ item.price }}</p>
+            </div>
+              <button class="follow-plus-btn"
+                      @click="addFollow(item)">
+                          <i class="bi bi-heart" v-if="!isFollowed(item)"></i>
+                          <i class="bi bi-heart-fill isFollow-icon" v-else></i>
+              </button>
+          </li>
+        </ul>
+      </div>
+      <div class="recently-viewed-box" v-if="recentlyViewed.length !== 0">
+        <h3>最近瀏覽過</h3>
+        <ul class="recently-viewed-list">
+          <li v-for="item in recentlyViewed" :key="item.id">
+            <div class="recently-viewed-content" @click="toProducts(item)">
+              <img :src="item.imageUrl" :alt="item.title" class="recently-viewed-thumbnail">
+              <h4>{{ item.title }}</h4>
+              <p>NT${{ item.price }}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="current-path-box">
+        <CurrentPath :name="name" :curPaths="currentPaths"/>
+      </div>
+      <div class="notice-box">
+        <ul class="notice-list">
+          <li>
+            <div class="notice-img-box">
+              <font-awesome-icon :icon="['fas', 'truck-moving']" class="notice-icon" />
+              <h5>運送＆運費須知</h5>
+            </div>
+            <div class="notice-content">
+              <h6>好運物流</h6>
+              <p>運費會根據送貨區域而有所不同。</p>
+              <br>
+              <p>台北市區：NT$200／中部市區：NT$250／高屏地區：NT$250／花東地區：NT$400／
+                宜蘭：NT$300／（不含稅）。
+                對於離島地區，會另外收取費用。
+              </p>
+              <br>
+              <p>如果一次購買商品總金額達到NT$8000或以上，則運費免費。</p>
+            </div>
+          </li>
+          <li>
+            <div class="notice-img-box">
+              <font-awesome-icon :icon="['fas', 'circle-xmark']" class="notice-icon" />
+              <h5>退貨須知</h5>
+            </div>
+            <div class="notice-content">
+              <h6>瑕疵品</h6>
+              <p>收到產品後請立即與我們聯繫。請注意，除非產品有缺陷，否則將不受理退貨。</p>
+              <br>
+              <h6>退貨期限</h6>
+              <p>請在收到產品後 7 天內透過電子郵件或電話聯絡我們以了解詳細資訊。
+                請注意，視實際情況可能無法受理退貨、換貨或取消。
+              </p>
+              <br>
+              <h6>退貨運費</h6>
+              <p>如因客戶原因造成的退貨將由客戶承擔。如果商品有缺陷，我們將承擔費用。</p>
+            </div>
+          </li>
+          <li>
+            <div class="notice-img-box">
+              <font-awesome-icon :icon="['fas', 'dollar-sign']" class="notice-icon" />
+              <h5>付款方式</h5>
+            </div>
+            <div class="notice-content">
+              <h6>信用卡支付</h6>
+              <div class="payment-img-box">
+                <img src="@/assets/images/icon/visa_icon.png" alt="visa-icon">
+                <img src="@/assets/images/icon/mastercard_icon.png" alt="mastercard-icon">
+                <img src="@/assets/images/icon/JCB_icon.png" alt="JCB-icon">
+                <img src="@/assets/images/icon/american express_icon.png" alt="american express-icon">
+              </div>
+              <br>
+              <h6>貨到付款</h6>
+              <p>超商或宅配取貨付款。
+                請注意，付款費用會根據產品價格而有所不同。</p>
+              <br>
+              <h6>銀行轉帳</h6>
+              <p>請將發票金額轉入本公司指定的銀行帳戶，帳戶將於下單後發送給您的訂單確認郵件提供。</p>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
     <ToPageTop :class="[ isHeaderSlide ? 'fadeIn' : '' ]" />
   </div>
@@ -272,7 +367,7 @@
           }
 
           &:hover img{
-            animation: flash 0.2s ease-out;
+            animation: flash 0.2s linear;
           }
           &:hover p{
             opacity: 0.7;
@@ -369,6 +464,9 @@
     }
     .productList-header-follow{
       margin-right: 50px;
+      .isFollow-icon{
+        margin-right: 10px;
+      }
     }
   }
 }
@@ -519,7 +617,158 @@
     display: flex;
   }
 }
+.follow-box, .recently-viewed-box{
+    margin: 100px 50px 50px 50px;
+    padding: 50px 0 0 0;
+    border-top: 1px solid $subColor4;
 
+    h3{
+      font-weight: bold;
+      margin-bottom: 50px;
+    }
+    .follow-list,.recently-viewed-list{
+      display: flex;
+      flex-wrap: wrap;
+
+      li{
+        margin-right: 20px;
+        cursor: pointer;
+        position: relative;
+        width: 200px;
+
+        .follow-content,.recently-viewed-content{
+          .follow-thumbnail,.recently-viewed-thumbnail{
+            object-fit: cover;
+            width: 200px;
+            height: 200px;
+          }
+          &:hover{
+            animation: flash 0.3s;
+          }
+        }
+
+        .follow-plus-btn{
+          position: absolute;
+          bottom: 0;
+          right: 0;
+        }
+      }
+    }
+  }
+.recently-viewed-box {
+  margin: 0 50px;
+}
+@media (max-width:919px){
+  .follow-box, .recently-viewed-box{
+    margin: 100px auto 50px auto;
+    width: 90%;
+
+    .follow-list,.recently-viewed-list{
+      flex-wrap: wrap;
+      margin-left: 5%;
+
+      li{
+        margin: 5px;
+        width: 45%;
+
+        .follow-content,.recently-viewed-content{
+          .follow-thumbnail,.recently-viewed-thumbnail{
+            width: 100%;
+          }
+          .recently-viewed-thumbnail{
+            height: 150px;
+          }
+          h4{
+            font-size: 14px;
+          }
+          .price{
+            font-size: 16px;
+          }
+        }
+      }
+    }
+    .recently-viewed-list{
+      li{
+        width: 30%;
+      }
+    }
+  }
+}
+
+.current-path-box{
+  margin: 100px 50px 0 50px;
+
+  .current-path{
+    justify-content: start;
+  }
+}
+
+.notice-box{
+
+  .notice-list{
+    display: flex;
+    align-items: start;
+    margin: 0 50px;
+    border-top: 1px solid $subColor4;
+    padding-top: 50px;
+
+    li{
+      margin: 0 20px;
+      width: 33%;
+
+      .notice-img-box{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-bottom: 1px solid $subColor4;
+        margin-bottom: 10px;
+
+        .notice-icon{
+          font-size: 50px;
+        }
+        h5{
+          font-weight: bold;
+          margin: 10px 0;
+        }
+      }
+      .notice-content{
+        h6{
+          font-weight: bold;
+          font-size: 14px;
+        }
+        p{
+          font-size: 14px;
+          color: gray;
+        }
+        .payment-img-box{
+          img{
+          width: 30px;
+          height: 30px;
+          margin-right: 10px;
+        }
+        }
+      }
+    }
+  }
+}
+@media (max-width:919px){
+  .current-path-box{
+    margin: 100px auto 0 auto;
+    width: 90%;
+  }
+  .notice-box{
+    .notice-list{
+      margin: 0 auto;
+      width: 90%;
+      flex-direction: column;
+
+      li{
+        width: 100%;
+        margin: 20px 0;
+      }
+    }
+  }
+}
 </style>
 
 <script>
@@ -528,6 +777,7 @@ import UserCart from '@/components/user/UserCart.vue'
 import CurrentPath from '@/components/user/CurrentPath.vue'
 import ToPageTop from '@/components/user/ToPageTop.vue'
 import emitter from '@/methods/emitter'
+import follow from '@/mixins/followMixin'
 
 export default {
   components: {
@@ -557,7 +807,8 @@ export default {
       searchContent: '',
       status: {
         loadingItem: ''
-      }
+      },
+      recentlyViewed: []
     }
   },
   watch: {
@@ -578,7 +829,7 @@ export default {
       }
     }
   },
-  mixins: [scrollPosMixin, emitter],
+  mixins: [scrollPosMixin, emitter, follow],
   methods: {
     getCart () {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
@@ -587,6 +838,9 @@ export default {
           this.carts = res.data.data.carts
           this.cartsData.finalTotal = res.data.data.final_total
           this.cartsData.total = res.data.data.total
+          if (this.carts[0].coupon.is_enabled) {
+            this.isCoupon = true
+          }
         })
         .catch((error) => {
           console.log('取得列表失敗', error)
@@ -635,7 +889,6 @@ export default {
         .then((res) => {
           if (res.data.success) {
             console.log(res.data)
-            this.isCoupon = true
             this.getCart()
           } else {
             console.log('套用優惠券失敗', res.data.message)
@@ -696,10 +949,24 @@ export default {
       this.searchContent = ''
       emitter.emit('search', this.searchContent)
       window.scrollTo(0, 0)
+    },
+    toProducts (item) {
+      this.$router.push(`/products/productslist/product/${item.id}`)
+      this.addRecentlyViewed(item)
+    },
+    addRecentlyViewed (item) {
+      const index = this.recentlyViewed.findIndex(recentlyViewedItem => recentlyViewedItem.id === item.id)
+      if (index !== -1) { // 避免重複相同產品
+        this.recentlyViewed.splice(index, 1)
+      } else if (this.recentlyViewed.length >= 5) { // 設置最多顯示5筆
+        this.recentlyViewed.pop()
+      }
+      this.recentlyViewed.unshift(item)
     }
   },
   created () {
     this.getCart()
+    console.log(window.history)
   },
   mounted () {
     this.getSectionTops()

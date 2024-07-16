@@ -46,7 +46,7 @@
                   </div>
         <div class="id-grid gap-2 col-6 mx-auto place-oder-box">
           <button type="button" class="place-oder-btn">
-                  <router-link to="/user/placeOder" class="nav-link place-oder-a">前往結帳</router-link>
+                  <router-link to="/paymentPage/placeOder" class="nav-link place-oder-a">前往結帳</router-link>
                   </button></div>
       </div>
     </transition>
@@ -124,7 +124,7 @@
   }
 
   .final-total{
-    color: $mainColor;
+    color: $subColor5;
 }
 
 .user-cart-couponCode{
@@ -136,7 +136,7 @@
 }
 
 .useCoupon-tip{
-  color: $mainColor;
+  color: $subColor5;
   font-size: 12px;
 }
 .place-oder-btn{

@@ -4,25 +4,3 @@
 }
 
 // 收件人、結帳資訊頁
-.form-box{
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  width: 60%;
-
-  h3{
-    text-align: end;
-  }
-  .ta-end{
-    text-align: end;
-  }
-  .region-select{
-    flex: 0.2 1 auto !important
-  }
-  .remark-message{
-    resize: none;
-  }
-  .isPay{
-    color: $success;
-  }
-}

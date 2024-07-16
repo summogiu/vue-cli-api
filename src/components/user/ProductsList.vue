@@ -5,7 +5,7 @@
           <ul class="product-list-ul toRight-1">
             <li v-for="(item, i) in showProducts" :key="item.id"
                     :class="{ 'big-size-li' : i === 0 || i === showProducts.length-1 }">
-              <div class="product-content" @click="openMore(item.id)">
+              <div class="product-content" @click="openMore(item)">
                 <img :src="item.imageUrl" alt="" class="thumbnail">
                 <p>{{ item.title }}</p>
                 <p>
@@ -19,7 +19,7 @@
                       <div class="spinner-border text-danger spinner-border-sm" role="status"
                           v-if="this.status.loadingItem === item.id"></div>
                           <i class="bi bi-cart-plus cart-plus-i" v-else></i></button>
-              <button class="btn follow-plus-btn"
+              <button class="follow-plus-btn"
                       @click="addFollow(item)">
                           <i class="bi bi-heart" v-if="!isFollowed(item)"></i>
                           <i class="bi bi-heart-fill" v-else></i>
@@ -27,7 +27,7 @@
             </li>
           </ul>
         </div>
-        <PaginationComponents :pages="pagination" @change-page="getPagination"></PaginationComponents>
+        <PaginationComponents :pages="pagination" @change-page="getPagination" v-if="showProducts.length !== 0"></PaginationComponents>
         <p class="totle-item-num">共{{ this.nowProductsTotle }}項產品</p>
   </div>
 </template>
@@ -61,15 +61,6 @@
           height: 30px;
 
           .cart-plus-i{
-            font-size: 20px;
-          }
-        }
-        .follow-plus-btn{
-          border: none;
-          color: rgb(209, 83, 104);
-          background-color: transparent;
-
-          i{
             font-size: 20px;
           }
         }
@@ -117,6 +108,7 @@
 <script>
 import PaginationComponents from '@/components/backstage/PaginationComponents.vue'
 import emitter from '@/methods/emitter'
+import follow from '@/mixins/followMixin'
 
 export default {
   components: {
@@ -126,7 +118,6 @@ export default {
     return {
       products: [],
       product: {},
-      followProducts: [],
       searchContent: '',
       pagination: {
         current_page: 1,
@@ -176,7 +167,7 @@ export default {
       return 0
     }
   },
-  mixins: [emitter],
+  mixins: [emitter, follow],
   methods: {
     getProducts () {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
@@ -212,8 +203,9 @@ export default {
       this.pagination.has_next = this.pagination.current_page < this.pagination.total_pages
       this.pagination.has_pre = this.pagination.current_page > 1
     },
-    openMore (id) {
-      this.$router.push(`/products/productslist/product/${id}`)
+    openMore (item) {
+      this.$router.push(`/products/productslist/product/${item.id}`)
+      this.$emit('addRecentlyViewed', item)
     },
     addCart (id) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
@@ -234,27 +226,11 @@ export default {
     searchKey (key) {
       this.getPagination() // 先換回第一頁 在進行篩選 避免篩選解果只有一頁導致顯示錯誤
       this.searchContent = key
-    },
-    addFollow (item) { // 增加、移除關注
-      const index = this.followProducts.findIndex(followedItem => followedItem.id === item.id)
-      console.log('index', index)
-      if (index !== -1) {
-        console.log('相同id', item.id === this.followProducts[index].id)
-        this.followProducts.splice(index, 1)
-      } else {
-        this.followProducts.push(item)
-        console.log('不同id，已加入')
-      }
-      localStorage.setItem('followArray', JSON.stringify(this.followProducts))
-    },
-    isFollowed (item) { // 判斷是否為關注狀態
-      return this.followProducts.some(followedItem => followedItem.id === item.id)
     }
   },
   created () {
     this.getProducts()
     this.searchContent = this.$route.query.searchContent // 接收全類搜尋結果
-    this.followProducts = JSON.parse(localStorage.getItem('followArray')) || []
   },
   mounted () {
     emitter.on('search', this.searchKey) // 接收分類搜尋結果

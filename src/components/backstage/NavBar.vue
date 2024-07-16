@@ -1,7 +1,10 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">首頁</a>
+      <router-link to="/login" class="nav-link" href="#">
+      <p>In My Light</p>
+      <p>後臺管理系統</p>
+      </router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -12,6 +15,9 @@
           </li>
           <li class="nav-item">
             <router-link to="coupons" class="nav-link">優惠券管理</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="article" class="nav-link">文章管理</router-link>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#" @click.prevent="logOut">登出</a>

@@ -4,6 +4,9 @@ import VueAxios from 'vue-axios' // 將axios綁定到this.$http中 讓axios可�
 import Loading from 'vue3-loading-overlay'
 import 'vue3-loading-overlay/dist/vue3-loading-overlay.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
 
 import { currency, date } from './methods/filters'
 import pushMessage from './methods/pushToastMessage'
@@ -39,6 +42,9 @@ configure({
 // 設定預設語系
 setLocale('zh_TW')
 
+library.add(fas)
+
+app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(VueAxios, axios)
 app.use(router)
 app.component('Loading', Loading)

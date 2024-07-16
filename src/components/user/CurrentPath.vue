@@ -14,7 +14,7 @@
 </template>
 
 <style lang="scss">
-  .current-path{
+.current-path{
   display: flex;
   justify-content: end;
   align-items: center;
@@ -25,6 +25,12 @@
   }
   .home-i{
     font-size: 26px;
+  }
+  a{
+    color: black;
+    &:hover{
+      color: $subColor3;
+    }
   }
 }
 </style>

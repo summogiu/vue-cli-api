@@ -30,7 +30,7 @@
                     </div>
                 </div>
             </li>
-            <li><a href="#"><p>CUSTOMIZED</p> <p class="subtitle">專屬訂製</p></a></li>
+            <li><router-link to="/customized"><p>CUSTOMIZED</p> <p class="subtitle">專屬訂製</p></router-link></li>
             <li><a href="#"><p>COMPANY</p> <p class="subtitle">公司資訊</p></a></li>
             <li><a href="#"><p>CONSULT</p> <p class="subtitle">線上諮詢</p></a></li>
         </ul>
@@ -52,7 +52,7 @@
                       <li><a href="#" @click.prevent="toCategory('燈泡')"><div class="MB-replace-anim">- <span class="MB-original-text">光源專區</span><span class="MB-replace-text">光源專區</span></div></a></li>
                   </ul>
               </li>
-              <li><a href="#"><span>CUSTOMIZED</span><span class="MB-subtitle">專屬訂製</span></a></li>
+              <li><router-link to="/customized"><span>CUSTOMIZED</span><span class="MB-subtitle">專屬訂製</span></router-link></li>
               <li><a href="#"><span>COMPANY</span><span class="MB-subtitle">公司資訊</span></a></li>
               <li><a href="#"><span>CONSULT</span><span class="MB-subtitle">線上諮詢</span></a></li>
           </ul>

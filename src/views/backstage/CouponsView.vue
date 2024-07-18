@@ -65,7 +65,6 @@ export default {
           if (res.data.success) {
             this.coupons = res.data.coupons
             this.pagination = res.data.pagination
-            console.log('取得優惠券列表成功', this.coupons)
           }
         })
         .catch((error) => {

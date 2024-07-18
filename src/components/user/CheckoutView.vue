@@ -143,6 +143,38 @@
     }
   }
 }
+@media (max-width:919px){
+  .form-box{
+    .products-content-table{
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+
+      thead{
+        tr{
+          th{
+            width: 100%;
+            white-space: nowrap;
+          }
+        }
+      }
+      tbody{
+        tr{
+          td{
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+
+    .paid-success-box{
+      padding: 20px 5px;
+    }
+  }
+}
 </style>
 
 <script>

@@ -55,6 +55,9 @@
         <button type="button" class="product-cart-open-btn"
                   v-if="!isCartOpen" @click="changeCartOpen(true)">
           <i class="bi bi-cart-fill product-cart-open-i"></i>
+          <div class="product-cart-qty-tip" v-if="carts.length > 0">
+            <p>{{ totalQty }}</p>
+          </div>
         </button>
       </transition>
       <transition name="Scale">
@@ -201,6 +204,9 @@
     }
   }
 }
+.product-cart-qty-tip{
+  color: white;
+}
 @media (max-width:919px){
   .product-cart-btns{
     .product-cart-open-btn{
@@ -229,6 +235,15 @@ export default {
   watch: {
     cart () {
       this.carts = this.cart
+    }
+  },
+  computed: {
+    totalQty () { // 購物車內商品總數
+      let total = 0
+      this.carts.forEach(item => {
+        total += item.qty
+      })
+      return total
     }
   },
   methods: {

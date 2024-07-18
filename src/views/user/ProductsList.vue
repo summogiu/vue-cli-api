@@ -2,33 +2,42 @@
   <div>
     <Loading :active="isLoading"></Loading>
     <div class="product-list-box">
-          <ul class="product-list-ul toRight-1">
-            <li v-for="(item, i) in showProducts" :key="item.id"
-                    :class="{ 'big-size-li' : i === 0 || i === showProducts.length-1 }">
-              <div class="product-content" @click="openMore(item)">
-                <img :src="item.imageUrl" alt="" class="thumbnail">
-                <p>{{ item.title }}</p>
-                <p>
-                  <span class="origin_price">NT${{ $filters.currency(item.origin_price) }}</span>
-                  <span class="price">NT${{ $filters.currency(item.price) }}</span>
-                </p>
-              </div>
-              <button class="btn btn-outline-danger cart-plus-btn"
-                  @click="addCart(item.id)"
-                      :disabled="this.status.loadingItem === item.id">
-                      <div class="spinner-border text-danger spinner-border-sm" role="status"
-                          v-if="this.status.loadingItem === item.id"></div>
-                          <i class="bi bi-cart-plus cart-plus-i" v-else></i></button>
-              <button class="follow-plus-btn"
-                      @click="addFollow(item)">
-                          <i class="bi bi-heart" v-if="!isFollowed(item)"></i>
-                          <i class="bi bi-heart-fill" v-else></i>
-                          </button>
-            </li>
-          </ul>
-        </div>
-        <PaginationComponents :pages="pagination" @change-page="getPagination" v-if="showProducts.length !== 0"></PaginationComponents>
-        <p class="totle-item-num">共{{ this.nowProductsTotle }}項產品</p>
+      <div class="filter-select-box">
+        <select class="filter-select" v-model="selectedOption">
+          <option v-for="item in options" :key="item.text" :data-sort="item.sort"
+                  :disabled="item.text === '價格排序'">
+            {{ item.text }}
+            </option>
+        </select>
+      </div>
+      <ul class="product-list-ul toRight-1">
+        <li v-for="(item, i) in showProducts" :key="item.id"
+                :class="[ i === 0 ? 'big-size-li' : '',
+                          i === showProducts.length-1 && showProducts.length > 9 ? 'big-size-li' : '']">
+          <div class="product-content" @click="openMore(item)">
+            <img :src="item.imageUrl" alt="" class="thumbnail">
+            <p>{{ item.title }}</p>
+            <p>
+              <span class="origin_price">NT${{ $filters.currency(item.origin_price) }}</span>
+              <span class="price">NT${{ $filters.currency(item.price) }}</span>
+            </p>
+          </div>
+          <button class="btn btn-outline-danger cart-plus-btn"
+              @click="addCart(item.id)"
+                  :disabled="this.status.loadingItem === item.id">
+                  <div class="spinner-border text-danger spinner-border-sm" role="status"
+                      v-if="this.status.loadingItem === item.id"></div>
+                      <i class="bi bi-cart-plus cart-plus-i" v-else></i></button>
+          <button class="follow-plus-btn"
+                  @click="addFollow(item)">
+                      <i class="bi bi-heart" v-if="!isFollowed(item)"></i>
+                      <i class="bi bi-heart-fill" v-else></i>
+                      </button>
+        </li>
+      </ul>
+    </div>
+    <PaginationComponents :pages="pagination" @change-page="getPagination" v-if="showProducts.length !== 0"></PaginationComponents>
+    <p class="totle-item-num">共{{ this.nowProductsTotle }}項產品</p>
   </div>
 </template>
 
@@ -37,23 +46,53 @@
     margin-top: 200px;
     animation: fadeIn 1s;
 
+    .filter-select-box{
+      display: flex;
+      justify-content: end;
+      width: 90%;
+      margin: 50px 0;
+
+      .filter-select{
+        height: 60px;
+        border-radius: 50px;
+        padding: 0 66px 0 50px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-image: url('@/assets/images/icon/211614_down_b_arrow_icon.png');
+        background-repeat: no-repeat;
+        background-position: 120px 20px;
+        background-size: 16px;
+      }
+    }
+
     .product-list-ul{
       display: flex;
       flex-wrap: wrap;
       width: 920px;
-      justify-content: space-around;
+      justify-content: start;
       margin: 0 auto;
 
       li{
-        width: 200px;
+        max-width: 440px;
+        margin: 0 5px;
         margin-bottom: 30px;
 
         .product-content{
           cursor: pointer;
+
+          p{
+            font-size: 15px;
+            width: 220px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
         }
         .thumbnail{
-          width: 200px;
-          height: 200px;
+          width: 220px;
+          height: 400px;
+          object-fit: cover;
         }
         .cart-plus-btn,.follow-plus-btn{
           padding: 0;
@@ -70,10 +109,9 @@
         }
       }
       .big-size-li{
-        width: 400px;
 
         .thumbnail{
-          width: 400px;
+          width: 440px;
           height: 400px;
         }
       }
@@ -83,14 +121,20 @@
   .product-list-box{
     margin: 0 auto;
 
+    .filter-select-box{
+      justify-content: center;
+      width: 100%;
+    }
+
     .product-list-ul{
       width: 90%;
+      flex-direction: column;
+      align-items: center;
 
       li{
-        width: 400px;
 
         .thumbnail{
-          width: 400px;
+          width: 440px;
           height: 400px;
           object-fit: cover;
         }
@@ -125,11 +169,26 @@ export default {
         has_pre: '',
         total_pages: 0
       },
-      perpage: 10,
+      perpage: 10, // 每頁顯示筆數
       isLoading: false,
       status: {
         loadingItem: '' // 對應品項ID 製作讀取效果
-      }
+      },
+      options: [ // 價格排序選項
+        {
+          text: '價格排序',
+          sort: ''
+        },
+        {
+          text: '由低至高',
+          sort: 'up'
+        },
+        {
+          text: '由高至低',
+          sort: 'down'
+        }
+      ],
+      selectedOption: '價格排序' // 選擇中的排序選項
     }
   },
   watch: {
@@ -143,12 +202,21 @@ export default {
       } else {
         this.pagination.total_pages = Math.ceil(this.products.length / this.perpage)
       }
+      this.selectedOption = '價格排序'
+    },
+    selectedOption (newV) { // 控制價格排序
+      const nowOption = this.options.find(option => option.text === newV)
+      if (nowOption.sort === 'up') {
+        this.products.sort((a, b) => a.price - b.price) // (低至高)
+      } else if (nowOption.sort === 'down') {
+        this.products.sort((a, b) => b.price - a.price) // (高至低)
+      }
     }
   },
   computed: {
     showProducts () {
-      const minData = (this.pagination.current_page * this.perpage) - this.perpage + 1
-      const maxData = (this.pagination.current_page * this.perpage)
+      const minData = (this.pagination.current_page * this.perpage) - this.perpage + 1 // 每頁第一筆
+      const maxData = (this.pagination.current_page * this.perpage) // 每頁最後一筆
       if (!this.searchContent) {
         return this.products.filter((item, i) => i + 1 >= minData && i + 1 <= maxData)
       } else if (this.searchContent) {
@@ -157,7 +225,7 @@ export default {
       }
       return []
     },
-    nowProductsTotle () {
+    nowProductsTotle () { // 篩選後商品數
       if (!this.searchContent) {
         return this.products.length
       } else if (this.searchContent) {
@@ -204,7 +272,7 @@ export default {
       this.pagination.has_pre = this.pagination.current_page > 1
     },
     openMore (item) {
-      this.$router.push(`/products/productslist/product/${item.id}`)
+      this.$emit('openMore', item)
       this.$emit('addRecentlyViewed', item)
     },
     addCart (id) {

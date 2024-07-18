@@ -398,6 +398,7 @@
 
 <script>
 import follow from '@/mixins/followMixin'
+import emitter from '@/methods/emitter'
 
 export default {
   data () {
@@ -421,11 +422,9 @@ export default {
     },
     '$route.params.productid' () {
       this.getProduct()
-      // this.$route.name = this.product.title
-      // console.log('從內頁切換觸發', this.$route.name)
     }
   },
-  mixins: [follow],
+  mixins: [follow, emitter],
   methods: {
     getProduct () {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${this.$route.params.productid}`
@@ -454,6 +453,7 @@ export default {
             })
 
             this.getrelatedProducts()
+            emitter.emit('pageName', this.product.title) // 傳送當前路徑名稱
           } else {
             console.log(res.data.message)
           }

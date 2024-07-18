@@ -2,7 +2,7 @@
   <div>
     <div class="error-page-frame">
       <h1>404 查無此頁面</h1>
-      <router-link to="/">回到首頁</router-link>
+      <router-link to="/frontPage">回到首頁</router-link>
     </div>
   </div>
 </template>

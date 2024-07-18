@@ -5,10 +5,10 @@
         <li v-for="(item, i) in currentPaths" :key="i" >
           <div v-if="i !== currentPaths.length - 1 && i !== 0 && item.name !== this.$route.name">
             <i class="bi bi-chevron-right"></i>
-            <router-link :to="item.path">{{item.name}}</router-link>
+            <a href="#" @click.prevent="toPath(item.path)">{{item.name}}</a>
           </div>
         </li>
-        <li><i class="bi bi-chevron-right"></i><span>{{ this.$route.name }}</span></li>
+        <li><i class="bi bi-chevron-right"></i><span>{{ routeName }}</span></li>
       </ul>
   </div>
 </template>
@@ -33,17 +33,26 @@
     }
   }
 }
+
+@media (max-width:414px){
+  .current-path{
+    li{
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
 </style>
 
 <script>
+import emitter from '@/methods/emitter'
+
 export default {
   data () {
     return {
-      currentPath: {
-        name: '',
-        path: ''
-      },
-      currentPaths: []
+      currentPaths: [],
+      routeName: this.$route.name
     }
   },
   watch: {
@@ -57,15 +66,28 @@ export default {
         this.getCurrentPath()
       },
       immediate: true
+    },
+    '$route.name' (newName) {
+      this.routeName = newName
     }
   },
+  mixins: [emitter],
   methods: {
     getCurrentPath () {
       this.currentPaths = this.$route.matched
       console.dir(this.$route)
+    },
+    getCurrentPathName (name) { // 接收單一產品頁面的路徑名稱
+      console.log('接收到', name)
+      this.routeName = name
+    },
+    toPath (path) {
+      this.$router.push(`${path}`)
+      window.scrollTo(0, 0)
     }
   },
   created () {
+    emitter.on('pageName', this.getCurrentPathName)
     this.getCurrentPath()
   }
 }

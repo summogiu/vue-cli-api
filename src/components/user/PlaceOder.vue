@@ -122,7 +122,7 @@
                 </div>
               </div>
               <div class="shopping-cart-list-delete">
-                <button>刪除</button>
+                <button @click="deleteProduct(item.id)">刪除</button>
               </div>
             </li>
           </ul>
@@ -385,6 +385,19 @@
     }
   }
 }
+@media (max-width:919px){
+  .place-page-top{
+    flex-direction: column;
+
+    .place-page-left,.shopping-cart-box{
+      width: 100%;
+
+      .back-produst-list{
+        display: none;
+      }
+    }
+  }
+}
 .place-page-bottom{
   max-width: 500px;
   margin: 0 auto;
@@ -514,6 +527,20 @@ export default {
         })
         .catch((error) => {
           console.log('更新數量失敗', error)
+        })
+    },
+    deleteProduct (id) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`
+      this.$http.delete(api)
+        .then((res) => {
+          if (res.data.success) {
+            this.getCart()
+          } else {
+            console.log(res.data.message)
+          }
+        })
+        .catch((error) => {
+          console.log('取得列表', error)
         })
     },
     useCoupon (couponCode) {

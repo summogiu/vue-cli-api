@@ -12,7 +12,7 @@
       <ul class="footer-menu">
         <li class="first-li"><router-link to="/about">關於我們</router-link></li>
         <li><router-link to="/products/productslist">產品資訊</router-link></li>
-        <li><router-link to="/about">專屬訂製</router-link></li>
+        <li><router-link to="/customized">專屬訂製</router-link></li>
         <li><router-link to="/about">公司資訊</router-link></li>
         <li><router-link to="/about">線上諮詢</router-link></li>
         <li><router-link to="/frontPage">回首頁</router-link></li>

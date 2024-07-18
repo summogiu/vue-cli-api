@@ -25,7 +25,7 @@ const routes = [
           {
             path: ':category?',
             name: '所有產品',
-            component: () => import('../components/user/ProductsList.vue')
+            component: () => import('../views/user/ProductsList.vue')
           },
           {
             path: 'product/:productid',
@@ -50,6 +50,11 @@ const routes = [
             component: () => import('../components/user/CheckoutView.vue')
           }
         ]
+      },
+      {
+        path: 'customized',
+        name: '訂製專欄',
+        component: () => import('../views/user/CustomizedView.vue')
       }
     ]
   },
@@ -77,6 +82,7 @@ const routes = [
   },
   {
     path: '/:pathMatch(.*)*',
+    name: '404頁面',
     component: () => import('../views/ErrorPage.vue')
   }
 ]

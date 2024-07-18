@@ -154,13 +154,13 @@
       <UserCart :cart="carts" :cartData="cartsData" @delete-one="deleteOne"
               @update-qty="updateOneQty" :loading="status.loadingItem"
               @use-coupon="useCoupon" :isCoupon="isCoupon"></UserCart>
-      <router-view @getCart="getCart" @toCategory="toCategory"
+      <router-view @getCart="getCart" @toCategory="toCategory" @openMore="toProduct"
               @addRecentlyViewed="addRecentlyViewed"></router-view>
       <div class="follow-box" v-if="followProducts.length !== 0">
         <h3>關注的產品</h3>
         <ul class="follow-list">
           <li v-for="item in followProducts.slice(0, 6)" :key="item.id">
-            <div class="follow-content" @click="toProducts(item)">
+            <div class="follow-content" @click="toProduct(item)">
               <img :src="item.imageUrl" :alt="item.title" class="follow-thumbnail">
               <h4>{{ item.title }}</h4>
               <p class="price">NT${{ item.price }}</p>
@@ -177,7 +177,7 @@
         <h3>最近瀏覽過</h3>
         <ul class="recently-viewed-list">
           <li v-for="item in recentlyViewed" :key="item.id">
-            <div class="recently-viewed-content" @click="toProducts(item)">
+            <div class="recently-viewed-content" @click="toProduct(item)">
               <img :src="item.imageUrl" :alt="item.title" class="recently-viewed-thumbnail">
               <h4>{{ item.title }}</h4>
               <p>NT${{ item.price }}</p>
@@ -186,7 +186,7 @@
         </ul>
       </div>
       <div class="current-path-box">
-        <CurrentPath :name="name" :curPaths="currentPaths"/>
+        <CurrentPath :name="name"/>
       </div>
       <div class="notice-box">
         <ul class="notice-list">
@@ -324,7 +324,7 @@
         opacity: 0;
         visibility: hidden;
         transform: translateY(-10%);
-        transition: transform 0.5s, opacity 0.5s;
+        transition: transform 0.2s, opacity 0.2s;
         border-bottom: 3px solid $subColor3;
       }
       .tab-bottom-pullDown-Tab{
@@ -708,7 +708,7 @@
   .notice-list{
     display: flex;
     align-items: start;
-    margin: 0 50px;
+    margin: 0 50px 50px 50px;
     border-top: 1px solid $subColor4;
     padding-top: 50px;
 
@@ -788,7 +788,6 @@ export default {
   data () {
     return {
       name: '產品資訊',
-      currentPaths: [],
       scrollPosition: 0,
       sectionTops: {
         productListHeaderPosition: 0
@@ -838,7 +837,7 @@ export default {
           this.carts = res.data.data.carts
           this.cartsData.finalTotal = res.data.data.final_total
           this.cartsData.total = res.data.data.total
-          if (this.carts[0].coupon.is_enabled) {
+          if (this.carts[0].coupon) {
             this.isCoupon = true
           }
         })
@@ -950,7 +949,7 @@ export default {
       emitter.emit('search', this.searchContent)
       window.scrollTo(0, 0)
     },
-    toProducts (item) {
+    toProduct (item) {
       this.$router.push(`/products/productslist/product/${item.id}`)
       this.addRecentlyViewed(item)
     },

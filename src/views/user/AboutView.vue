@@ -12,7 +12,7 @@
             :class="[ isContentBoxIn ? 'transform0' : '' ]">
       <h3 class="about-page-content-box-topName"
               :class="[ isContentBoxIn ? 'toLeft-1' : '' ]">In My Light</h3>
-      <CurrentPath :name="name" :curPaths="currentPaths"/>
+      <CurrentPath/>
       <img src="@/assets/images/background/pexels-tristan-paolo-4276607.jpg"
               alt="" class="title-img"
               :class="[ isContentBoxIn ? 'fadeIn toDown-1' : '' ]">
@@ -276,8 +276,6 @@ export default {
   },
   data () {
     return {
-      name: '關於我們',
-      currentPaths: [],
       scrollPosition: 0,
       sectionTops: {
         contentBoxTops: 0,

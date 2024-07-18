@@ -56,7 +56,17 @@
     }
   }
 }
+@media (max-width:919px) {
+  .payment-page-header{
+    .process-box{
+      flex-direction: column;
 
+      .next-icon{
+        transform: rotate(90deg);
+      }
+    }
+  }
+}
 </style>
 
 <script>

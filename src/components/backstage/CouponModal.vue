@@ -67,7 +67,10 @@ import modalMixin from '@/mixins/ModalMixin'
 
 export default {
   props: {
-    coupon: {}
+    coupon: {
+      type: Object,
+      default () { return {} }
+    }
   },
   mixins: [modalMixin],
   data () {

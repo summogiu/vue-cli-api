@@ -14,7 +14,7 @@
                   <label for="customFile" class="form-label">上傳封面
                       <div class="spinner-border spinner-border-sm" role="status" v-if="status.loadingItem">
                       </div>
-                  </label>
+                  </label><br>
                   <img :src="tempArticle.imageUrl" alt="title-img" class="fileImg" v-if="tempArticle.imageUrl">
                   <p v-else>尚未上傳</p>
                   <form action="/api/giugiu-api/admin/upload" enctype="multipart/form-data"
@@ -30,9 +30,9 @@
                           placeholder="請輸入您的名稱" v-model="tempArticle.author">
                 </div>
                 <div class="mb-3">
-                  <label for="due_date" class="form-label">建立日期</label>
-                  <input type="date" class="form-control" id="due_date"
-                            v-model="due_date">
+                  <label for="create_at" class="form-label">建立日期</label>
+                  <input type="date" class="form-control" id="create_at"
+                            v-model="create_at">
                 </div>
                 <div class="mb-3">
                   <input class="form-check-input" type="checkbox"
@@ -63,10 +63,8 @@
                 </div>
                 <div class="mb-3">
                   <label for="content">文章內容</label>
-                  <!-- <textarea class="form-control article-content" id="content"
-                          placeholder="請輸入內容" v-model="tempArticle.content">
-                  </textarea> -->
-                  <Wang ref="wang" v-model="tempArticle.content"></Wang>
+                  <Wang ref="wang" v-model="tempArticle.content" :articleContent="tempArticle.content"
+                  @editContent="editContent"></Wang>
                 </div>
               </div>
             </div>
@@ -108,7 +106,10 @@ import Wang from '@/components/backstage/Wang.vue'
 
 export default {
   props: {
-    article: {}
+    article: {
+      type: Object,
+      default () { return {} }
+    }
   },
   components: {
     Wang
@@ -117,7 +118,7 @@ export default {
     return {
       modal: {},
       tempArticle: {},
-      due_date: '',
+      create_at: '',
       status: {
         loadingItem: false
       }
@@ -127,13 +128,17 @@ export default {
     article () {
       this.tempArticle = this.article
 
+      const dateAndTime = new Date(this.tempArticle.create_at * 1000)
+        .toISOString().split('T');
+
+      [this.create_at] = dateAndTime
+
       if (!this.tempArticle.isPublic) {
         this.tempArticle.isPublic = false
       }
     },
-    due_date () {
-      console.log(this.due_date)
-      this.tempArticle.create_at = Math.floor(new Date(this.due_date) / 1000)
+    create_at () {
+      this.tempArticle.create_at = Math.floor(new Date(this.create_at) / 1000)
     }
   },
   mixins: [modalMixin],
@@ -156,12 +161,17 @@ export default {
           if (res.data.success) {
             this.status.loadingItem = false
             this.tempArticle.imageUrl = res.data.imageUrl
-            console.log(this.tempArticle.imageUrl)
+            if (this.$refs.titleImgInput) {
+              this.$refs.titleImgInput.value = ''
+            }
           }
         })
         .catch((error) => {
           console.log(error)
         })
+    },
+    editContent (content) {
+      this.tempArticle.content = content
     }
   },
   mounted () {

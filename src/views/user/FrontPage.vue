@@ -1,587 +1,524 @@
 <template>
-  <div class="fram">
-    <div class="bg"></div>
-    <div class="banner" ref="banner">
-          <div class="h1-animation" ref="titleLogo"
-          :class="[ isTitleLogoFade ? 'h1-animation-fadeOut' : '' ]">
-              <div class="circle-background"></div>
-              <h1>In My Light</h1>
+  <div>
+    <div class="front-page-frame">
+      <div class="bunner-box">
+        <div class="swiper bannerSwiper" ref="bannerSwiper">
+          <div class="swiper-wrapper banner-swiper-wrapper">
+            <div class="swiper-slide banner-swiper-slide">
+              <img src="@/assets/images/banner/fontPage-banner01.jpg" alt="banner">
+            </div>
+            <div class="swiper-slide banner-swiper-slide">
+              <img src="@/assets/images/banner/fontPage-banner02.jpg" alt="banner">
+            </div>
+            <div class="swiper-slide banner-swiper-slide">
+              <img src="@/assets/images/banner/fontPage-banner03.jpg" alt="banner">
+            </div>
           </div>
+          <div class="swiper-pagination banner-swiper-pagination"></div>
+        </div>
+        <h1 class="bunner-title">IN MY LIGHT</h1>
+        <img src="@/assets/images/icon/bunner-icon.png" class="bunner-title-icon">
+        <div class="about-box">
+          <div class="about-title">
+            <img src="@/assets/images/icon/aboutUs.png" class="about-title-icon">
+            <h2>ABOUT</h2>
+          </div>
+          <span class="little-title">- 關於我們 -</span>
+          <router-link to="/about" class="about-Introduction">
+            <p>在In My Light，我們相信每一盞燈都是一個故事的開始，一個氛圍的創造者，以及家居美學的靈感來源。
+              我們是一家專業的燈具店，致力於為您的空間帶來獨特而精心設計的照明解決方案。</p>
+            <img src="@/assets/images/icon/related-products-to.png" alt="to-about" class="to-more-btn">
+          </router-link>
+        </div>
       </div>
 
-      <div class="about" ref="about" :class="[ isAboutFade ? 'fadeIn transform0' : '' ]">
-          <img src="@/assets/images/background/about.jpg" alt="">
-          <h4 class="background-text" :class="[isAboutFade ? 'fadeIn toRight-1' : '' ]">About</h4>
-          <div class="about-text">
-              <h2 :class="[ isAboutFade ? 'fadeIn toLeft-1' : '' ]">
-                照亮生活 ,<br>將美好帶入您的空間 ,<br>探索 "In My Light"。</h2>
-              <div class="about-content">
-                  <p :class="[ isAboutFade ? 'fadeIn toLeft-2' : '' ]">
-                      在In My Light，<br>我們相信每一盞燈都是一個故事的開始，<br>一個氛圍的創造者，<br>以及家居美學的靈感來源。<br>
-                      我們是一家專業的燈具店，<br>致力於為您的空間帶來獨特而精心設計的照明解決方案。
-                  </p>
-                  <br>
-                  <router-link to="about" class="more-link">
-                    more
-                      <div class="to-more-icon">
-                          <img src="@/assets/images/circle.png" alt="" class="circle">
-                          <i class="bi bi-arrow-right"></i>
-                      </div>
-                  </router-link>
-              </div>
+      <div class="product-section-box">
+        <div class="product-Introduction">
+          <img src="@/assets/images/icon/bag_shopping_icon.png">
+          <h2>PRODUCT</h2>
+          <router-link to="/products/productslist">
+          <p>我們的產品包括吊燈、壁燈、臺燈和地燈等各種類型，涵蓋了現代、古典、工業風等多種風格，滿足您的不同需求和喜好。
+            無論是為家居、辦公室還是商業空間，In My Light 系列燈具都能提供出色的照明效果，同時為您的空間增添藝術氣息和舒適感。
+            選擇 In My Light，讓您的空間更加煥然一新！</p>
+          <img src="@/assets/images/icon/related-products-to.png" alt="to-about" class="to-more-btn">
+          </router-link>
+          <span class="little-title">- 產品資訊 -</span>
+        </div>
+        <div class="swiper sectionSwiper" ref="productSwiper">
+          <div class="swiper-wrapper section-swiper-wrapper">
+            <div class="swiper-slide section-swiper-slide">
+              <img src="@/assets/images/products/industrial/pexels-anastasia-latunova-9967197.jpg" alt="product">
+            </div>
+            <div class="swiper-slide section-swiper-slide">
+              <img src="@/assets/images/products/crystal/pexels-aleksandar-j-popovic-5292856.jpg" alt="product">
+            </div>
+            <div class="swiper-slide section-swiper-slide">
+              <img src="@/assets/images/products/industrial/pexels-chris-f-8649354.jpg" alt="product">
+            </div>
           </div>
+          <div class="swiper-pagination product-swiper-pagination"></div>
+        </div>
       </div>
 
-      <div class="products-frame" ref="products" :class="[ isProductsFade ? 'fadeIn transform0' : '' ]">
-          <div class="products">
-            <h4 class="background-text" :class="{ 'toRight-1' : isProductsFade }">Products</h4>
-              <div class="products-content">
-                  <h2 :class="{ 'toLeft-1' : isProductsFade }">
-                      "In My Light "的燈具<br>每一件都由設計師團隊精心打造,<br>旨在為您的空間注入個人的獨特風格。
-                  </h2>
-                  <p :class="{ 'toLeft-2' : isProductsFade }">
-                      我們的產品包括吊燈、壁燈、臺燈和地燈等各種類型，<br>涵蓋了現代、古典、工業風等多種風格，<br>滿足您的不同需求和喜好。<br>無論是為家居、辦公室還是商業空間，<br>
-                      In My Light 系列燈具都能提供出色的照明效果，<br>同時為您的空間增添藝術氣息和舒適感。<br>選擇 In My Light，讓您的空間更加煥然一新！
-                  </p>
-                  <router-link to="products/productslist" class="more-link">
-                      more
-                      <div class="to-more-icon">
-                          <img src="@/assets/images/circle.png" alt="" class="circle">
-                          <i class="bi bi-arrow-right"></i>
-                      </div>
-                  </router-link>
-              </div>
-              <img src="@/assets/images/background/products01.jpg" alt="" class="products-show-image1"
-                      :class="{ 'toDown-1' : isProductsFade }">
-              <img src="@/assets/images/background/products02.jpg" alt="" class="products-show-image2"
-                      :class="{ 'toUp-1' : isProductsFade }">
-              <img src="@/assets/images/background/products03.jpg" alt=""
-                      :class="{ 'toDown-1' : isProductsFade }">
+      <div class="customized-section-box">
+        <div class="swiper sectionSwiper" ref="customizedSwiper">
+          <div class="swiper-wrapper section-swiper-wrapper">
+            <div class="swiper-slide section-swiper-slide">
+              <img src="@/assets/images/customized/StarlightHotel02.jpg" alt="customized">
+            </div>
+            <div class="swiper-slide section-swiper-slide">
+              <img src="@/assets/images/customized/StarlightHotel04.jpg" alt="customized">
+            </div>
           </div>
-          <div :class="[ isProductsFade ? 'swiperToLeft' : '' ]">
-            <ProductSwiper/>
-          </div>
+          <div class="swiper-pagination customized-swiper-pagination"></div>
+        </div>
+        <div class="customized-Introduction">
+          <img src="@/assets/images/icon/mallet_icon.png">
+          <h2>CUSTOMIZED</h2>
+          <router-link to="/customized">
+          <p>在In My Light，我們理解每個空間都是獨一無二的。
+            我們提供訂製專欄服務，讓您能夠打造符合您獨特需求和風格的照明解決方案。
+            無論您需要定制尺寸、特定材料或特別設計，我們的專業團隊將與您合作，
+            以確保您得到完美的訂製燈具，讓您的空間煥然一新，與眾不同。
+            與In My Light合作，將您的想象變成現實！
+          </p>
+          <img src="@/assets/images/icon/related-products-to.png" alt="to-about" class="to-more-btn">
+          </router-link>
+        </div>
+        <span class="little-title">- 訂製專欄 -</span>
       </div>
 
-      <div class="customized" ref="customized" :class="[ isCustomizedFade ? 'fadeIn transform0' : '' ]">
-          <img src="@/assets/images/background/customized.jpg" alt="">
-          <div class="customized-content"  :class="{ 'fadeIn customized-content-in' : isCustomizedFade }">
-              <h4 class="background-text" :class="{ 'toLeft-1' : isCustomizedFade }">Customized</h4>
-              <h2 :class="[ isCustomizedFade ? 'fadeIn toDown-2' : '' ]">
-                        在In My Light，<br>我們理解每個空間都是獨一無二的。</h2>
-              <p :class="{ 'toUp-2' : isCustomizedFade }">
-                  我們提供訂製專欄服務，<br>讓您能夠打造符合您獨特需求和風格的照明解決方案。<br>無論您需要定制尺寸、特定材料或特別設計，<br>我們的專業團隊將與您合作，<br>
-                  以確保您得到完美的訂製燈具，<br>讓您的空間煥然一新，與眾不同。<br>與In My Light合作，<br>將您的想象變成現實！
-              </p>
-              <a href="#" class="more-link">
-                  more
-                  <div class="to-more-icon">
-                      <img src="@/assets/images/circle.png" alt="" class="circle">
-                      <i class="bi bi-arrow-right"></i>
-                  </div>
-              </a>
+      <div class="company-section-box">
+        <img src="@/assets/images/background/company1.jpg" alt="company">
+        <span class="little-title">- 公司資訊 -</span>
+        <div class="company-information">
+          <div class="company-title">
+            <img src="@/assets/images/icon/bunner-icon-black.png">
+            <p>IN MY LIGHT</p>
           </div>
+          <div class="table-box">
+            <table>
+              <tr>
+                <th>公司名稱</th>
+                <td>In My Light 燈具有限公司</td>
+              </tr>
+              <tr>
+                <th>創建日期</th>
+                <td>2020-01-15</td>
+              </tr>
+              <tr>
+                <th>FAX</th>
+                <td>+886-2-8765-4321</td>
+              </tr>
+            </table>
+            <table>
+              <tr>
+                <th>公司地址</th>
+                <td>1234 台灣台北市中山區光復北路100號</td>
+              </tr>
+              <tr>
+                <th>TEL</th>
+                <td>+886-2-1234-5678</td>
+              </tr>
+              <tr>
+                <th>業務類別</th>
+                <td>家具及裝設品製造業.綜合零售業</td>
+              </tr>
+            </table>
+          </div>
+          <button class="connect-us-btn" type="button">
+            <i class="bi bi-envelope"></i>
+            聯絡我們
+          </button>
+        </div>
       </div>
 
-      <div class="company" ref="company">
-      <h4 class="background-text" :class="[ isCompanyFade ? 'toRight-1' : '' ]">Company</h4>
-      <ul :class="[ isCompanyFade ? 'fadeIn toLeft-1' : '' ]">
-          <li>聯絡資訊</li>
-          <li>地址：123台灣台北市中山區光復北路100號</li>
-          <li>電話：+886-2-1234-5678</li>
-          <li>電子郵件：info@inmylight.com</li>
-          <li>網站：www.inmylight.com</li>
-      </ul>
-      <p>在您有任何疑問、建議或合作意向時，請隨時通過上述聯絡方式與我們取得聯繫。我們的專業團隊將竭誠為您提供最優質的服務，並解答您的所有疑問。期待與您的溝通與合作！</p>
-      <img src="@/assets/images/background/company1.jpg" alt="" :class="[ isCompanyFade ? 'fadeIn transform0' : '' ]">
+      <div class="consult-section-box">
+        <span class="little-title">- 線上諮詢 -</span>
+        <img src="@/assets/images/icon/consult-icon.png">
+        <p>在您有任何疑問、建議或合作意向時，請隨時通過電子信箱服務與我們取得聯繫。<br>
+          我們的專業團隊將竭誠為您提供最優質的服務，並解答您的所有疑問。<br>
+          期待與您的溝通與合作！
+        </p>
+        <p>信箱地址：info@inmylight.com</p>
+        <span>或者</span>
+        <button class="common-problem-btn" type="button">
+          提交線上表單
+          <img src="@/assets/images/icon/related-products-to.png" alt="to-about" class="to-more-btn">
+        </button>
+        <button class="back-top-btn" type="button" @click="scrollToTop">
+          <img src="@/assets/images/icon/up.png">
+        </button>
       </div>
+    </div>
   </div>
-  <ToPageTop :class="[ isTitleLogoFade ? 'fadeIn' : '' ]" />
 </template>
 
 <style lang="scss">
-.fram{
-  overflow: hidden;
-  .bg{
-    height: 100vh;
-    width: 100%;
-    position: fixed;
-    background-image: url('@/assets/images/banner/index-banner.jpg');
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center right;
-    animation: slowScale 100s infinite alternate both;
+@import 'swiper/css';
+@import 'swiper/css/pagination';
+@import 'swiper/css/autoplay';
+@import 'swiper/css/effect-fade';
+
+.bannerSwiper{
+  width: 90%;
+  animation: mask-title 2s ease-in forwards;
+
+  .banner-swiper-wrapper{
+    border-radius: 0 0 50% 50%;
+    height: 1000px;
+    overflow: hidden;
+
+    .banner-swiper-slide{
+
+      img{
+        max-width: 2000px;
+        object-fit: cover;
+        animation: slowScale 30s infinite;
+      }
+    }
+  }
+  .banner-swiper-pagination{
+    bottom: 15% !important;
   }
 }
+.sectionSwiper{
+  max-width: 500px;
+  margin: 0;
 
-.banner{
-    position: relative;
-    display: block;
-    height: auto;
-    z-index: 1;
-    height: 100vh;
-
-    .h1-animation{
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        left: 20%;
-        scale: 1.5;
-        opacity: 1;
-        transition: all .5s;
-    }
-    .h1-animation::before {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: $subColor2;
-        animation: slideOut 1s ;
-        opacity: 0;
-    }
-    .h1-animation::after{
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 5%;
-        bottom: -10px;
-        background-color: $subColor2;
-        animation: slideIn 1.5s .5s ease-in reverse ,fadeIn 1s .5s forwards;
-        opacity: 0;
-    }
-    h1{
-        font-size: 50px;
-        color: $subColor2;
-        opacity: 0;
-        animation: fadeIn 2s .2s forwards;
-    }
-    .circle-background{
-        position: absolute;
-        top: -60px;
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        background-color: rgba(255,255,255,0.7);
-        animation: fadeIn 2s .2s, slideDown 1s .2s forwards;
-    }
-
-    .h1-animation-fadeOut{
-      scale: 0;
-      opacity: 0;
-      top: 80%;
-    }
-}
-
-@media (max-width:919px){
-    .banner{
-        .h1-animation{
-            scale: 1;
-        }
-    }
-}
-
-.about {
-    display: flex;
-    position: relative;
+  .section-swiper-wrapper{
+    border-radius: 0 0 50% 50%;
+    height: 560px;
     overflow: hidden;
-    margin-top: 50px;
-    background: white;
-    // 進場
-    opacity: 0;
-    transform: translateY(30%);
-    transition: all 1s;
 
-    .background-text{
-        top: -20px;
-        left: 30%;
-        opacity: 0;
-        transition: all .5s;
-    }
-    >img{
-        width: 30%;
-        height: 600px;
+    .section-swiper-slide{
+      img{
+        max-width: 1000px;
         object-fit: cover;
-    }
-    .about-text{
-        display: flex;
-        z-index: 5;
-
-        h2{
-            margin-top: 15%;
-            opacity: 0;
-            transition: all 1s;
-        }
-        .about-content{
-            margin-top: 18%;
-            p{
-                font-size: 20px;
-                opacity: 0;
-                transition: all 1s;
-            }
-            .more-link{
-                position: absolute;
-                right: -50px;
-            }
-        }
-    }
-}
-
-@media (max-width:919px) {
-    .about{
-      flex-direction: column-reverse;
-
-      .background-text{
-        top: -80px;
-        left: 10%;
-        }
-      .about-text{
-          flex-direction: column;
-
-        .about-content{
-            margin-top: 5%;
-            p{
-                margin-left: 16px;
-            }
-            .more-link{
-                bottom: 0;
-                right: 0;
-            }
-        }
-      }
-      >img{
-        width: 60%;
-        height: 300px;
-        opacity: 0.5;
-      }
-    }
-}
-@media (max-width:414px){
-    .about{
-      .background-text{
-        top: -20px;
-            left: -50%;
-        }
-      .about-text{
-        .about-content{
-            .more-link{
-                right: -50px;
-            }
-        }
-      }
-    }
-}
-
-.products-frame{
-    position: relative;
-    height: 800px;
-    margin: 200px 0;
-    background: white;
-    // 進場
-    opacity: 0;
-    transform: translateY(30%);
-    transition: all 1s;
-
-    .products{
-        display: flex;
-        position: relative;
-        overflow: hidden;
-
-        .products-content{
-            width: 50%;
-            font-size: 20px;
-            z-index: 5;
-
-            h2{
-                position: absolute;
-                margin-top: 150px;
-            }
-            p{
-                position: absolute;
-                margin-left: 10%;
-                margin-top: 340px;
-                background: rgba(255,255,255,0.5);
-                border-radius: 3px;
-                padding: 10px;
-            }
-            .more-link{
-                position: absolute;
-                left: 50px;;
-                bottom: 0;
-                z-index: 10;
-            }
-        }
-        >img{
-            margin-right: 5px;
-            border-radius: 5px;
-            height: 100%;
-            z-index: 3;
-        }
-        .products-show-image1{
-            margin-top: 10px;
-        }
-        .products-show-image2{
-            margin-top: 50px;
-        }
-    }
-}
-@media (max-width:919px){
-    .products-frame{
-        margin-top: 100px;
-        .products{
-            height: 100%;
-            >img{
-                width: 30%;
-                height: 50%;
-                opacity: 0.7;
-            }
-            h2{
-                white-space:unset;
-                scale: 0.7;
-                text-align: end;
-                z-index: 10;
-                width: 110%;
-            }
-            .background-text{
-                top: -100px;
-                left: -200px;
-              }
-            .products-content{
-              p{
-                top: 40px;
-                z-index: 10;
-                width: 80%;
-              }
-              .more-link{
-                left: 50%;
-                transform: translateX(-50%);
-              }
-            }
-        }
-    }
-}
-@media (max-width:414px){
-  .products-frame{
-    .products{
-      h2{
-        top: -30px
-      }
-      .background-text{
-          right: -250px;
-          bottom: -1700px;
-        }
-      .products-content{
-        .more-link{
-            display: none;
-        }
+        animation: slowScale 30s infinite;
       }
     }
   }
 }
+.swiper-pagination-bullet-active{
+    background-color: white;
+}
 
-.customized{
-    margin-top: 300px;
-    position: relative;
-    overflow: hidden;
-    // 進場
+.bunner-box{
+  position: relative;
+
+  .bunner-title{
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    font-size: 80px;
+    color: $subColor;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     opacity: 0;
-    transform: translateY(30%);
-    transition: all 1s;
+    animation: fadeIn 2s .5s ease-in forwards;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+  }
+  .bunner-title-icon{
+    height: 300px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+  }
 
-    .background-text{
-        color: $subColor2;
-        top: -180px;
-        right: 0;
-        font-size: 200px;
-        z-index: -1;
-    }
-    >img{
-        width: 100%;
-        max-height: 1200px;
-        object-fit: cover;
-    }
-
-    .customized-content{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translateX(-50%) translateY(-100%);
-        opacity: 0;
-        transition: all 1s;
-        text-align: center;
-        background: linear-gradient(to bottom,rgba(0, 0, 0, 0.6) 90%,rgba(0, 0, 0, 0));
-        width: 100%;
-        padding: 20px 0;
-        h2{
-            color: $subColor;
-            opacity: 0;
-            transition: all 1s;
-        }
-        p{
-            line-height: 3;
-            margin: 30px auto 0 auto;
-            color: $subColor;
-        }
-        .more-link{
-            margin: 0 auto;
-            padding-left: 20px;
-        }
-    }
-    .customized-content-in{
-      transform: translateX(-50%) translateY(-50%);
-}
-}
-
-@media (max-width:919px){
-    .customized{
-        margin-top: 1300px;
-
-        .background-text{
-          top: -150px;
-          font-size: 150px;
-          left: 0;
-        }
-        >img{
-          height: 800px;
-        }
-
-    }
-}
-@media (max-width:414px){
-    .customized{
-
-        .background-text{
-            left: -20%;
-            top: -100px;
-            font-size: 150px;
-        }
-
-        .customized-content{
-            padding-bottom: 60px;
-            h2{
-                font-size: 36px;
-                white-space:unset;
-            }
-        }
-    }
-}
-
-.company{
+  .about-box{
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    position: relative;
-    margin-top: 250px;
-    overflow: hidden;
+    width: 640px;
+    padding: 35px 50px;
+    background-color: white;
+    border-radius: 150px 0 0 150px;
+    transform: translateX(100%);
+    animation: out-to-Left .5s 2.5s ease forwards;
+    position: absolute;
+    bottom: 20%;
+    right: 0;
+    z-index: 25;
 
-    .background-text{
-        color: $subColor;
-        top: -50px;
+    .about-title{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .about-title-icon{
+        width: 130px;
+      }
+      h2{
+        font-size: 24px;
+      }
     }
-    ul{
-        padding-left: 100px;
-        line-height: 3;
-        background-color: rgba(0,0,0,0.75);
-        height: 500px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        color: $subColor;
-        z-index: 5;
-        opacity: 0;
-        transition: all 2s;
+    .about-Introduction{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: space-between;
+      height: 150px;
+      padding: 30px 20px 0 20px;
+
+      p{
+        font-size: 14px;
+        color: $subColor2;
+      }
+      &:hover img{
+        animation: BounceToRight 0.3s;
+      }
     }
+    .little-title{
+      right: 50px;
+      top: 20px;
+    }
+  }
+}
+
+.product-section-box,.customized-section-box{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 90%;
+  margin: 150px auto 0 auto;
+  position: relative;
+
+  .product-Introduction,.customized-Introduction{
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    >img{
+      width: 130px;
+    }
+    h2{
+      font-size: 24px;
+      padding: 10px;
+    }
+    a{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+
+      p{
+        font-size: 14px;
+        color: $subColor2;
+      }
+      &:hover img{
+        animation: BounceToRight 0.3s;
+      }
+    }
+  }
+}
+.product-section-box{
+  .little-title{
+    left: 0;
+    top: 0;
+  }
+}
+.customized-section-box{
+  padding-bottom: 400px;
+
+  .little-title{
+    right: 0;
+    top: 0;
+  }
+}
+
+.company-section-box{
+  border-radius: 50px 50px 0 0;
+  overflow: hidden;
+  background-color: $subColor7;
+  position: relative;
+  padding-bottom: 160px;
+
+  >img{
+    position: relative;
+    z-index: 10;
+    height: 500px;
+    width: 100%;
+    object-fit: cover;
+  }
+  .little-title{
+    top: 20px;
+    left: 50px;
+    z-index: 20;
+  }
+  .company-title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translateY(-50px);
+
     img{
-        width: 50%;
-        height: 500px;
-        object-fit: cover;
-        opacity: 0;
-        transform: translateY(30%);
-        transition: all 1s;
+      width: 120px;
     }
     p{
-        position: absolute;
-        bottom: 0;
-        text-align: center;
-        width: 100%;
-        background-color: rgba(0,0,0,0.75);
-        color: $subColor;
-        z-index: 10;
+      font-size: 30px;
+      font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     }
+  }
+  .table-box{
+    display: flex;
+    justify-content: space-around;
+
+    table{
+      width: 40%;
+      tr{
+        display:block;
+        border-top: 1px solid rgba(0, 0, 0, 0.2);
+        padding: 20px 0;
+        width: 100%;
+
+        th{
+          width: 100px;
+        }
+      }
+    }
+  }
+}
+.consult-section-box{
+  border-radius: 50px 50px 0 0;
+  background-color: $subColor4;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .little-title{
+    top: 20px;
+    right: 50px;
+  }
+  >img{
+    margin: 130px auto 60px auto;
+  }
+  p{
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .back-top-btn{
+    background-color: transparent;
+    border: none;
+    border-top: 2px solid black;
+    margin: 100px 0 60px 0;
+
+    img{
+      width: 100px;
+      margin-top: 5px;
+    }
+    &:hover{
+      img{
+        animation: BounceToTop 0.2s;
+      }
+    }
+  }
+}
+.connect-us-btn,.common-problem-btn{
+  background-color: black;
+  border-radius: 20px;
+  border: none;
+  color: white;
+  width: 240px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 40px auto;
+
+  i{
+    margin-right: 10px;
+    font-size: 18px;
+  }
+}
+.common-problem-btn{
+  background-color: white;
+  color: black;
+
+  img{
+    margin-left: 10px;
+    width: 20px;
+  }
+  &:hover img{
+    animation: BounceToRight 0.3s;
+  }
 }
 
-@media (max-width:414px){
-        .company{
-          .background-text{
-            color: $subColor;
-            left: -50px;
-            font-size: 150px;
-        }
-        ul{
-            position: absolute;
-            padding: 0 20px;
-        }
-        img{
-          width: 100%;
-        }
-    }
+.to-more-btn{
+  width: 30px;
 }
+.little-title{
+  position: absolute;
+  font-size: 14px;
+}
+
 </style>
 
 <script>
-import ProductSwiper from '@/components/user/ProductSwiper.vue'
-import scrollPosMixin from '@/mixins/scrollPosMixin' // 監聽滾動事件
-import ToPageTop from '@/components/user/ToPageTop.vue'
+// import scrollPosMixin from '@/mixins/scrollPosMixin'
+
+import Swiper from 'swiper'
+import { Pagination, Autoplay, EffectFade } from 'swiper/modules'
+
+Swiper.use(Pagination)
+Swiper.use(Autoplay)
+Swiper.use(EffectFade)
 
 export default {
-  components: {
-    ProductSwiper,
-    ToPageTop
-  },
   data () {
     return {
-      scrollPosition: 0,
-      sectionTops: {
-        titleLogoTops: 0,
-        bannerTops: 0,
-        aboutTops: 0,
-        productsTops: 0,
-        customizedTops: 0,
-        companyTops: 0
-      }
+      bannerSwiper: ''
     }
   },
-  computed: {
-    isTitleLogoFade () {
-      return this.scrollPosition >= this.sectionTops.titleLogoTops / 2
-    },
-    isAboutFade () {
-      return this.scrollPosition >= this.sectionTops.aboutTops / 2
-    },
-    isProductsFade () {
-      return this.scrollPosition >= this.sectionTops.productsTops / 1.5
-    },
-    isCustomizedFade () {
-      return this.scrollPosition >= this.sectionTops.customizedTops / 1.5
-    },
-    isCompanyFade () {
-      return this.scrollPosition >= this.sectionTops.companyTops / 1.2
-    }
-  },
-  mixins: [scrollPosMixin],
+  // mixins: [scrollPosMixin],
   methods: {
-    // 取得區塊定位
-    getSectionTops () {
-      this.sectionTops.titleLogoTops = this.$refs.titleLogo.getBoundingClientRect().top + window.pageYOffset
-      this.sectionTops.bannerTops = this.$refs.banner.getBoundingClientRect().top + window.pageYOffset
-      this.sectionTops.aboutTops = this.$refs.about.getBoundingClientRect().top + window.pageYOffset
-      this.sectionTops.productsTops = this.$refs.products.getBoundingClientRect().top + window.pageYOffset
-      this.sectionTops.customizedTops = this.$refs.customized.getBoundingClientRect().top + window.pageYOffset
-      this.sectionTops.companyTops = this.$refs.company.getBoundingClientRect().top + window.pageYOffset
+    scrollToTop () {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
     }
   },
   mounted () {
-    this.getSectionTops()
+    // bannerSwiper
+    this.bannerSwiper = new Swiper(this.$refs.bannerSwiper, {
+      pagination: {
+        el: '.banner-swiper-pagination',
+        clickable: true
+      },
+      autoplay: {
+        delay: 5000
+      },
+      effect: 'fade'
+    })
+    // productSwiper
+    this.productSwiper = new Swiper(this.$refs.productSwiper, {
+      pagination: {
+        el: '.product-swiper-pagination',
+        clickable: true
+      },
+      autoplay: {
+        delay: 5000
+      },
+      effect: 'fade'
+    })
+    // customizedSwiper
+    this.customizedSwiper = new Swiper(this.$refs.customizedSwiper, {
+      pagination: {
+        el: '.customized-swiper-pagination',
+        clickable: true
+      },
+      autoplay: {
+        delay: 5000
+      },
+      effect: 'fade'
+    })
   }
 }
 </script>

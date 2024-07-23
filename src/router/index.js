@@ -42,12 +42,12 @@ const routes = [
           {
             path: 'placeOder',
             name: '填寫收件資訊頁面',
-            component: () => import('../components/user/PlaceOder.vue')
+            component: () => import('../views/user/PlaceOder.vue')
           },
           {
             path: 'checkout/:oderid',
             name: '訂單成立頁面',
-            component: () => import('../components/user/CheckoutView.vue')
+            component: () => import('../views/user/CheckoutView.vue')
           }
         ]
       },
@@ -89,7 +89,11 @@ const routes = [
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes,
+  scrollBehavior (to, from, savedPosition) {
+    // 確保每次導航到新頁面時，視窗都從頂部開始
+    return { left: 0, top: 0 }
+  }
 })
 
 export default router

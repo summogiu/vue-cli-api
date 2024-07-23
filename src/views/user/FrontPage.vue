@@ -32,8 +32,8 @@
         </div>
       </div>
 
-      <div class="product-section-box">
-        <div class="product-Introduction">
+      <div class="product-section-box" ref="product">
+        <div class="product-Introduction" :class="[isSectionIn.isProductSectionIn ? 'fadeIn toDown-1' : '']">
           <img src="@/assets/images/icon/bag_shopping_icon.png">
           <h2>PRODUCT</h2>
           <router-link to="/products/productslist">
@@ -42,9 +42,9 @@
             選擇 In My Light，讓您的空間更加煥然一新！</p>
           <img src="@/assets/images/icon/related-products-to.png" alt="to-about" class="to-more-btn">
           </router-link>
-          <span class="little-title">- 產品資訊 -</span>
         </div>
-        <div class="swiper sectionSwiper" ref="productSwiper">
+        <span class="little-title">- 產品資訊 -</span>
+        <div class="swiper sectionSwiper" ref="productSwiper" :class="[isSectionIn.isProductSectionIn ? 'sectionSwiper-In' : '']">
           <div class="swiper-wrapper section-swiper-wrapper">
             <div class="swiper-slide section-swiper-slide">
               <img src="@/assets/images/products/industrial/pexels-anastasia-latunova-9967197.jpg" alt="product">
@@ -56,12 +56,14 @@
               <img src="@/assets/images/products/industrial/pexels-chris-f-8649354.jpg" alt="product">
             </div>
           </div>
+          <div class="mask-color"></div>
           <div class="swiper-pagination product-swiper-pagination"></div>
         </div>
       </div>
 
-      <div class="customized-section-box">
-        <div class="swiper sectionSwiper" ref="customizedSwiper">
+      <div class="customized-section-box" ref="customized"
+          :style="{ transform: `translateY(${moveTranslateY.customizedTranslate}px)`}">
+        <div class="swiper sectionSwiper" ref="customizedSwiper"  :class="[isSectionIn.isCustomizedSectionIn ? 'sectionSwiper-In' : '']">
           <div class="swiper-wrapper section-swiper-wrapper">
             <div class="swiper-slide section-swiper-slide">
               <img src="@/assets/images/customized/StarlightHotel02.jpg" alt="customized">
@@ -70,9 +72,10 @@
               <img src="@/assets/images/customized/StarlightHotel04.jpg" alt="customized">
             </div>
           </div>
+          <div class="mask-color"></div>
           <div class="swiper-pagination customized-swiper-pagination"></div>
         </div>
-        <div class="customized-Introduction">
+        <div class="customized-Introduction" :class="[isSectionIn.isCustomizedSectionIn ? 'fadeIn toDown-1' : '']">
           <img src="@/assets/images/icon/mallet_icon.png">
           <h2>CUSTOMIZED</h2>
           <router-link to="/customized">
@@ -86,9 +89,11 @@
           </router-link>
         </div>
         <span class="little-title">- 訂製專欄 -</span>
+        <div class="shadow" :style="{ opacity: this.opacity.customizedQpacity }"></div>
       </div>
 
-      <div class="company-section-box">
+      <div class="company-section-box" ref="company"
+          :style="{ transform: `translateY(${moveTranslateY.companyTranslate}px)` }">
         <img src="@/assets/images/background/company1.jpg" alt="company">
         <span class="little-title">- 公司資訊 -</span>
         <div class="company-information">
@@ -131,9 +136,10 @@
             聯絡我們
           </button>
         </div>
+        <div class="shadow" :style="{ opacity: this.opacity.companyQpacity }"></div>
       </div>
 
-      <div class="consult-section-box">
+      <div class="consult-section-box" ref="consult">
         <span class="little-title">- 線上諮詢 -</span>
         <img src="@/assets/images/icon/consult-icon.png">
         <p>在您有任何疑問、建議或合作意向時，請隨時通過電子信箱服務與我們取得聯繫。<br>
@@ -160,6 +166,7 @@
 @import 'swiper/css/autoplay';
 @import 'swiper/css/effect-fade';
 
+// Swiper樣式
 .bannerSwiper{
   width: 90%;
   animation: mask-title 2s ease-in forwards;
@@ -182,13 +189,16 @@
     bottom: 15% !important;
   }
 }
+// product及customized的通用Swiper樣式
 .sectionSwiper{
-  max-width: 500px;
+  max-width: 640px;
+  width: 50%;
   margin: 0;
+  opacity: 0;
 
   .section-swiper-wrapper{
-    border-radius: 0 0 50% 50%;
-    height: 560px;
+    border-radius: 0 0 320px 320px;
+    height: 640px;
     overflow: hidden;
 
     .section-swiper-slide{
@@ -204,8 +214,11 @@
     background-color: white;
 }
 
+// 區塊樣式
+// bunner及about
 .bunner-box{
   position: relative;
+  overflow: hidden;
 
   .bunner-title{
     user-select: none;
@@ -240,7 +253,7 @@
     background-color: white;
     border-radius: 150px 0 0 150px;
     transform: translateX(100%);
-    animation: out-to-Left .5s 2.5s ease forwards;
+    animation: out-to-Left 1.5s 2.5s cubic-bezier(0.2, 1, 0.3, 1) forwards;
     position: absolute;
     bottom: 20%;
     right: 0;
@@ -280,20 +293,23 @@
     }
   }
 }
-
+// product及customized的通用樣式
 .product-section-box,.customized-section-box{
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 90%;
+  padding: 0 5%;
   margin: 150px auto 0 auto;
   position: relative;
 
   .product-Introduction,.customized-Introduction{
-    max-width: 400px;
+    max-width: 540px;
+    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    opacity: 0;
+    transition: opacity .5s;
 
     >img{
       width: 130px;
@@ -317,20 +333,46 @@
     }
   }
 }
+.mask-color{
+    border-radius: 0 0 320px 320px;
+    height: 640px;
+    width: 100%;
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    transition: opacity 2s ease-in;
+}
+// product及customized的個別樣式
 .product-section-box{
   .little-title{
-    left: 0;
+    left: 5%;
     top: 0;
+  }
+  .mask-color{
+    background-color: $subColor5;
   }
 }
 .customized-section-box{
   padding-bottom: 400px;
+  transition: translate .5s;
 
   .little-title{
-    right: 0;
+    right: 5%;
     top: 0;
   }
+  .mask-color{
+    background-color: $subColor6;
+  }
 }
+// product及customized的進場動畫
+.sectionSwiper-In{
+    animation: mask-circle 3s ease-in forwards;
+
+    .mask-color{
+      opacity: 0;
+    }
+  }
 
 .company-section-box{
   border-radius: 50px 50px 0 0;
@@ -449,6 +491,17 @@
     animation: BounceToRight 0.3s;
   }
 }
+// customized及consult的覆蓋效果
+.shadow{
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    z-index: 25;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity .3s;
+    pointer-events: none;
+}
 
 .to-more-btn{
   width: 30px;
@@ -461,7 +514,7 @@
 </style>
 
 <script>
-// import scrollPosMixin from '@/mixins/scrollPosMixin'
+import scrollPosMixin from '@/mixins/scrollPosMixin'
 
 import Swiper from 'swiper'
 import { Pagination, Autoplay, EffectFade } from 'swiper/modules'
@@ -473,16 +526,87 @@ Swiper.use(EffectFade)
 export default {
   data () {
     return {
-      bannerSwiper: ''
+      bannerSwiper: '',
+      productSwiper: '',
+      customizedSwiper: '',
+      // 區塊位置
+      sectionTops: {
+        productTop: 0,
+        customizedTop: 0,
+        companyTop: 0,
+        consultTop: 0
+      },
+      // 判斷是否已進場
+      isSectionIn: {
+        isProductSectionIn: false,
+        isCustomizedSectionIn: false
+      },
+      // 動態改變的TranslateY
+      moveTranslateY: {
+        customizedTranslate: 0,
+        companyTranslate: 0
+      },
+      // 動態改變的opacity
+      opacity: {
+        customizedQpacity: 0,
+        companyQpacity: 0
+      }
     }
   },
-  // mixins: [scrollPosMixin],
+  watch: {
+    // 判斷是否已進場
+    scrollPosition () {
+      console.log(this.scrollPosition)
+      if (this.scrollPosition >= this.sectionTops.productTop / 2) {
+        this.isSectionIn.isProductSectionIn = true
+      }
+      if (this.scrollPosition >= this.sectionTops.customizedTop / 1.4) {
+        this.isSectionIn.isCustomizedSectionIn = true
+      }
+      this.handleScroll()
+    }
+  },
+  mixins: [scrollPosMixin],
   methods: {
-    scrollToTop () {
+    scrollToTop () { // 返回頁面頂端
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
       })
+    },
+    getSectionTops () { // 取得區塊定位
+      this.sectionTops.productTop = this.$refs.product.getBoundingClientRect().top + window.pageYOffset
+      this.sectionTops.customizedTop = this.$refs.customized.getBoundingClientRect().top + window.pageYOffset
+      this.sectionTops.companyTop = this.$refs.company.getBoundingClientRect().top + window.pageYOffset
+      this.sectionTops.consultTop = this.$refs.consult.getBoundingClientRect().top + window.pageYOffset
+    },
+    handleScroll () { // 動態改變TranslateY和opacity
+      // customized區塊
+      // TranslateY
+      if (this.scrollPosition >= this.sectionTops.companyTop / 1.52) {
+        this.moveTranslateY.customizedTranslate = (this.scrollPosition - this.sectionTops.customizedTop) * 0.5
+      } else {
+        this.moveTranslateY.customizedTranslate = 0
+      }
+      // opacity
+      if (this.scrollPosition >= this.sectionTops.companyTop / 1.2) {
+        this.opacity.customizedQpacity = Math.min(this.scrollPosition / 5000, 1)
+      } else {
+        this.opacity.customizedQpacity = 0
+      }
+      // company區塊
+      // TranslateY
+      if (this.scrollPosition >= this.sectionTops.consultTop / 1.4) {
+        this.moveTranslateY.companyTranslate = (this.scrollPosition - this.sectionTops.companyTop) * 0.3
+      } else {
+        this.moveTranslateY.companyTranslate = 0
+      }
+      // opacity
+      if (this.scrollPosition >= this.sectionTops.consultTop / 1.15) {
+        this.opacity.companyQpacity = Math.min(this.scrollPosition / 5000, 1)
+      } else {
+        this.opacity.companyQpacity = 0
+      }
     }
   },
   mounted () {
@@ -519,6 +643,8 @@ export default {
       },
       effect: 'fade'
     })
+
+    this.getSectionTops()
   }
 }
 </script>

@@ -7,6 +7,11 @@
         <h1>About</h1>
         <h2>關於我們</h2>
       </div>
+      <div class="marquee"
+          :class="[ isContentBoxIn ? 'marquee-up' : '' ]">
+        <p class="marquee-content">ABOUT IN MY LIGHT</p>
+        <p class="marquee-content-delay">&nbsp;&nbsp;ABOUT IN MY LIGHT</p>
+      </div>
     </div>
     <div class="about-page-content-box" ref="contentBox"
             :class="[ isContentBoxIn ? 'transform0' : '' ]">
@@ -27,8 +32,8 @@
             <div :class="[ isPointFade ? 'fadeIn straight-line' : '' ]"
                     @animationend="lineAnimationJudge"></div>
       <ul class="about-page-point" ref="point"
-            :class="[ islineAnimationEnd ? 'fadeIn' : '' ]">
-        <li :class="[ islineAnimationEnd ? 'toRight-1 point-fadeIn' : '' ]">
+            :class="[ islineAnimationEnd && isPointFade ? 'fadeIn' : '' ]">
+        <li :class="[ islineAnimationEnd && isPointFade ? 'toRight-1 point-fadeIn' : '' ]">
           <img src="@/assets/images/about-img/point1.jpg" alt="">
           <div class="about-page-point-text">
             <p>優質品質：</p>
@@ -109,6 +114,28 @@
     h2{
       font-size: 30px;
       text-align: end;
+    }
+    .marquee {
+      overflow: hidden;
+      white-space: nowrap;
+      position: absolute;
+      bottom: -80px;
+      transition: transform .5s, opacity .5s;
+      opacity: 0.5;
+
+      .marquee-content,.marquee-content-delay {
+        display: inline-block;
+        animation: marquee 50s linear infinite;
+        color: white;
+        font-size: 180px;
+      }
+      .marquee-content-delay{
+        animation: marquee 50s -50s linear infinite;
+      }
+    }
+    .marquee-up{
+      transform: translateY(-200%);
+      opacity: 1;
     }
   }
 
@@ -289,11 +316,11 @@ export default {
       return this.scrollPosition >= this.sectionTops.contentBoxTops / 5
     },
     isContentIn () {
-      return this.scrollPosition >= this.sectionTops.contentBoxTops / 1.2
+      return this.scrollPosition >= this.sectionTops.contentBoxTops
     },
     isPointFade (
     ) {
-      return this.scrollPosition >= this.sectionTops.pointTops / 2
+      return this.scrollPosition >= this.sectionTops.pointTops / 1.5
     },
     isPointFadeHalf () {
       return this.scrollPosition >= this.sectionTops.pointTops / 1.5

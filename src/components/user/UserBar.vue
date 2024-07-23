@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="header">
-        <ul class="header-menu">
+        <ul class="header-menu" :class="[ isHeaderMenuIn ? 'header-menu-In' : '']"
+            @mouseenter="isHeaderMenuIn = true" @mouseleave="isHeaderMenuIn = false">
+            <li>
+              <i class="bi bi-caret-left-fill header-menu-In-btn" :class="[ isHeaderMenuIn ? 'fadeOut' : '' ]"></i>
+            </li>
             <li><router-link to="/about"><p>ABOUT</p> <p class="subtitle">關於我們</p></router-link></li>
             <li class="open-products-style-box">
                 <router-link to="/products/productslist"><p>PRODUCTS</p> <p class="subtitle">產品資訊</p></router-link>
@@ -71,12 +75,21 @@
     right: 0;
     top: 0;
     z-index: 50;
-    background: linear-gradient(to left,rgba(0, 0, 0, 0.75) 50%,rgba(0, 0, 0, 0));
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 50px 0 0 50px;
     padding-left: 20px;
+    transform: translateX(92%);
+    transition: transform .5s cubic-bezier(0.2, 1, 0.3, 1);
+
     >li{
         margin-right: 20px;
         position: relative;
 
+        .header-menu-In-btn{
+          color: white;
+          line-height: 67px;
+          transition: opacity .5s;
+        }
         >a{
             display: block;
             padding: 10px;
@@ -119,6 +132,9 @@
         }
 
     }
+}
+.header-menu-In{
+  transform: translateX(0);
 }
 //產品選單
 .products-style-box {
@@ -383,7 +399,8 @@
 export default {
   data () {
     return {
-      MBmenuIsOpen: false
+      MBmenuIsOpen: false,
+      isHeaderMenuIn: false
     }
   },
   methods: {
@@ -404,7 +421,6 @@ export default {
     toCategory (category) {
       this.isMBMenuOpen = false
       this.$router.push(`/products/productslist/${category}`)
-      window.scrollTo(0, 0)
     }
   }
 }

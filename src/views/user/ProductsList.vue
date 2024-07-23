@@ -43,7 +43,7 @@
 
 <style lang="scss">
 .product-list-box{
-    margin-top: 200px;
+    margin-top: 250px;
     animation: fadeIn 1s;
 
     .filter-select-box{

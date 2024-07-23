@@ -287,9 +287,36 @@ h2{
     transform: translateX(-5%);
   }
 }
+@keyframes mask-circle {
+  0% {
+    mask-image: url('@/assets/images/icon/mask-circle.png');
+    mask-repeat: no-repeat;
+    mask-position: center center;
+    mask-size: 30px 30px;
+    opacity: 0;
+  }
+  15% {
+    mask-size: 100px 100px;
+  }
+  30% {
+    mask-size: 60px 60px;
+    opacity: 1;
+  }
+  40% {
+    mask-size: 1000px 1000px;
+  }
+  100% {
+    mask-position: center center;
+    mask-image: none;
+    opacity: 1;
+  }
+}
 
 .fadeIn {
   opacity: 1 !important;
+}
+.fadeOut {
+  opacity: 0 !important;
 }
 .transform0 {
   transform: translateY(0) translateX(0) !important;
@@ -338,6 +365,14 @@ h2{
   }
   to {
     transform: translate(-50%, -50%) rotate(360deg) translate(100px) rotate(-360deg);
+  }
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
   }
 }
 

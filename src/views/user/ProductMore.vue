@@ -45,11 +45,11 @@
                           </button>
         </div>
         <div class="provision-box">
-          <a href="#">退貨條款</a>
-          <a href="#">特定商業交易法</a>
+          <router-link to="/frontPage">退貨條款</router-link>
+          <router-link to="/frontPage">特定商業交易法</router-link>
         </div>
       </div>
-      <div class="text-content-box" ref="textContent"></div>
+      <div clrouter-linkss="text-content-box" ref="textContent"></div>
       <div class="related-products-box" v-if="filterProducts.length !== 0">
         <h3>相關產品</h3>
         <ul class="related-products-list">
@@ -82,7 +82,7 @@
 <style lang="scss">
 .product-content-frame{
   margin: 0 100px;
-  margin-top: 200px;
+  margin-top: 250px;
 
   .img-box{
     display: flex;
@@ -431,7 +431,6 @@ export default {
       this.isLoading = true
       this.$http.get(api)
         .then((res) => {
-          window.scrollTo(0, 0)
           if (res.data.success) {
             this.isLoading = false
             this.product = res.data.product

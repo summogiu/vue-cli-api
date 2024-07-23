@@ -6,140 +6,143 @@
               isHeaderSlide ? 'productList-header-slide' : '',
               isMBMenuOpen ? 'MB-productList-menu-open' : '' ]"
               ref="productListHeader">
-        <ul class="productList-header-nav">
-          <li>
-            <button type="button" class="tab-bottom PC-btn"
-                    @mouseover="changeSearchTabOpen"
-                    :class="[ isSearchTabOpen ? 'tab-bottom-active' : '' ]">
-                    關鍵字搜尋</button>
-            <button type="button" class="tab-bottom MB-btn"
-                    @click="changeSearchTabOpen"
-                    :class="[ isSearchTabOpen ? 'tab-bottom-active' : '' ]">
-                    關鍵字搜尋</button>
-            <div class="pullDown-frame"
-                    :class="[ isSearchTabOpen ? 'pullDown-frame-100' : '' ]">
-              <div class="tab-bottom-pullDown-box"
-                   :class="[ isSearchTabOpen ? 'tab-bottom-pullDown-box-open' : '' ]"
-                   @mouseleave="changeSearchTabOpen">
-                <div class="tab-bottom-pullDown-SearchTab">
-                  <input type="text" :placeholder="searchInputTit" class="search-input"
-                        ref="searchContent">
-                  <button type="button" class="search-btn" @click="search">
-                    <i class="bi bi-search"></i>
-                  </button>
+        <p class="top-tip">單次購買滿$8,000元免運費</p>
+        <div class="productList-header-content">
+          <ul class="productList-header-nav">
+            <li>
+              <button type="button" class="tab-bottom PC-btn"
+                      @mouseover="changeSearchTabOpen"
+                      :class="[ isSearchTabOpen ? 'tab-bottom-active' : '' ]">
+                      關鍵字搜尋</button>
+              <button type="button" class="tab-bottom MB-btn"
+                      @click="changeSearchTabOpen"
+                      :class="[ isSearchTabOpen ? 'tab-bottom-active' : '' ]">
+                      關鍵字搜尋</button>
+              <div class="pullDown-frame"
+                      :class="[ isSearchTabOpen ? 'pullDown-frame-100' : '' ]">
+                <div class="tab-bottom-pullDown-box"
+                    :class="[ isSearchTabOpen ? 'tab-bottom-pullDown-box-open' : '' ]"
+                    @mouseleave="changeSearchTabOpen">
+                  <div class="tab-bottom-pullDown-SearchTab">
+                    <input type="text" :placeholder="searchInputTit" class="search-input"
+                          ref="searchContent">
+                    <button type="button" class="search-btn" @click="search">
+                      <i class="bi bi-search"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </li>
-          <li>
-            <button type="button" class="tab-bottom PC-btn"
-                    @mouseover="changeStyleTabOpen"
-                    :class="[ isStyleTabOpen ? 'tab-bottom-active' : '' ]">
-                    依風格搜尋</button>
-            <button type="button" class="tab-bottom MB-btn"
-                    @click="changeStyleTabOpen"
-                    :class="[ isStyleTabOpen ? 'tab-bottom-active' : '' ]">
-                    依風格搜尋</button>
-            <div class="pullDown-frame"
-                    :class="[ isStyleTabOpen ? 'pullDown-frame-100' : '' ]">
-              <div class="tab-bottom-pullDown-box"
-                   :class="[ isStyleTabOpen ? 'tab-bottom-pullDown-box-open' : '' ]"
-                   @mouseleave="changeStyleTabOpen">
-                <ul class="tab-bottom-pullDown-Tab">
-                  <li>
-                    <a href="#" @click.prevent="toCategory('手作布罩燈')">
-                      <img src="@/assets/images/products/header/tab-img-Cloth.jpg" alt="tab-img-Cloth" class="style-img">
-                      <p>Cloth | <span>手作布罩</span></p>
-                      </a>
-                    </li>
-                  <li>
-                    <a href="#" @click.prevent="toCategory('水晶燈')">
-                      <img src="@/assets/images/products/header/tab-img-Crystal.jpg" alt="tab-img-Crystal" class="style-img">
-                      <p>Crystal | <span>水晶燈</span></p>
-                      </a>
-                    </li>
-                  <li>
-                    <a href="#" @click.prevent="toCategory('工業風')">
-                      <img src="@/assets/images/products/header/tab-img-Industrial.jpg" alt="tab-img-Industrial" class="style-img">
-                      <p>Industrial | <span>工業風</span></p>
-                      </a>
-                    </li>
-                  <li>
-                    <a href="#" @click.prevent="toCategory('北歐風')">
-                      <img src="@/assets/images/products/header/tab-img-Nordic.jpg" alt="tab-img-Nordic" class="style-img">
-                      <p>Nordic | <span>北歐風</span></p>
-                      </a>
-                    </li>
-                </ul>
-              </div>
-            </div>
-          </li>
-          <li>
-            <button type="button" class="tab-bottom PC-btn"
-                    @mouseover="changeTypeTabOpen"
-                    :class="[ isTypeTabOpen ? 'tab-bottom-active' : '' ]">
-                    依種類搜尋</button>
-            <button type="button" class="tab-bottom MB-btn"
-                    @click="changeTypeTabOpen"
-                    :class="[ isTypeTabOpen ? 'tab-bottom-active' : '' ]">
-                    依種類搜尋</button>
-             <div class="pullDown-frame"
-                    :class="[ isTypeTabOpen ? 'pullDown-frame-100' : '' ]">
-              <div class="tab-bottom-pullDown-box"
-                    :class="[ isTypeTabOpen ? 'tab-bottom-pullDown-box-open' : '' ]"
-                    @mouseleave="changeTypeTabOpen">
-                <ul class="tab-bottom-pullDown-Tab">
-                  <li>
-                    <a href="#" @click.prevent="toCategory('吊燈')">
-                      <img src="@/assets/images/products/header/type-chandelier.png" alt="type-chandelier" class="type-img">
-                      <p>Chandelier | <span>吊燈</span></p>
-                    </a>
-                    </li>
-                  <li>
-                    <a href="#" @click.prevent="toCategory('壁燈')">
-                      <img src="@/assets/images/products/header/type-wall-lamp.png" alt="type-chandelier" class="type-img">
-                      <p>Wall Lamp | <span>壁燈</span></p>
-                    </a>
-                    </li>
-                  <li>
-                    <a href="#" @click.prevent="toCategory('檯燈')">
-                      <img src="@/assets/images/products/header/type-desk-lamp.png" alt="type-chandelier" class="type-img">
-                      <p>Desk Lamp | <span>檯燈</span></p>
-                    </a>
-                    </li>
-                  <li>
-                    <a href="#" @click.prevent="toCategory('吸頂燈')">
-                      <img src="@/assets/images/products/header/type-ceiling-lamp.png" alt="type-chandelier" class="type-img">
-                      <p>DeskCeiling Lamp | <span>吸頂燈</span></p>
-                    </a>
-                    </li>
-                  <li>
-                    <a href="#" @click.prevent="toCategory('落地燈')">
-                      <img src="@/assets/images/products/header/type-standing-lamp.png" alt="type-chandelier" class="type-img">
-                      <p>Standing Lamp | <span>落地燈</span></p>
-                    </a>
-                    </li>
-                  <li>
-                    <a href="#" @click.prevent="toCategory('燈泡')">
-                      <img src="@/assets/images/products/header/type-light-bulb.png" alt="type-chandelier" class="type-img">
-                      <p>Light Bulb | <span>燈泡</span></p>
-                    </a>
-                    </li>
-                </ul>
-              </div>
-             </div>
             </li>
-        </ul>
-        <div class="productList-header-logo" @click="backProductList">
-          <h1>In My Light</h1>
-          <p>返回所有商品</p>
+            <li>
+              <button type="button" class="tab-bottom PC-btn"
+                      @mouseover="changeStyleTabOpen"
+                      :class="[ isStyleTabOpen ? 'tab-bottom-active' : '' ]">
+                      依風格搜尋</button>
+              <button type="button" class="tab-bottom MB-btn"
+                      @click="changeStyleTabOpen"
+                      :class="[ isStyleTabOpen ? 'tab-bottom-active' : '' ]">
+                      依風格搜尋</button>
+              <div class="pullDown-frame"
+                      :class="[ isStyleTabOpen ? 'pullDown-frame-100' : '' ]">
+                <div class="tab-bottom-pullDown-box"
+                    :class="[ isStyleTabOpen ? 'tab-bottom-pullDown-box-open' : '' ]"
+                    @mouseleave="changeStyleTabOpen">
+                  <ul class="tab-bottom-pullDown-Tab">
+                    <li>
+                      <a href="#" @click.prevent="toCategory('手作布罩燈')">
+                        <img src="@/assets/images/products/header/tab-img-Cloth.jpg" alt="tab-img-Cloth" class="style-img">
+                        <p>Cloth | <span>手作布罩</span></p>
+                        </a>
+                      </li>
+                    <li>
+                      <a href="#" @click.prevent="toCategory('水晶燈')">
+                        <img src="@/assets/images/products/header/tab-img-Crystal.jpg" alt="tab-img-Crystal" class="style-img">
+                        <p>Crystal | <span>水晶燈</span></p>
+                        </a>
+                      </li>
+                    <li>
+                      <a href="#" @click.prevent="toCategory('工業風')">
+                        <img src="@/assets/images/products/header/tab-img-Industrial.jpg" alt="tab-img-Industrial" class="style-img">
+                        <p>Industrial | <span>工業風</span></p>
+                        </a>
+                      </li>
+                    <li>
+                      <a href="#" @click.prevent="toCategory('北歐風')">
+                        <img src="@/assets/images/products/header/tab-img-Nordic.jpg" alt="tab-img-Nordic" class="style-img">
+                        <p>Nordic | <span>北歐風</span></p>
+                        </a>
+                      </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li>
+              <button type="button" class="tab-bottom PC-btn"
+                      @mouseover="changeTypeTabOpen"
+                      :class="[ isTypeTabOpen ? 'tab-bottom-active' : '' ]">
+                      依種類搜尋</button>
+              <button type="button" class="tab-bottom MB-btn"
+                      @click="changeTypeTabOpen"
+                      :class="[ isTypeTabOpen ? 'tab-bottom-active' : '' ]">
+                      依種類搜尋</button>
+              <div class="pullDown-frame"
+                      :class="[ isTypeTabOpen ? 'pullDown-frame-100' : '' ]">
+                <div class="tab-bottom-pullDown-box"
+                      :class="[ isTypeTabOpen ? 'tab-bottom-pullDown-box-open' : '' ]"
+                      @mouseleave="changeTypeTabOpen">
+                  <ul class="tab-bottom-pullDown-Tab">
+                    <li>
+                      <a href="#" @click.prevent="toCategory('吊燈')">
+                        <img src="@/assets/images/products/header/type-chandelier.png" alt="type-chandelier" class="type-img">
+                        <p>Chandelier | <span>吊燈</span></p>
+                      </a>
+                      </li>
+                    <li>
+                      <a href="#" @click.prevent="toCategory('壁燈')">
+                        <img src="@/assets/images/products/header/type-wall-lamp.png" alt="type-chandelier" class="type-img">
+                        <p>Wall Lamp | <span>壁燈</span></p>
+                      </a>
+                      </li>
+                    <li>
+                      <a href="#" @click.prevent="toCategory('檯燈')">
+                        <img src="@/assets/images/products/header/type-desk-lamp.png" alt="type-chandelier" class="type-img">
+                        <p>Desk Lamp | <span>檯燈</span></p>
+                      </a>
+                      </li>
+                    <li>
+                      <a href="#" @click.prevent="toCategory('吸頂燈')">
+                        <img src="@/assets/images/products/header/type-ceiling-lamp.png" alt="type-chandelier" class="type-img">
+                        <p>DeskCeiling Lamp | <span>吸頂燈</span></p>
+                      </a>
+                      </li>
+                    <li>
+                      <a href="#" @click.prevent="toCategory('落地燈')">
+                        <img src="@/assets/images/products/header/type-standing-lamp.png" alt="type-chandelier" class="type-img">
+                        <p>Standing Lamp | <span>落地燈</span></p>
+                      </a>
+                      </li>
+                    <li>
+                      <a href="#" @click.prevent="toCategory('燈泡')">
+                        <img src="@/assets/images/products/header/type-light-bulb.png" alt="type-chandelier" class="type-img">
+                        <p>Light Bulb | <span>燈泡</span></p>
+                      </a>
+                      </li>
+                  </ul>
+                </div>
+              </div>
+              </li>
+          </ul>
+          <div class="productList-header-logo" @click="backProductList">
+            <h1>In My Light</h1>
+            <p>返回所有商品</p>
+          </div>
+          <div class="productList-header-right">
+            <a href="#" @click.prevent="toCategory('正在關注')" class="productList-header-follow">
+              <i class="bi bi-heart-fill follow-plus-btn isFollow-icon"></i>關注的產品
+            </a>
+          </div>
         </div>
-        <div class="productList-header-right">
-          <a href="#" @click.prevent="toCategory('正在關注')" class="productList-header-follow">
-            <i class="bi bi-heart-fill follow-plus-btn isFollow-icon"></i>關注的產品
-          </a>
         </div>
-      </div>
       <div class="open-MB-productList-menu-btn">
         <button type="button"
                 @click="changeMBMenuOpen">
@@ -266,220 +269,231 @@
   position: absolute;
   z-index: 65;
   top: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 200px;
   width: 100%;
-  padding: 0 50px;
+  transition: top 0.5s;
   background-color: white;
 
-  .productList-header-nav{
-    display: flex;
-
-    .PC-btn{
-      cursor: default;
-    }
-    .MB-btn{
-      display: none;
-    }
-    li{
-
-      .tab-bottom{
-        position: relative;
-        background-color: transparent;
-        border: none;
-        font-size: 20px;
-        margin: 0 10px;
-        padding: 10px 0;
-        z-index: 80;
-
-        &::before{
-          content:'';
-          position: absolute;
-          bottom: 0;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 0;
-          height: 3px;
-          background-color: $subColor3;
-          border-radius: 5px;
-          transition: all .5s;
-          transform-origin: center;
-        }
-      }
-      .tab-bottom-active{
-        &::before{
-          width: 100%;
-        }
-      }
-
-      .tab-bottom-pullDown-box{
-        position: absolute;
-        z-index: 70;
-        left: 0;
-        width: 100%;
-        padding: 50px 0;
-        background-color: white;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10%);
-        transition: transform 0.2s, opacity 0.2s;
-        border-bottom: 3px solid $subColor3;
-      }
-      .tab-bottom-pullDown-Tab{
-        display: flex;
-        justify-content: start;
-        flex-wrap: wrap;
-        width: 920px;
-        margin: 0 auto;
-
-        li{
-          font-size: 24px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-          margin-bottom: 20px;
-          margin: 0 12px 20px 12px;
-          width: 280px;
-
-          a{
-            color: $subColor2;
-          }
-          .style-img{
-            width: 280px;
-            height: 195px;
-            object-fit: cover;
-            transition: all 0.5s;
-          }
-          .type-img{
-            width: 200px;
-            height: 200px;
-          }
-          p{
-            opacity: 1;
-            transition: all 0.5s;
-
-            span{
-              font-size: 20px;
-            }
-          }
-
-          &:hover img{
-            animation: flash 0.2s linear;
-          }
-          &:hover p{
-            opacity: 0.7;
-          }
-        }
-
-      }
-
-      .tab-bottom-pullDown-box-open{
-        opacity: 1;
-        transform: translateY(0);
-        visibility: visible;
-      }
-
-      .tab-bottom-pullDown-SearchTab{
-        display: flex;
-        justify-content: center;
-
-        .search-input{
-          font-size: 20px;
-          padding: 10px;
-          border-radius: 25px;
-          border: 1px solid gray;
-        }
-        .search-btn{
-          background: transparent;
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          border: 1px solid gray;
-          margin-left: 10px;
-
-          i{
-            font-size: 24px;
-          }
-          &:active{
-            box-shadow: 0px 0px 5px gray inset;
-            i{
-              color: $subColor3;
-            }
-          }
-        }
-      }
-    }
+  .top-tip{
+    text-align: center;
+    padding: 14px;
+    font-size: 14px;
+    border-bottom: 1px solid $subColor4;
   }
-  .productList-header-logo{
-    position: absolute;
-    z-index: 70;
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    cursor: pointer;
 
-    &::before{
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0%;
-      height: 3px;
-      background-color: black;
-      transition: all .5s;
-    }
-    h1{
-      font-size: 50px;
-    }
-    p{
-      position: absolute;
-      bottom: -50px;
-      left: 50%;
-      transform: translateX(-50%);
-      opacity: 0;
-      transition: all .5s;
-    }
-
-    &:hover::before{
-      width: 100%;
-    }
-    &:hover p{
-      opacity: 1;
-    }
-  }
-  .productList-header-right{
+  .productList-header-content{
+    height: 200px;
+    width: 100%;
+    padding: 0 50px;
+    position: relative;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 
-    a{
-      color: black;
+    .productList-header-nav{
+      display: flex;
 
-      &:hover{
-        color: $subColor3;
+      .PC-btn{
+        cursor: default;
+      }
+      .MB-btn{
+        display: none;
+      }
+      li{
+
+        .tab-bottom{
+          position: relative;
+          background-color: transparent;
+          border: none;
+          font-size: 20px;
+          margin: 0 10px;
+          padding: 10px 0;
+          z-index: 80;
+
+          &::before{
+            content:'';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background-color: $subColor3;
+            border-radius: 5px;
+            transition: all .5s;
+            transform-origin: center;
+          }
+        }
+        .tab-bottom-active{
+          &::before{
+            width: 100%;
+          }
+        }
+
+        .tab-bottom-pullDown-box{
+          position: absolute;
+          z-index: 100;
+          left: 0;
+          width: 100%;
+          padding: 50px 0;
+          background-color: white;
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(-10%);
+          transition: transform 0.2s, opacity 0.2s;
+          border-bottom: 3px solid $subColor3;
+        }
+        .tab-bottom-pullDown-Tab{
+          display: flex;
+          justify-content: start;
+          flex-wrap: wrap;
+          width: 920px;
+          margin: 0 auto;
+
+          li{
+            font-size: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 20px;
+            margin: 0 12px 20px 12px;
+            width: 280px;
+
+            a{
+              color: $subColor2;
+            }
+            .style-img{
+              width: 280px;
+              height: 195px;
+              object-fit: cover;
+              transition: all 0.5s;
+            }
+            .type-img{
+              width: 200px;
+              height: 200px;
+            }
+            p{
+              opacity: 1;
+              transition: all 0.5s;
+
+              span{
+                font-size: 20px;
+              }
+            }
+
+            &:hover img{
+              animation: flash 0.2s linear;
+            }
+            &:hover p{
+              opacity: 0.7;
+            }
+          }
+
+        }
+
+        .tab-bottom-pullDown-box-open{
+          opacity: 1;
+          transform: translateY(0);
+          visibility: visible;
+        }
+
+        .tab-bottom-pullDown-SearchTab{
+          display: flex;
+          justify-content: center;
+
+          .search-input{
+            font-size: 20px;
+            padding: 10px;
+            border-radius: 25px;
+            border: 1px solid gray;
+          }
+          .search-btn{
+            background: transparent;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid gray;
+            margin-left: 10px;
+
+            i{
+              font-size: 24px;
+            }
+            &:active{
+              box-shadow: 0px 0px 5px gray inset;
+              i{
+                color: $subColor3;
+              }
+            }
+          }
+        }
       }
     }
-    .productList-header-follow{
-      margin-right: 50px;
-      .isFollow-icon{
-        margin-right: 10px;
+    .productList-header-logo{
+      position: absolute;
+      z-index: 70;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      cursor: pointer;
+
+      &::before{
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0%;
+        height: 3px;
+        background-color: black;
+        transition: all .5s;
+      }
+      h1{
+        font-size: 50px;
+      }
+      p{
+        position: absolute;
+        bottom: -50px;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: all .5s;
+      }
+
+      &:hover::before{
+        width: 100%;
+      }
+      &:hover p{
+        opacity: 1;
+      }
+    }
+    .productList-header-right{
+      display: flex;
+      align-items: center;
+
+      a{
+        color: black;
+
+        &:hover{
+          color: $subColor3;
+        }
+      }
+      .productList-header-follow{
+        margin-right: 50px;
+        .isFollow-icon{
+          margin-right: 10px;
+        }
       }
     }
   }
 }
 .productList-header-close{
   position: fixed;
-  top: -200px;
+  top: -250px;
   left: 0;
   z-index: 90;
-  transition: top 0.5s;
 }
 .productList-header-slide{
-  top: 0;
-  transition: all 0.5s;
+  top: -50px;
 }
 
  .open-MB-productList-menu-btn{
@@ -517,12 +531,13 @@
   }
 @media (max-width:1100px){
   .productList-header{
-
-    .productList-header-logo{
-      position: relative;
-      top: -10px;
-      left: 0;
-      transform: translateX(0);
+    .productList-header-content{
+      .productList-header-logo{
+        position: relative;
+        top: -10px;
+        left: 0;
+        transform: translateX(0);
+      }
     }
   }
 }
@@ -532,77 +547,85 @@
     height: 100%;
     position: fixed;
     top: 0;
-    padding: 50px 0;
     opacity: 0;
     visibility: hidden;
     transition: all 0.5s;
 
-    .productList-header-nav{
+    .productList-header-content{
       flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+      padding: 50px;
+      overflow-y: auto;
+      overflow-x: hidden;
 
-      li{
-        .MB-btn{
-          display: block;
-          margin: 0 auto;
-        }
-        .PC-btn{
-          display: none;
-        }
-        .pullDown-frame{
-          max-height: 0;
-          transition: all 0.3s;
-        }
-        .pullDown-frame-100{
-          max-height: 900px;
-        }
-        .tab-bottom-pullDown-box{
-          position: relative;
+      .productList-header-nav{
+        flex-direction: column;
 
-          .tab-bottom-pullDown-Tab{
-            width: 100%;
-            justify-content: space-around;
+        li{
+          .MB-btn{
+            display: block;
+            margin: 0 auto;
+          }
+          .PC-btn{
+            display: none;
+          }
+          .pullDown-frame{
+            max-height: 0;
+            transition: all 0.3s;
+          }
+          .pullDown-frame-100{
+            max-height: 900px;
+          }
+          .tab-bottom-pullDown-box{
+            position: relative;
 
-            li{
-              width: 40%;
+            .tab-bottom-pullDown-Tab{
+              width: 100%;
+              justify-content: space-around;
 
-              .style-img{
-                width: 140px;
-                height: 97px;
-              }
-              .type-img{
-                width: 100px;
-                height: 100px;
-              }
-              p{
-                font-size: 14px;
+              li{
+                width: 40%;
 
-                span{
+                .style-img{
+                  width: 140px;
+                  height: 97px;
+                }
+                .type-img{
+                  width: 100px;
+                  height: 100px;
+                }
+                p{
                   font-size: 14px;
+
+                  span{
+                    font-size: 14px;
+                  }
                 }
               }
             }
           }
         }
       }
-    }
 
-    .productList-header-logo{
-      z-index: 66;
+      .productList-header-logo{
+        z-index: 66;
 
-      &::before{
-        width: 100%;
+        &::before{
+          width: 100%;
+        }
+        p{
+          opacity: 1;
+        }
       }
-      p{
-        opacity: 1;
-      }
-    }
 
-    .productList-header-right{
-      flex-direction: column;
+      .productList-header-right{
+        flex-direction: column;
 
-      .productList-header-follow{
-        margin-right: 0;
-        margin-bottom: 50px;
+        .productList-header-follow{
+          margin: 50px auto;
+        }
       }
     }
   }
@@ -812,7 +835,9 @@ export default {
   },
   watch: {
     scrollPosition (n, o) {
-      if (n < o) {
+      if (this.scrollPosition === 0) {
+        this.isHeaderSlide = false
+      } else if (n < o) {
         this.isHeaderSlide = true
       } else {
         this.isHeaderSlide = false
@@ -940,14 +965,12 @@ export default {
       this.$router.push('/products/productslist')
       this.searchContent = ''
       emitter.emit('search', this.searchContent)
-      window.scrollTo(0, 0)
     },
     toCategory (category) { // 前往產品分類
       this.isMBMenuOpen = false
       this.$router.push(`/products/productslist/${category}`)
       this.searchContent = ''
       emitter.emit('search', this.searchContent)
-      window.scrollTo(0, 0)
     },
     toProduct (item) {
       this.$router.push(`/products/productslist/product/${item.id}`)

@@ -20,8 +20,11 @@
   align-items: center;
 
   i{
-    color: $subColor3;
     margin: 0 5px;
+    background: $linearColor;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-clip: text;
   }
   .home-i{
     font-size: 26px;

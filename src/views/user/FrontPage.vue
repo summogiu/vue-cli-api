@@ -186,13 +186,33 @@
     }
   }
   .banner-swiper-pagination{
-    bottom: 15% !important;
+    bottom: 15%;
   }
 }
+@media (max-width:919px){
+  .bannerSwiper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .banner-swiper-wrapper{
+      height: 550px;
+      width: 160%;
+
+      .banner-swiper-slide{
+        img{
+          max-width: 1000px;
+        }
+      }
+    }
+  }
+}
+
 // product及customized的通用Swiper樣式
 .sectionSwiper{
   max-width: 640px;
-  width: 50%;
+  width: calc(50% - 12px);
   margin: 0;
   opacity: 0;
 
@@ -212,6 +232,25 @@
 }
 .swiper-pagination-bullet-active{
     background-color: white;
+}
+@media (max-width:919px){
+  .sectionSwiper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .section-swiper-wrapper{
+      height: 360px;
+      max-width: 400px;
+
+      .section-swiper-slide{
+        img{
+          max-width: 600px;
+        }
+      }
+    }
+  }
 }
 
 // 區塊樣式
@@ -293,6 +332,50 @@
     }
   }
 }
+@media (max-width:919px){
+  .bunner-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .bunner-title{
+      font-size: 40px;
+      white-space: nowrap;
+      top: 25%;
+    }
+    .bunner-title-icon{
+      height: 200px;
+    }
+    .about-box{
+      flex-direction: column;
+      width: 100%;
+      max-width: 540px;
+      padding: 50px 5%;
+      position: relative;
+      opacity: 0;
+      animation: fadeIn .8s 2.5s forwards;
+      transform: translateX(0);
+
+      .about-title{
+        h2{
+          padding-bottom: 10px;
+        }
+      }
+      .about-Introduction{
+        padding: 0;
+        height: auto;
+      }
+      .little-title{
+        color: white;
+        top: -50px;
+        right: 50%;
+        transform: translateX(50%);
+        text-align: center;
+      }
+    }
+  }
+}
+
 // product及customized的通用樣式
 .product-section-box,.customized-section-box{
   display: flex;
@@ -304,12 +387,12 @@
 
   .product-Introduction,.customized-Introduction{
     max-width: 540px;
-    width: 50%;
+    width: calc(50% - 12px);
     display: flex;
     flex-direction: column;
     align-items: center;
     opacity: 0;
-    transition: opacity .5s;
+    transition: opacity .8s;
 
     >img{
       width: 130px;
@@ -354,7 +437,7 @@
   }
 }
 .customized-section-box{
-  padding-bottom: 400px;
+  padding-bottom: 200px;
   transition: translate .5s;
 
   .little-title{
@@ -373,6 +456,30 @@
       opacity: 0;
     }
   }
+@media (max-width:919px){
+  .product-section-box,.customized-section-box{
+    flex-direction: column;
+    margin: 50px auto 0 auto;
+
+    .product-Introduction,.customized-Introduction{
+      width: 100%;
+      padding: 30px 0;
+    }
+    .little-title{
+      transform: translateX(-50%);
+      left: 50%;
+    }
+  }
+  .mask-color{
+    height: 360px;
+    max-width: 400px;
+    right: auto;
+  }
+
+  .product-section-box{
+    flex-direction: column-reverse;
+  }
+}
 
 .company-section-box{
   border-radius: 50px 50px 0 0;
@@ -426,6 +533,20 @@
     }
   }
 }
+@media (max-width:919px){
+  .company-section-box{
+    .table-box{
+      flex-direction: column;
+      align-items: center;
+
+      table{
+        width: 60%;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
 .consult-section-box{
   border-radius: 50px 50px 0 0;
   background-color: $subColor4;
@@ -556,7 +677,6 @@ export default {
   watch: {
     // 判斷是否已進場
     scrollPosition () {
-      console.log(this.scrollPosition)
       if (this.scrollPosition >= this.sectionTops.productTop / 2) {
         this.isSectionIn.isProductSectionIn = true
       }
@@ -575,6 +695,7 @@ export default {
       })
     },
     getSectionTops () { // 取得區塊定位
+      console.log('定位更新', this.sectionTops)
       this.sectionTops.productTop = this.$refs.product.getBoundingClientRect().top + window.pageYOffset
       this.sectionTops.customizedTop = this.$refs.customized.getBoundingClientRect().top + window.pageYOffset
       this.sectionTops.companyTop = this.$refs.company.getBoundingClientRect().top + window.pageYOffset
@@ -584,7 +705,7 @@ export default {
       // customized區塊
       // TranslateY
       if (this.scrollPosition >= this.sectionTops.companyTop / 1.52) {
-        this.moveTranslateY.customizedTranslate = (this.scrollPosition - this.sectionTops.customizedTop) * 0.5
+        this.moveTranslateY.customizedTranslate = Math.max((this.scrollPosition - this.sectionTops.customizedTop) * 0.3, 0)
       } else {
         this.moveTranslateY.customizedTranslate = 0
       }
@@ -596,13 +717,13 @@ export default {
       }
       // company區塊
       // TranslateY
-      if (this.scrollPosition >= this.sectionTops.consultTop / 1.4) {
-        this.moveTranslateY.companyTranslate = (this.scrollPosition - this.sectionTops.companyTop) * 0.3
+      if (this.scrollPosition >= this.sectionTops.consultTop / 1.3) {
+        this.moveTranslateY.companyTranslate = Math.max((this.scrollPosition - this.sectionTops.companyTop) * 0.3, 0)
       } else {
         this.moveTranslateY.companyTranslate = 0
       }
       // opacity
-      if (this.scrollPosition >= this.sectionTops.consultTop / 1.15) {
+      if (this.scrollPosition >= this.sectionTops.consultTop / 1.1) {
         this.opacity.companyQpacity = Math.min(this.scrollPosition / 5000, 1)
       } else {
         this.opacity.companyQpacity = 0

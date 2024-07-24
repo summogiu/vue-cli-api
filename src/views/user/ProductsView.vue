@@ -340,7 +340,6 @@
           visibility: hidden;
           transform: translateY(-10%);
           transition: transform 0.2s, opacity 0.2s;
-          border-bottom: 3px solid $subColor3;
         }
         .tab-bottom-pullDown-Tab{
           display: flex;

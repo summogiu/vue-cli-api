@@ -210,8 +210,8 @@
 @media (max-width:919px){
   .product-cart-btns{
     .product-cart-open-btn{
-      width: 50px;
-      height: 50px;
+      width: 70px;
+      height: 70px;
     }
     .product-cart-close-btn{
       width: 50px;

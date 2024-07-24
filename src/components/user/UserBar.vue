@@ -79,6 +79,8 @@
     border-radius: 50px 0 0 50px;
     padding-left: 20px;
     transform: translateX(92%);
+    opacity: 0;
+    animation: fadeIn .5s 2.5s ease-in forwards;
     transition: transform .5s cubic-bezier(0.2, 1, 0.3, 1);
 
     >li{
@@ -133,6 +135,7 @@
 
     }
 }
+
 .header-menu-In{
   transform: translateX(0);
 }

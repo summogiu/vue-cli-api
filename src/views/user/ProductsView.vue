@@ -264,6 +264,8 @@
   background-color: white;
   overflow: hidden;
   min-height: 100vh;
+  opacity: 0;
+  animation: fadeIn .8s .5s forwards;
 }
 .productList-header{
   position: absolute;
@@ -921,17 +923,26 @@ export default {
           console.log('套用優惠券失敗', error)
         })
     },
-    changeStyleTabOpen () {
+    changeStyleTabOpen (event) {
+      if (event.type === 'mouseleave' && window.innerWidth <= 919) {
+        return // 於919斷點時，取消mouseleave的事件處發
+      }
       this.isStyleTabOpen = !this.isStyleTabOpen
       this.isTypeTabOpen = false
       this.isSearchTabOpen = false
     },
-    changeTypeTabOpen () {
+    changeTypeTabOpen (event) {
+      if (event.type === 'mouseleave' && window.innerWidth <= 919) {
+        return
+      }
       this.isTypeTabOpen = !this.isTypeTabOpen
       this.isStyleTabOpen = false
       this.isSearchTabOpen = false
     },
-    changeSearchTabOpen () {
+    changeSearchTabOpen (event) {
+      if (event.type === 'mouseleave' && window.innerWidth <= 919) {
+        return
+      }
       this.isSearchTabOpen = !this.isSearchTabOpen
       this.isStyleTabOpen = false
       this.isTypeTabOpen = false

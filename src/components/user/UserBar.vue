@@ -348,6 +348,7 @@
                 }
 
                 .MB-original-text{
+                  white-space: nowrap;
                     position: absolute;
                     transform: translateX(0);
                     transition: 0.2s;

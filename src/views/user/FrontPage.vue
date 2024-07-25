@@ -139,22 +139,24 @@
         <div class="shadow" :style="{ opacity: this.opacity.companyQpacity }"></div>
       </div>
 
-      <div class="consult-section-box" ref="consult">
-        <span class="little-title">- 線上諮詢 -</span>
-        <img src="@/assets/images/icon/consult-icon.png">
-        <p>在您有任何疑問、建議或合作意向時，請隨時通過電子信箱服務與我們取得聯繫。<br>
-          我們的專業團隊將竭誠為您提供最優質的服務，並解答您的所有疑問。<br>
-          期待與您的溝通與合作！
-        </p>
-        <p>信箱地址：info@inmylight.com</p>
-        <span>或者</span>
-        <button class="common-problem-btn" type="button">
-          提交線上表單
-          <img src="@/assets/images/icon/related-products-to.png" alt="to-about" class="to-more-btn">
-        </button>
-        <button class="back-top-btn" type="button" @click="scrollToTop">
-          <img src="@/assets/images/icon/up.png">
-        </button>
+      <div class="consult-section-frame" ref="consult">
+        <div class="consult-section-box">
+          <span class="little-title">- 線上諮詢 -</span>
+          <img src="@/assets/images/icon/consult-icon.png">
+          <p>在您有任何疑問、建議或合作意向時，請隨時通過電子信箱服務與我們取得聯繫。<br>
+            我們的專業團隊將竭誠為您提供最優質的服務，並解答您的所有疑問。<br>
+            期待與您的溝通與合作！
+          </p>
+          <p>信箱地址：info@inmylight.com</p>
+          <span>或者</span>
+          <button class="common-problem-btn" type="button">
+            提交線上表單
+            <img src="@/assets/images/icon/related-products-to.png" alt="to-about" class="to-more-btn">
+          </button>
+          <button class="back-top-btn" type="button" @click="scrollToTop">
+            <img src="@/assets/images/icon/up.png">
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -165,6 +167,11 @@
 @import 'swiper/css/pagination';
 @import 'swiper/css/autoplay';
 @import 'swiper/css/effect-fade';
+
+.front-page-frame{
+  opacity: 0;
+  animation: fadeIn .8s .5s forwards;
+}
 
 // Swiper樣式
 .bannerSwiper{
@@ -384,6 +391,7 @@
   padding: 0 5%;
   margin: 150px auto 0 auto;
   position: relative;
+  transform: translateY(0);
 
   .product-Introduction,.customized-Introduction{
     max-width: 540px;
@@ -487,6 +495,7 @@
   background-color: $subColor7;
   position: relative;
   padding-bottom: 160px;
+  transform: translateY(0);
 
   >img{
     position: relative;
@@ -547,6 +556,9 @@
   }
 }
 
+.consult-section-frame{
+  background-color: $subColor7;
+}
 .consult-section-box{
   border-radius: 50px 50px 0 0;
   background-color: $subColor4;
@@ -717,7 +729,7 @@ export default {
       }
       // company區塊
       // TranslateY
-      if (this.scrollPosition >= this.sectionTops.consultTop / 1.3) {
+      if (this.scrollPosition >= this.sectionTops.consultTop / 1.35) {
         this.moveTranslateY.companyTranslate = Math.max((this.scrollPosition - this.sectionTops.companyTop) * 0.3, 0)
       } else {
         this.moveTranslateY.companyTranslate = 0

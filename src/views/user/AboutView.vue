@@ -74,6 +74,8 @@
 <style lang="scss">
 .about-page-frame{
   background: $subColor3;
+  opacity: 0;
+  animation: fadeIn .8s .5s forwards;
 }
   .about-page-bg{
     background: $subColor3;

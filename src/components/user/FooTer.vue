@@ -27,7 +27,7 @@
 .footer-frame{
     position: relative;
     z-index: 1;
-    background-color: $h2Color;
+    background-color: $subColor9;
     height: 300px;
     padding: 20px;
     display: flex;

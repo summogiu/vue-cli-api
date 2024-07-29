@@ -6,6 +6,7 @@
             <li>
               <i class="bi bi-caret-left-fill header-menu-In-btn" :class="[ isHeaderMenuIn ? 'fadeOut' : '' ]"></i>
             </li>
+            <li><router-link to="/frontPage"><p>HOME</p> <p class="subtitle">回到首頁</p></router-link></li>
             <li><router-link to="/about"><p>ABOUT</p> <p class="subtitle">關於我們</p></router-link></li>
             <li class="open-products-style-box">
                 <router-link to="/products/productslist"><p>PRODUCTS</p> <p class="subtitle">產品資訊</p></router-link>
@@ -110,7 +111,7 @@
             &::before{
                 content: '';
                 position: absolute;
-                bottom: -2px;
+                bottom: 1px;
                 width: 0;
                 height: 1px;
                 background-color: $mainColor;
@@ -218,10 +219,10 @@
                 transition: width 0.3s;
             }
             &::before {
-                left: 15%;
+                left: 10%;
             }
             &:hover::before{
-                width: 90%;
+                width: 70%;
             }
         }
     }
@@ -234,13 +235,15 @@
             display: flex;
             align-items: end;
 
+            .to-more-icon{
+              margin-right: 20px;
+            }
             &:hover i{
-                transition: all 1s;
-                color: $mainColor;
+              color: $mainColor;
+              scale: 0.8;
             }
             &:hover .circle{
-                animation: circleRotate 10s infinite linear;
-                scale:1.2;
+              animation: circleRotate 10s infinite linear;
             }
             .photo{
                 display: flex;

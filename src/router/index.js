@@ -54,7 +54,13 @@ const routes = [
       {
         path: 'customized',
         name: '訂製專欄',
-        component: () => import('../views/user/CustomizedView.vue')
+        component: () => import('../views/user/CustomizedView.vue'),
+        children: [
+          {
+            path: 'article/:articleid',
+            component: () => import('../views/user/CustomizedMore.vue')
+          }
+        ]
       }
     ]
   },

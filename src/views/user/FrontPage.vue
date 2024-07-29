@@ -33,7 +33,7 @@
       </div>
 
       <div class="product-section-box" ref="product">
-        <div class="product-Introduction" :class="[isSectionIn.isProductSectionIn ? 'fadeIn toDown-1' : '']">
+        <div class="product-Introduction">
           <img src="@/assets/images/icon/bag_shopping_icon.png">
           <h2>PRODUCT</h2>
           <router-link to="/products/productslist">
@@ -75,7 +75,7 @@
           <div class="mask-color"></div>
           <div class="swiper-pagination customized-swiper-pagination"></div>
         </div>
-        <div class="customized-Introduction" :class="[isSectionIn.isCustomizedSectionIn ? 'fadeIn toDown-1' : '']">
+        <div class="customized-Introduction">
           <img src="@/assets/images/icon/mallet_icon.png">
           <h2>CUSTOMIZED</h2>
           <router-link to="/customized">
@@ -209,7 +209,7 @@
 
       .banner-swiper-slide{
         img{
-          max-width: 1000px;
+          max-width: 1400px;
         }
       }
     }
@@ -330,7 +330,7 @@
         color: $subColor2;
       }
       &:hover img{
-        animation: BounceToRight 0.3s;
+        animation: BounceToRight 1s cubic-bezier(0.2, 1, 0.3, 1) infinite;
       }
     }
     .little-title{
@@ -359,9 +359,8 @@
       max-width: 540px;
       padding: 50px 5%;
       position: relative;
-      opacity: 0;
-      animation: fadeIn .8s 2.5s forwards;
       transform: translateX(0);
+      animation: none;
 
       .about-title{
         h2{
@@ -399,8 +398,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    opacity: 0;
-    transition: opacity .8s;
 
     >img{
       width: 130px;
@@ -419,7 +416,7 @@
         color: $subColor2;
       }
       &:hover img{
-        animation: BounceToRight 0.3s;
+        animation: BounceToRight 1s cubic-bezier(0.2, 1, 0.3, 1) infinite;
       }
     }
   }
@@ -441,7 +438,7 @@
     top: 0;
   }
   .mask-color{
-    background-color: $subColor5;
+    background-color: $subColor8;
   }
 }
 .customized-section-box{
@@ -453,7 +450,7 @@
     top: 0;
   }
   .mask-color{
-    background-color: $subColor6;
+    background-color: $subColor9;
   }
 }
 // product及customized的進場動畫
@@ -476,6 +473,7 @@
     .little-title{
       transform: translateX(-50%);
       left: 50%;
+      top: -36px;
     }
   }
   .mask-color{
@@ -503,6 +501,7 @@
     height: 500px;
     width: 100%;
     object-fit: cover;
+    transform-origin: center bottom;
   }
   .little-title{
     top: 20px;
@@ -544,6 +543,10 @@
 }
 @media (max-width:919px){
   .company-section-box{
+    .little-title{
+      transform: translateX(-50%);
+      left: 50%;
+    }
     .table-box{
       flex-direction: column;
       align-items: center;
@@ -621,9 +624,18 @@
     width: 20px;
   }
   &:hover img{
-    animation: BounceToRight 0.3s;
+    animation: BounceToRight 1s cubic-bezier(0.2, 1, 0.3, 1) infinite;
   }
 }
+@media (max-width:919px){
+  .consult-section-box{
+    .little-title{
+      transform: translateX(-50%);
+      left: 50%;
+    }
+  }
+}
+
 // customized及consult的覆蓋效果
 .shadow{
     background-color: rgba(0, 0, 0, 0.6);
@@ -634,6 +646,16 @@
     height: 100%;
     transition: opacity .3s;
     pointer-events: none;
+
+    &::before{
+      content: '';
+      height: 200px;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      bottom: -200px;
+      background-color: rgba(0, 0, 0, 0.55);
+    }
 }
 
 .to-more-btn{
@@ -642,6 +664,7 @@
 .little-title{
   position: absolute;
   font-size: 14px;
+  text-align: center;
 }
 
 </style>
@@ -714,31 +737,91 @@ export default {
       this.sectionTops.consultTop = this.$refs.consult.getBoundingClientRect().top + window.pageYOffset
     },
     handleScroll () { // 動態改變TranslateY和opacity
-      // customized區塊
-      // TranslateY
-      if (this.scrollPosition >= this.sectionTops.companyTop / 1.52) {
-        this.moveTranslateY.customizedTranslate = Math.max((this.scrollPosition - this.sectionTops.customizedTop) * 0.3, 0)
-      } else {
-        this.moveTranslateY.customizedTranslate = 0
-      }
-      // opacity
-      if (this.scrollPosition >= this.sectionTops.companyTop / 1.2) {
-        this.opacity.customizedQpacity = Math.min(this.scrollPosition / 5000, 1)
-      } else {
-        this.opacity.customizedQpacity = 0
-      }
-      // company區塊
-      // TranslateY
-      if (this.scrollPosition >= this.sectionTops.consultTop / 1.35) {
-        this.moveTranslateY.companyTranslate = Math.max((this.scrollPosition - this.sectionTops.companyTop) * 0.3, 0)
-      } else {
-        this.moveTranslateY.companyTranslate = 0
-      }
-      // opacity
-      if (this.scrollPosition >= this.sectionTops.consultTop / 1.1) {
-        this.opacity.companyQpacity = Math.min(this.scrollPosition / 5000, 1)
-      } else {
-        this.opacity.companyQpacity = 0
+      // >919斷點
+      if (window.innerWidth > 919) {
+        // customized區塊
+        // TranslateY
+        console.log('919的斷', this.sectionTops)
+        if (this.scrollPosition >= this.sectionTops.companyTop / 1.52) {
+          this.moveTranslateY.customizedTranslate = Math.max((this.scrollPosition - this.sectionTops.customizedTop) * 0.3, 0)
+        } else {
+          this.moveTranslateY.customizedTranslate = 0
+        }
+        // opacity
+        if (this.scrollPosition >= this.sectionTops.companyTop / 1.2) {
+          this.opacity.customizedQpacity = Math.min(this.scrollPosition / 5000, 1)
+        } else {
+          this.opacity.customizedQpacity = 0
+        }
+        // company區塊
+        // TranslateY
+        if (this.scrollPosition >= this.sectionTops.consultTop / 1.35) {
+          this.moveTranslateY.companyTranslate = Math.max((this.scrollPosition - this.sectionTops.companyTop) * 0.15, 0)
+        } else {
+          this.moveTranslateY.companyTranslate = 0
+        }
+        // opacity
+        if (this.scrollPosition >= this.sectionTops.consultTop / 1.1) {
+          this.opacity.companyQpacity = Math.min(this.scrollPosition / 5000, 1)
+        } else {
+          this.opacity.companyQpacity = 0
+        }
+      } else if (window.innerWidth <= 919 && window.innerWidth > 414) { // <=919 >414
+        console.log('919~414的斷', this.sectionTops)
+        // customized區塊
+        // TranslateY
+        if (this.scrollPosition >= this.sectionTops.companyTop / 1.48) {
+          this.moveTranslateY.customizedTranslate = Math.max((this.scrollPosition - this.sectionTops.customizedTop) * 0.3, 0)
+        } else {
+          this.moveTranslateY.customizedTranslate = 0
+        }
+        // opacity
+        if (this.scrollPosition >= this.sectionTops.companyTop / 1.2) {
+          this.opacity.customizedQpacity = Math.min(this.scrollPosition / 5000, 1)
+        } else {
+          this.opacity.customizedQpacity = 0
+        }
+        // company區塊
+        // TranslateY
+        if (this.scrollPosition >= this.sectionTops.consultTop / 1.35) {
+          this.moveTranslateY.companyTranslate = Math.max((this.scrollPosition - this.sectionTops.companyTop) * 0.15, 0)
+        } else {
+          this.moveTranslateY.companyTranslate = 0
+        }
+        // opacity
+        if (this.scrollPosition >= this.sectionTops.consultTop / 1.08) {
+          this.opacity.companyQpacity = Math.min(this.scrollPosition / 5000, 1)
+        } else {
+          this.opacity.companyQpacity = 0
+        }
+      } else if (window.innerWidth <= 414) { // <=414
+        console.log('414的斷', this.sectionTops)
+        // customized區塊
+        // TranslateY
+        if (this.scrollPosition >= this.sectionTops.companyTop / 1.48) {
+          this.moveTranslateY.customizedTranslate = Math.max((this.scrollPosition - this.sectionTops.customizedTop) * 0.3, 0)
+        } else {
+          this.moveTranslateY.customizedTranslate = 0
+        }
+        // opacity
+        if (this.scrollPosition >= this.sectionTops.companyTop / 1.1) {
+          this.opacity.customizedQpacity = Math.min(this.scrollPosition / 5000, 1)
+        } else {
+          this.opacity.customizedQpacity = 0
+        }
+        // company區塊
+        // TranslateY
+        if (this.scrollPosition >= this.sectionTops.consultTop / 1.35) {
+          this.moveTranslateY.companyTranslate = Math.max((this.scrollPosition - this.sectionTops.companyTop) * 0.15, 0)
+        } else {
+          this.moveTranslateY.companyTranslate = 0
+        }
+        // opacity
+        if (this.scrollPosition >= this.sectionTops.consultTop / 1.05) {
+          this.opacity.companyQpacity = Math.min(this.scrollPosition / 5000, 1)
+        } else {
+          this.opacity.companyQpacity = 0
+        }
       }
     }
   },
@@ -778,6 +861,7 @@ export default {
     })
 
     this.getSectionTops()
+    window.addEventListener('resize', this.handleScroll)
   }
 }
 </script>

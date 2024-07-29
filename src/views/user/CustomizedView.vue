@@ -3,63 +3,73 @@
     <Loading :active="isLoading"></Loading>
     <div class="articles-list-frame">
       <CurrentPath/>
-      <div class="articles-list-title-box">
-        <h2>CUSTOMIZED</h2>
-        <h3>訂製專欄</h3>
-        <img src="@/assets/images/icon/anvil.png">
-      </div>
-      <div class="articles-list-tab-box">
-        <div class="year-tab">
-          <span class="year-tab-text-pc">年份：</span>
-          <button type="button" class="year-tab-btn-mb" @click="changeYearLabelBoxOpen">
-            <span>選擇年份</span>
-            <transition name="clockwise">
-              <span v-if="!isYearLabelBoxOpen" class="expand-icon"><i class="bi bi-plus"></i></span>
-              <span v-else class="expand-icon"><i class="bi bi-dash"></i></span>
-            </transition>
-          </button>
-          <div class="year-label-box" :class="[isYearLabelBoxOpen ? 'open' : '']">
-            <label class="year-label">
-              <input type="radio" value="all" name="year-group">
-              <span>全部</span>
-            </label>
-            <label class="year-label">
-              <input type="radio" value="2024" name="year-group">
-              <span>2024年</span>
-            </label>
-            <label class="year-label">
-              <input type="radio" value="2023" name="year-group">
-              <span>2023年</span>
-            </label>
-            <label class="year-label">
-              <input type="radio" value="2022" name="year-group">
-              <span>2022年</span>
-            </label>
+      <div class="articles-list-content-box" v-if="!isArticleMore">
+        <div class="articles-list-title-box">
+          <h2>CUSTOMIZED</h2>
+          <h3>訂製專欄</h3>
+          <img src="@/assets/images/icon/anvil.png">
+        </div>
+        <div class="articles-list-tab-box" ref="articlesListBox">
+          <div class="year-tab">
+            <span class="year-tab-text-pc">年份：</span>
+            <button type="button" class="year-tab-btn-mb" @click="changeYearLabelBoxOpen">
+              <span>選擇年份</span>
+              <transition name="clockwise">
+                <span v-if="!isYearLabelBoxOpen" class="expand-icon"><i class="bi bi-plus"></i></span>
+                <span v-else class="expand-icon"><i class="bi bi-dash"></i></span>
+              </transition>
+            </button>
+            <div class="year-label-box" :class="[isYearLabelBoxOpen ? 'open' : '']">
+              <label class="year-label">
+                <input type="radio" value="" name="year-group" v-model="selectedYearTab">
+                <span>全部</span>
+              </label>
+              <label class="year-label">
+                <input type="radio" value="2024" name="year-group" v-model="selectedYearTab">
+                <span>2024年</span>
+              </label>
+              <label class="year-label">
+                <input type="radio" value="2023" name="year-group" v-model="selectedYearTab">
+                <span>2023年</span>
+              </label>
+              <label class="year-label">
+                <input type="radio" value="2022" name="year-group" v-model="selectedYearTab">
+                <span>2022年</span>
+              </label>
+            </div>
+          </div>
+          <div class="keywords-tab">
+            <label for="key-input" class="keywords-tab-text-pc">關鍵字：</label>
+            <div class="keywords-tab-search-box">
+              <input type="text" id="key-input" ref="keywordInput">
+              <button type="button" @click="searchKeyword">搜尋</button>
+            </div>
           </div>
         </div>
-        <div class="keywords-tab">
-          <label for="key-input" class="keywords-tab-text-pc">關鍵字：</label>
-          <div class="keywords-tab-search-box">
-            <input type="text" id="key-input">
-            <button type="button">搜尋</button>
+        <div class="articles-list-box">
+          <h4>HANDLER NOTES</h4>
+          <div class="search-tip">
+            <span v-if="selectedYearTab">{{ `"${selectedYearTab}"` }}</span>
+            <span v-if="selectedYearTab && keywordContent">,</span>
+            <span v-if="keywordContent">{{ `"${ keywordContent}"` }}</span>
+            <span v-if="selectedYearTab || keywordContent">{{ '的搜尋結果：' + showArticles.length + '篇文章' }}</span>
           </div>
+          <ul class="articles-list">
+            <li v-for="item in showArticles" :key="item.id">
+              <router-link class="articles-link" :to="`/customized/article/${item.id}`">
+                <img :src="item.imageUrl" alt="article-img">
+                <p class="articles-author">{{ item.author }}</p>
+                <p class="articles-create">{{ item.create_at }}</p>
+                <p class="articles-tag">{{ '#' + item.tag.join(' #') }}</p>
+              </router-link>
+            </li>
+          </ul>
         </div>
-      </div>
-      <div class="articles-list-box">
-        <h4>HANDLER NOTES</h4>
-        <ul class="articles-list">
-          <li v-for="item in articles" :key="item.id">
-            <router-link class="articles-link">
-              <img :src="item.imageUrl" alt="article-img">
-              <p class="articles-author">{{ item.author }}</p>
-              <p class="articles-create">{{ $filters.date(item.create_at) }}</p>
-              <p class="articles-tag">{{ '#' + item.tag.join(' #') }}</p>
-            </router-link>
-          </li>
-        </ul>
       </div>
     </div>
-    <PaginationComponents :pages="pagination" @change-page="getArticles"/>
+    <ToPageTop :class="[isBackToTopBtnShow ? 'fadeIn' : '']" />
+    <PaginationComponents :pages="pagination" @change-page="getArticles" v-if="!isArticleMore"/>
+    <router-view v-if="isArticleMore"></router-view>
   </div>
 </template>
 
@@ -318,6 +328,14 @@
     left: 50%;
     transform: translateX(-50%);
   }
+
+  .search-tip{
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
 }
 .articles-list{
   display: flex;
@@ -364,6 +382,7 @@
       }
       .articles-create{
         bottom: 50px;
+        white-space: nowrap;
       }
       .articles-tag{
         font-size: 14px;
@@ -419,20 +438,57 @@
 <script>
 import PaginationComponents from '@/components/backstage/PaginationComponents.vue'
 import CurrentPath from '@/components/user/CurrentPath.vue'
+import ToPageTop from '@/components/user/ToPageTop.vue'
+import scrollPosMixin from '@/mixins/scrollPosMixin'
 
 export default {
   components: {
     PaginationComponents,
-    CurrentPath
+    CurrentPath,
+    ToPageTop
   },
   data () {
     return {
       articles: [],
       isLoading: false,
       pagination: {},
-      isYearLabelBoxOpen: false
+      isYearLabelBoxOpen: false,
+      selectedYearTab: '',
+      keywordContent: '',
+      sectionTops: {
+        articlesListBoxTops: 0
+      }
     }
   },
+  computed: {
+    showArticles () {
+      // 轉換日期格式
+      const copyList = JSON.parse(JSON.stringify(this.articles))
+      copyList.forEach(item => {
+        const date = new Date(item.create_at * 1000).toISOString().split('T')
+        item.create_at = date[0]
+      })
+      // 篩選
+      if (this.selectedYearTab || this.keywordContent) {
+        window.scrollTo(0, this.sectionTops.articlesListBoxTops)
+        const filterList = copyList.filter(item => item.create_at.includes(this.selectedYearTab)) // 年份
+        return filterList.filter(item => {
+          return item.title.includes(this.keywordContent) || item.tag.join('').includes(this.keywordContent) // 關鍵字
+        })
+      }
+      return copyList
+    },
+    isBackToTopBtnShow () {
+      return this.scrollPosition >= 500 / 1.5 || false
+    },
+    isArticleMore () { // 判斷是否開啟文章內容
+      if (this.$route.params.articleid) {
+        return true
+      }
+      return false
+    }
+  },
+  mixins: [scrollPosMixin],
   methods: {
     getArticles (page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/articles?page=${page}`
@@ -440,11 +496,9 @@ export default {
       this.$http.get(api)
         .then((res) => {
           this.isLoading = false
-          console.log('請求已傳送')
           if (res.data.success) {
             this.articles = res.data.articles
             this.pagination = res.data.pagination
-            console.log('請求已回覆')
           } else {
             console.log(res.data)
           }
@@ -455,10 +509,25 @@ export default {
     },
     changeYearLabelBoxOpen () { // 開關年份選單
       this.isYearLabelBoxOpen = !this.isYearLabelBoxOpen
+    },
+    searchKeyword () {
+      if (!this.$refs.keywordInput.value) { // 沒有輸入內容就按下搜尋 回到全部結果
+        this.selectedYearTab = ''
+      }
+      this.keywordContent = this.$refs.keywordInput.value
+      this.$refs.keywordInput.value = ''
+    },
+    getSectionTops () {
+      if (this.$refs.articlesListBox) {
+        this.sectionTops.articlesListBoxTops = this.$refs.articlesListBox.getBoundingClientRect().top + window.pageYOffset
+      }
     }
   },
   created () {
     this.getArticles()
+  },
+  mounted () {
+    this.getSectionTops()
   }
 }
 </script>

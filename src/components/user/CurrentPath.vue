@@ -8,7 +8,7 @@
             <a href="#" @click.prevent="toPath(item.path)">{{item.name}}</a>
           </div>
         </li>
-        <li><i class="bi bi-chevron-right"></i><span>{{ routeName }}</span></li>
+        <li class="current-name"><i class="bi bi-chevron-right"></i><span>{{ routeName }}</span></li>
       </ul>
   </div>
 </template>
@@ -41,6 +41,8 @@
   .current-path{
     li{
       white-space: nowrap;
+    }
+    .current-name{
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -71,6 +73,7 @@ export default {
       immediate: true
     },
     '$route.name' (newName) {
+      this.getCurrentPath()
       this.routeName = newName
     }
   },
@@ -81,12 +84,10 @@ export default {
       console.dir(this.$route)
     },
     getCurrentPathName (name) { // 接收單一產品頁面的路徑名稱
-      console.log('接收到', name)
       this.routeName = name
     },
     toPath (path) {
       this.$router.push(`${path}`)
-      window.scrollTo(0, 0)
     }
   },
   created () {

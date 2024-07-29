@@ -575,6 +575,7 @@
           .pullDown-frame{
             max-height: 0;
             transition: all 0.3s;
+            overflow: hidden; // 防止內容溢出出現異常空白區塊
           }
           .pullDown-frame-100{
             max-height: 900px;
@@ -950,8 +951,14 @@ export default {
     getSectionTops () {
       this.sectionTops.productListHeaderPosition = this.$refs.productListHeader.getBoundingClientRect().top + window.pageYOffset
     },
+    closePullDownBox () { // 關閉所有分類選單
+      this.isSearchTabOpen = false
+      this.isStyleTabOpen = false
+      this.isTypeTabOpen = false
+    },
     changeMBMenuOpen () {
       this.isMBMenuOpen = !this.isMBMenuOpen
+      this.closePullDownBox()
     },
     search () {
       this.searchContent = this.$refs.searchContent.value
@@ -966,18 +973,20 @@ export default {
         emitter.emit('search', this.searchContent)
       }
 
-      this.isSearchTabOpen = false
+      this.closePullDownBox()
       this.isMBMenuOpen = false
       this.$refs.searchContent.value = ''
     },
     backProductList () { // 回到所有產品
       this.isMBMenuOpen = false
+      this.closePullDownBox()
       this.$router.push('/products/productslist')
       this.searchContent = ''
       emitter.emit('search', this.searchContent)
     },
     toCategory (category) { // 前往產品分類
       this.isMBMenuOpen = false
+      this.closePullDownBox()
       this.$router.push(`/products/productslist/${category}`)
       this.searchContent = ''
       emitter.emit('search', this.searchContent)

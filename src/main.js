@@ -17,6 +17,9 @@ import { email, required } from '@vee-validate/rules'
 import { localize, setLocale } from '@vee-validate/i18n'
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
 
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
 import App from './App.vue'
 import router from './router'
 
@@ -43,7 +46,7 @@ configure({
 setLocale('zh_TW')
 
 library.add(fas)
-
+gsap.registerPlugin(ScrollTrigger)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(VueAxios, axios)
 app.use(router)

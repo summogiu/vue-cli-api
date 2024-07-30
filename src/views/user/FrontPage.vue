@@ -44,7 +44,7 @@
           </router-link>
         </div>
         <span class="little-title">- 產品資訊 -</span>
-        <div class="swiper sectionSwiper" ref="productSwiper" :class="[isSectionIn.isProductSectionIn ? 'sectionSwiper-In' : '']">
+        <div class="swiper sectionSwiper" ref="productSwiper">
           <div class="swiper-wrapper section-swiper-wrapper">
             <div class="swiper-slide section-swiper-slide">
               <img src="@/assets/images/products/industrial/pexels-anastasia-latunova-9967197.jpg" alt="product">
@@ -61,9 +61,8 @@
         </div>
       </div>
 
-      <div class="customized-section-box" ref="customized"
-          :style="{ transform: `translateY(${moveTranslateY.customizedTranslate}px)`}">
-        <div class="swiper sectionSwiper" ref="customizedSwiper"  :class="[isSectionIn.isCustomizedSectionIn ? 'sectionSwiper-In' : '']">
+      <div class="customized-section-box" ref="customized">
+        <div class="swiper sectionSwiper" ref="customizedSwiper">
           <div class="swiper-wrapper section-swiper-wrapper">
             <div class="swiper-slide section-swiper-slide">
               <img src="@/assets/images/customized/StarlightHotel02.jpg" alt="customized">
@@ -89,11 +88,10 @@
           </router-link>
         </div>
         <span class="little-title">- 訂製專欄 -</span>
-        <div class="shadow" :style="{ opacity: this.opacity.customizedQpacity }"></div>
+        <div class="shadow customized-shadow"></div>
       </div>
 
-      <div class="company-section-box" ref="company"
-          :style="{ transform: `translateY(${moveTranslateY.companyTranslate}px)` }">
+      <div class="company-section-box" ref="company">
         <img src="@/assets/images/background/company1.jpg" alt="company">
         <span class="little-title">- 公司資訊 -</span>
         <div class="company-information">
@@ -136,7 +134,7 @@
             聯絡我們
           </button>
         </div>
-        <div class="shadow" :style="{ opacity: this.opacity.companyQpacity }"></div>
+        <div class="shadow company-shadow"></div>
       </div>
 
       <div class="consult-section-frame" ref="consult">
@@ -644,18 +642,8 @@
     top: 0;
     width: 100%;
     height: 100%;
-    transition: opacity .3s;
+    opacity: 0;
     pointer-events: none;
-
-    &::before{
-      content: '';
-      height: 200px;
-      width: 100%;
-      position: absolute;
-      left: 0;
-      bottom: -200px;
-      background-color: rgba(0, 0, 0, 0.55);
-    }
 }
 
 .to-more-btn{
@@ -670,9 +658,9 @@
 </style>
 
 <script>
-import scrollPosMixin from '@/mixins/scrollPosMixin'
-
 import Swiper from 'swiper'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Pagination, Autoplay, EffectFade } from 'swiper/modules'
 
 Swiper.use(Pagination)
@@ -685,51 +673,9 @@ export default {
       bannerSwiper: '',
       productSwiper: '',
       customizedSwiper: '',
-      // 區塊位置
-      sectionTops: {
-        productTop: 0,
-        customizedTop: 0,
-        companyTop: 0,
-        consultTop: 0
-      },
-      // 判斷是否已進場
-      isSectionIn: {
-        isProductSectionIn: false,
-        isCustomizedSectionIn: false
-      },
-      // 動態改變的TranslateY
-      moveTranslateY: {
-        customizedTranslate: 0,
-        companyTranslate: 0
-      },
-      // 動態改變的opacity
-      opacity: {
-        customizedQpacity: 0,
-        companyQpacity: 0
-      }
+      cTX: ''
     }
   },
-  computed: {
-    screenWidth () { // 視窗寬度
-      return window.innerWidth
-    }
-  },
-  watch: {
-    // 判斷是否已進場
-    scrollPosition () {
-      if (this.scrollPosition >= this.sectionTops.productTop / 2) {
-        this.isSectionIn.isProductSectionIn = true
-      }
-      if (this.scrollPosition >= this.sectionTops.customizedTop / 1.4) {
-        this.isSectionIn.isCustomizedSectionIn = true
-      }
-      this.handleScroll()
-    },
-    screenWidth () {
-      this.getSectionTops()
-    }
-  },
-  mixins: [scrollPosMixin],
   methods: {
     scrollToTop () { // 返回頁面頂端
       window.scrollTo({
@@ -737,108 +683,73 @@ export default {
         behavior: 'smooth'
       })
     },
-    getSectionTops () { // 取得區塊定位
-      // 取得元素目前的translateY
-      const getTFY = (refName) => {
-        const element = this.$refs[refName] // 取得元素
-        const style = window.getComputedStyle(element) // 取得元素樣式
-        const matrix = new WebKitCSSMatrix(style.transform) // 變換矩陣，支援度關係，需替換成其他方式取得translateY
-        return matrix.m42 // 取得translateY
-      }
-      console.log('定位更新', this.sectionTops)
-      this.sectionTops.productTop = this.$refs.product.getBoundingClientRect().top + window.pageYOffset
-      // 透過 - getTFY('customized')扣除偏移量(元素當前的translateY)
-      this.sectionTops.customizedTop = this.$refs.customized.getBoundingClientRect().top + window.pageYOffset - getTFY('customized')
-      this.sectionTops.companyTop = this.$refs.company.getBoundingClientRect().top + window.pageYOffset - getTFY('company')
-      this.sectionTops.consultTop = this.$refs.consult.getBoundingClientRect().top + window.pageYOffset
+    scrollTriggerAnim () { // 滾動事件
+      this.cTX && this.cTX.revert()
+      const productSwiper = this.$refs.productSwiper
+      const customizedSwiper = this.$refs.customizedSwiper
+      const customized = this.$refs.customized
+      const company = this.$refs.company
+
+      this.cTX = gsap.context(() => {
+        // swiprer
+        ScrollTrigger.create({
+          trigger: productSwiper,
+          start: 'top center',
+          onEnter: () => {
+            if (productSwiper) {
+              productSwiper.classList.add('sectionSwiper-In')
+            }
+          }
+        })
+        ScrollTrigger.create({
+          trigger: customizedSwiper,
+          start: 'top center',
+          onEnter: () => {
+            if (customizedSwiper) {
+              customizedSwiper.classList.add('sectionSwiper-In')
+            }
+          }
+        })
+        // customized區塊
+        ScrollTrigger.create({
+          trigger: customized,
+          start: 'bottom center',
+          end: 'bottom top',
+          onUpdate: (self) => {
+            // Y軸偏移
+            const translateYV = self.progress * 200
+            if (customized) {
+              gsap.set(customized, { translateY: `${translateYV}px` })
+            }
+            // 陰影透明度
+            const opacityValue = self.progress
+            gsap.set('.customized-shadow', { opacity: opacityValue })
+          }
+        })
+        // company區塊
+        ScrollTrigger.create({
+          trigger: company,
+          start: 'bottom center',
+          end: 'bottom top',
+          onUpdate: (self) => {
+            // Y軸偏移
+            const translateYV = self.progress * 200
+            if (company) {
+              gsap.set(company, { translateY: `${translateYV}px` })
+            }
+            // 陰影透明度
+            const opacityValue = self.progress
+            gsap.set('.company-shadow', { opacity: opacityValue })
+          }
+        })
+      })
+      ScrollTrigger.refresh(true)
     },
-    handleScroll () { // 動態改變TranslateY和opacity
-      // >919斷點
-      if (this.screenWidth > 919) {
-        // customized區塊
-        // TranslateY
-        console.log('919的斷', this.sectionTops)
-        if (this.scrollPosition >= this.sectionTops.companyTop / 1.52) {
-          this.moveTranslateY.customizedTranslate = Math.max((this.scrollPosition - this.sectionTops.customizedTop) * 0.3, 0)
-        } else {
-          this.moveTranslateY.customizedTranslate = 0
-        }
-        // opacity
-        if (this.scrollPosition >= this.sectionTops.companyTop / 1.2) {
-          this.opacity.customizedQpacity = Math.min(this.scrollPosition / 5000, 1)
-        } else {
-          this.opacity.customizedQpacity = 0
-        }
-        // company區塊
-        // TranslateY
-        if (this.scrollPosition >= this.sectionTops.consultTop / 1.35) {
-          this.moveTranslateY.companyTranslate = Math.max((this.scrollPosition - this.sectionTops.companyTop) * 0.2, 0)
-        } else {
-          this.moveTranslateY.companyTranslate = 0
-        }
-        // opacity
-        if (this.scrollPosition >= this.sectionTops.consultTop / 1.1) {
-          this.opacity.companyQpacity = Math.min(this.scrollPosition / 5000, 1)
-        } else {
-          this.opacity.companyQpacity = 0
-        }
-      } else if (this.screenWidth <= 919 && this.screenWidth > 414) { // <=919 >414
-        console.log('919~414的斷', this.sectionTops)
-        // customized區塊
-        // TranslateY
-        if (this.scrollPosition >= this.sectionTops.companyTop / 1.48) {
-          this.moveTranslateY.customizedTranslate = Math.max((this.scrollPosition - this.sectionTops.customizedTop) * 0.3, 0)
-        } else {
-          this.moveTranslateY.customizedTranslate = 0
-        }
-        // opacity
-        if (this.scrollPosition >= this.sectionTops.companyTop / 1.2) {
-          this.opacity.customizedQpacity = Math.min(this.scrollPosition / 5000, 1)
-        } else {
-          this.opacity.customizedQpacity = 0
-        }
-        // company區塊
-        // TranslateY
-        if (this.scrollPosition >= this.sectionTops.consultTop / 1.35) {
-          this.moveTranslateY.companyTranslate = Math.max((this.scrollPosition - this.sectionTops.companyTop) * 0.15, 0)
-        } else {
-          this.moveTranslateY.companyTranslate = 0
-        }
-        // opacity
-        if (this.scrollPosition >= this.sectionTops.consultTop / 1.08) {
-          this.opacity.companyQpacity = Math.min(this.scrollPosition / 5000, 1)
-        } else {
-          this.opacity.companyQpacity = 0
-        }
-      } else if (this.screenWidth <= 414) { // <=414
-        console.log('414的斷', this.sectionTops)
-        // customized區塊
-        // TranslateY
-        if (this.scrollPosition >= this.sectionTops.companyTop / 1.48) {
-          this.moveTranslateY.customizedTranslate = Math.max((this.scrollPosition - this.sectionTops.customizedTop) * 0.3, 0)
-        } else {
-          this.moveTranslateY.customizedTranslate = 0
-        }
-        // opacity
-        if (this.scrollPosition >= this.sectionTops.companyTop / 1.1) {
-          this.opacity.customizedQpacity = Math.min(this.scrollPosition / 5000, 1)
-        } else {
-          this.opacity.customizedQpacity = 0
-        }
-        // company區塊
-        // TranslateY
-        if (this.scrollPosition >= this.sectionTops.consultTop / 1.35) {
-          this.moveTranslateY.companyTranslate = Math.max((this.scrollPosition - this.sectionTops.companyTop) * 0.15, 0)
-        } else {
-          this.moveTranslateY.companyTranslate = 0
-        }
-        // opacity
-        if (this.scrollPosition >= this.sectionTops.consultTop / 1.05) {
-          this.opacity.companyQpacity = Math.min(this.scrollPosition / 5000, 1)
-        } else {
-          this.opacity.companyQpacity = 0
-        }
-      }
+    resetScrollTrigger () {
+      // 重置 ScrollTrigger 的狀態
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+      // 重新初始化 ScrollTrigger
+      this.scrollTriggerAnim()
     }
   },
   mounted () {
@@ -876,8 +787,8 @@ export default {
       effect: 'fade'
     })
 
-    this.getSectionTops()
-    window.addEventListener('resize', this.handleScroll)
+    this.scrollTriggerAnim()
+    window.addEventListener('resize', this.resetScrollTrigger)
   }
 }
 </script>

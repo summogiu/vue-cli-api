@@ -270,22 +270,22 @@
   width: 30px;
   height: 30px;
   display: none;
-  position: fixed;
-  right: 0;
-  top: 0;
-  margin: 5px;
-  padding: 5px;
-  border: 2px solid $subColor;
+  justify-content: center;
+  align-items: center;
   color: $subColor;
   border-radius: 50%;
+  border: 2px solid $subColor;
+  position: fixed;
+  right: 5px;
+  top: 5px;
   z-index: 100;
-  transition: all 0.5s;
-  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.75);
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.75);
 
   i{
+    font-size: 20px;
+    color: $subColor;
     position: absolute;
-    top: 2px;
-    text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.8);
   }
 }
 .MBmenu{
@@ -371,7 +371,7 @@
         display: none;
     }
     .open-MBmenu{
-        display: block;
+        display: flex;
     }
 }
 

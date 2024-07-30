@@ -709,6 +709,11 @@ export default {
       }
     }
   },
+  computed: {
+    screenWidth () { // 視窗寬度
+      return window.innerWidth
+    }
+  },
   watch: {
     // 判斷是否已進場
     scrollPosition () {
@@ -719,6 +724,9 @@ export default {
         this.isSectionIn.isCustomizedSectionIn = true
       }
       this.handleScroll()
+    },
+    screenWidth () {
+      this.getSectionTops()
     }
   },
   mixins: [scrollPosMixin],
@@ -730,15 +738,23 @@ export default {
       })
     },
     getSectionTops () { // 取得區塊定位
+      // 取得元素目前的translateY
+      const getTFY = (refName) => {
+        const element = this.$refs[refName] // 取得元素
+        const style = window.getComputedStyle(element) // 取得元素樣式
+        const matrix = new WebKitCSSMatrix(style.transform) // 變換矩陣，支援度關係，需替換成其他方式取得translateY
+        return matrix.m42 // 取得translateY
+      }
       console.log('定位更新', this.sectionTops)
       this.sectionTops.productTop = this.$refs.product.getBoundingClientRect().top + window.pageYOffset
-      this.sectionTops.customizedTop = this.$refs.customized.getBoundingClientRect().top + window.pageYOffset
-      this.sectionTops.companyTop = this.$refs.company.getBoundingClientRect().top + window.pageYOffset
+      // 透過 - getTFY('customized')扣除偏移量(元素當前的translateY)
+      this.sectionTops.customizedTop = this.$refs.customized.getBoundingClientRect().top + window.pageYOffset - getTFY('customized')
+      this.sectionTops.companyTop = this.$refs.company.getBoundingClientRect().top + window.pageYOffset - getTFY('company')
       this.sectionTops.consultTop = this.$refs.consult.getBoundingClientRect().top + window.pageYOffset
     },
     handleScroll () { // 動態改變TranslateY和opacity
       // >919斷點
-      if (window.innerWidth > 919) {
+      if (this.screenWidth > 919) {
         // customized區塊
         // TranslateY
         console.log('919的斷', this.sectionTops)
@@ -756,7 +772,7 @@ export default {
         // company區塊
         // TranslateY
         if (this.scrollPosition >= this.sectionTops.consultTop / 1.35) {
-          this.moveTranslateY.companyTranslate = Math.max((this.scrollPosition - this.sectionTops.companyTop) * 0.15, 0)
+          this.moveTranslateY.companyTranslate = Math.max((this.scrollPosition - this.sectionTops.companyTop) * 0.2, 0)
         } else {
           this.moveTranslateY.companyTranslate = 0
         }
@@ -766,7 +782,7 @@ export default {
         } else {
           this.opacity.companyQpacity = 0
         }
-      } else if (window.innerWidth <= 919 && window.innerWidth > 414) { // <=919 >414
+      } else if (this.screenWidth <= 919 && this.screenWidth > 414) { // <=919 >414
         console.log('919~414的斷', this.sectionTops)
         // customized區塊
         // TranslateY
@@ -794,7 +810,7 @@ export default {
         } else {
           this.opacity.companyQpacity = 0
         }
-      } else if (window.innerWidth <= 414) { // <=414
+      } else if (this.screenWidth <= 414) { // <=414
         console.log('414的斷', this.sectionTops)
         // customized區塊
         // TranslateY

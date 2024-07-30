@@ -143,10 +143,10 @@
           </div>
         </div>
         </div>
-      <div class="open-MB-productList-menu-btn">
+      <div class="open-MB-productList-menu-btn" :class="[isOpenMenuBtnChangeColor ? 'changeColor' : '']">
         <button type="button"
                 @click="changeMBMenuOpen">
-                <transition name="rotate"><i class="bi bi-filter-left" v-if="!isMBMenuOpen"></i></transition>
+                <transition name="rotate"><i class="bi bi-filter-left open-menu-i" v-if="!isMBMenuOpen"></i></transition>
                 <transition name="rotate"><i class="bi bi-x-lg" v-if="isMBMenuOpen"></i></transition>
                 </button>
       </div>
@@ -171,7 +171,7 @@
               <button class="follow-plus-btn"
                       @click="addFollow(item)">
                           <i class="bi bi-heart" v-if="!isFollowed(item)"></i>
-                          <i class="bi bi-heart-fill isFollow-icon" v-else></i>
+                          <i class="bi bi-heart-fill isFollow-icon follow-plus-btn-isFollow" v-else></i>
               </button>
           </li>
         </ul>
@@ -276,10 +276,11 @@
   background-color: white;
 
   .top-tip{
+    color: white;
     text-align: center;
     padding: 14px;
     font-size: 14px;
-    border-bottom: 1px solid $subColor4;
+    background: $linearColor2;
   }
 
   .productList-header-content{
@@ -319,7 +320,7 @@
             transform: translateX(-50%);
             width: 0;
             height: 3px;
-            background-color: $subColor3;
+            background: $linearColor;
             border-radius: 5px;
             transition: all .5s;
             transform-origin: center;
@@ -337,11 +338,21 @@
           left: 0;
           width: 100%;
           padding: 50px 0;
-          background-color: white;
+          background: white;
           opacity: 0;
           visibility: hidden;
           transform: translateY(-10%);
           transition: transform 0.2s, opacity 0.2s;
+
+          &::before{
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            content: '';
+            width: 100%;
+            height: 5px;
+            background: $linearColor2;
+          }
         }
         .tab-bottom-pullDown-Tab{
           display: flex;
@@ -409,15 +420,16 @@
             border: 1px solid gray;
           }
           .search-btn{
-            background: transparent;
+            background: $linearColor;
             width: 50px;
             height: 50px;
+            border: none;
             border-radius: 50%;
-            border: 1px solid gray;
             margin-left: 10px;
 
             i{
               font-size: 24px;
+              color: white;
             }
             &:active{
               box-shadow: 0px 0px 5px gray inset;
@@ -445,13 +457,19 @@
         transform: translateX(-50%);
         width: 0%;
         height: 3px;
-        background-color: black;
+        background: $linearColor;
         transition: all .5s;
       }
       h1{
         font-size: 50px;
+        font-weight: bold;
+        background: $linearColor2;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
       }
       p{
+        color: $subColor8;
         position: absolute;
         bottom: -50px;
         left: 50%;
@@ -480,6 +498,7 @@
       }
       .productList-header-follow{
         margin-right: 50px;
+
         .isFollow-icon{
           margin-right: 10px;
         }
@@ -494,7 +513,7 @@
   z-index: 90;
 }
 .productList-header-slide{
-  top: -50px;
+  top: -40px;
 }
 
  .open-MB-productList-menu-btn{
@@ -510,6 +529,7 @@
 
       i{
         font-size: 50px;
+        color: white;
         position: absolute;
         top: 0;
         left: 0;
@@ -523,11 +543,17 @@
   align-items: center;
   justify-content: center;
   height: 200px;
+  background: $linearColor2;
 
     h2{
+      color: white;
       font-size: 50px;
-      border-bottom: 3px solid black;
+      border-bottom: 3px solid white;
       margin-bottom: 5px;
+      font-weight: bold;
+    }
+    p{
+      color: white;
     }
   }
 @media (max-width:1100px){
@@ -638,6 +664,11 @@
   .open-MB-productList-menu-btn{
     display: block;
   }
+  .open-MB-productList-menu-btn.changeColor{
+    .open-menu-i{
+      color: $subColor8;
+    }
+  }
   .MB-title{
     display: flex;
   }
@@ -657,6 +688,7 @@
 
       li{
         margin-right: 20px;
+        margin-bottom: 20px;
         cursor: pointer;
         position: relative;
         width: 200px;
@@ -666,6 +698,14 @@
             object-fit: cover;
             width: 200px;
             height: 200px;
+          }
+          h4{
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          p{
+            font-size: 16px;
           }
           &:hover{
             animation: flash 0.3s;
@@ -853,6 +893,9 @@ export default {
       } else {
         return '在所有類別中搜尋'
       }
+    },
+    isOpenMenuBtnChangeColor () {
+      return this.scrollPosition >= 200
     }
   },
   mixins: [scrollPosMixin, emitter, follow],

@@ -176,7 +176,7 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    background-color: black;
+    background: black;
     border: none;
     width: 80px;
     height: 80px;

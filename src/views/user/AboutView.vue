@@ -23,7 +23,7 @@
               :class="[ isContentBoxIn ? 'fadeIn toDown-1' : '' ]">
       <p class="about-page-content-p to-up-p"
               :class="[ isContentIn ? 'fadeIn toUp-1' : '' ]">
-              您好！還迎來到In Mu Light！
+              您好！還迎來到In My Light！
               </p>
       <p class="about-page-content-p to-up-p"
               :class="[ isContentIn ? 'fadeIn toUp-2' : '' ]">
@@ -194,7 +194,7 @@
   .about-page-content-box{
       position: relative;
       margin-top: 100vh;
-      padding: 50px 100px 100px 100px;
+      padding: 50px 100px 100px;
       background: white;
       border-radius: 15px 15px 0 0;
       z-index: 5;
@@ -362,16 +362,33 @@
     }
 
   .about-page-content-box{
+    padding: 50px 12px 100px;
     .about-page-content-box-topName{
       line-height: 1;
       writing-mode: vertical-lr;
       left: 15px;
       top: 15px;
-      opacity: 0.5;
       font-size: 80px;
+      z-index: 10;
     }
     .about-page-point{
-      width: 100%;
+      width: 60%;
+    }
+    .other-link-box{
+
+      ul{
+        flex-direction: column;
+
+        li{
+          width: 100%;
+          margin: 30px 0;
+          a{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+        }
+      }
     }
   }
 }
@@ -393,7 +410,6 @@
       text-align: start;
     }
     .about-page-point{
-      width: 100%;
       li{
         width: 100%;
       }

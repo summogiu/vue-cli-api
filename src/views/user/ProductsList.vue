@@ -17,22 +17,23 @@
           <div class="product-content" @click="openMore(item)">
             <img :src="item.imageUrl" alt="" class="thumbnail">
             <p>{{ item.title }}</p>
-            <p>
-              <span class="origin_price">NT${{ $filters.currency(item.origin_price) }}</span>
-              <span class="price">NT${{ $filters.currency(item.price) }}</span>
-            </p>
           </div>
-          <button class="btn btn-outline-danger cart-plus-btn"
-              @click="addCart(item.id)"
-                  :disabled="this.status.loadingItem === item.id">
-                  <div class="spinner-border text-danger spinner-border-sm" role="status"
-                      v-if="this.status.loadingItem === item.id"></div>
-                      <i class="bi bi-cart-plus cart-plus-i" v-else></i></button>
-          <button class="follow-plus-btn"
-                  @click="addFollow(item)">
-                      <i class="bi bi-heart" v-if="!isFollowed(item)"></i>
-                      <i class="bi bi-heart-fill" v-else></i>
-                      </button>
+          <div class="price-box">
+              <p class="price">NT${{ $filters.currency(item.price) }}</p>
+              <div class="product-btn-box">
+                <button class="cart-plus-btn"
+                        @click="addCart(item.id)"
+                        :disabled="this.status.loadingItem === item.id">
+                        <div class="spinner-border text-danger spinner-border-sm" role="status"
+                            v-if="this.status.loadingItem === item.id"></div>
+                            <i class="bi bi-cart-plus" v-else></i></button>
+                <button class="follow-plus-btn"
+                        @click="addFollow(item)">
+                            <i class="bi bi-heart" v-if="!isFollowed(item)"></i>
+                            <i class="bi bi-heart-fill follow-plus-btn-isFollow" v-else></i>
+                            </button>
+              </div>
+            </div>
         </li>
       </ul>
     </div>
@@ -46,6 +47,7 @@
     margin-top: 250px;
     animation: fadeIn 1s;
 
+    // 價格排序
     .filter-select-box{
       display: flex;
       justify-content: end;
@@ -65,61 +67,73 @@
         background-size: 16px;
       }
     }
-
+    // 商品列表
     .product-list-ul{
       display: flex;
       flex-wrap: wrap;
-      width: 920px;
       justify-content: start;
-      margin: 0 auto;
+      margin: 0 12px;
 
       li{
-        max-width: 440px;
-        margin: 0 5px;
-        margin-bottom: 30px;
+        margin: 0 12px 50px;
+        width: calc(25% - 24px);
+        position: relative;
 
         .product-content{
           cursor: pointer;
 
           p{
-            font-size: 15px;
             width: 220px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            object-fit: cover;
           }
         }
         .thumbnail{
-          width: 220px;
+          width: 100%;
           height: 400px;
           object-fit: cover;
         }
-        .cart-plus-btn,.follow-plus-btn{
-          padding: 0;
-          width: 30px;
-          height: 30px;
+        .price-box{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-          .cart-plus-i{
-            font-size: 20px;
-          }
+            .product-btn-box{
+              display: flex;
+              align-items: center;
+
+              .cart-plus-btn,.follow-plus-btn{
+                padding: 0;
+                width: 30px;
+                height: 30px;
+                margin-left: 10px;
+              }
+            }
         }
+        &::before{
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            content: '';
+            width: 100%;
+            height: 1px;
+            background: $subColor4;
+          }
 
         &:hover .thumbnail{
           animation: flash 0.2s ease-out;
         }
       }
       .big-size-li{
-
-        .thumbnail{
-          width: 440px;
-          height: 400px;
-        }
+        width: calc(50% - 24px);
       }
     }
   }
 @media (max-width:919px){
   .product-list-box{
-    margin: 0 auto;
+    margin-top: 70px;
 
     .filter-select-box{
       justify-content: center;
@@ -127,17 +141,13 @@
     }
 
     .product-list-ul{
-      width: 90%;
       flex-direction: column;
       align-items: center;
 
-      li{
-
-        .thumbnail{
-          width: 440px;
-          height: 400px;
-          object-fit: cover;
-        }
+      li,.big-size-li{
+        margin: 20px 0;
+        width: 100%;
+        max-width: 400px;
       }
     }
   }

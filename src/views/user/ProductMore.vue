@@ -109,7 +109,7 @@
         cursor: pointer;
       }
       .focus-img{
-        border: 2px solid black;
+        border: 2px solid $subColor3;
       }
     }
   }
@@ -118,6 +118,9 @@
     padding-bottom: 25px;
     border-bottom: 1px solid $subColor4;
 
+    h2{
+      font-size: 36px;
+    }
     .category-link{
       color: black;
       padding-bottom: 1px;
@@ -181,9 +184,8 @@
       }
 
       .cart-plus-btn{
-        background-color: black;
+        background: $subColor8;
         color: white;
-        border: 1px solid black;
         border-radius: 50px;
         padding: 0 30px;
 
@@ -311,7 +313,7 @@
       &:hover{
         animation: flash 0.3s;
         .to-icon{
-          animation: BounceToRight 0.3s;
+          animation: BounceToRight 1s cubic-bezier(0.2, 1, 0.3, 1) infinite;
         }
       }
     }

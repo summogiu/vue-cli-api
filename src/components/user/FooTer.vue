@@ -2,9 +2,9 @@
   <div>
     <div class="footer-frame">
       <ul class="footer-content">
-        <li><a href="#"><i class="bi bi-facebook"></i></a></li>
-        <li><a href="#"><i class="bi bi-instagram"></i></a></li>
-        <li><a href="#"><i class="bi bi-twitter-x"></i></a></li>
+        <li><router-link to="/"><i class="bi bi-facebook"></i></router-link></li>
+        <li><router-link to="/"><i class="bi bi-instagram"></i></router-link></li>
+        <li><router-link to="/"><i class="bi bi-twitter-x"></i></router-link></li>
       </ul>
 
       <p class="business-time">營業時間：<br>平日 10:00 - 19:00，<br>週六 10:00 - 17:00。</p>
@@ -13,7 +13,7 @@
         <li class="first-li"><router-link to="/about">關於我們</router-link></li>
         <li><router-link to="/products/productslist">產品資訊</router-link></li>
         <li><router-link to="/customized">專屬訂製</router-link></li>
-        <li><router-link to="/about">公司資訊</router-link></li>
+        <li><router-link to="/company">公司資訊</router-link></li>
         <li><router-link to="/about">線上諮詢</router-link></li>
         <li><router-link to="/frontPage">回首頁</router-link></li>
       </ul>

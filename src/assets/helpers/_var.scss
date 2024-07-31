@@ -467,3 +467,14 @@ $isfollow: rgb(214, 130, 144);
     transform: translateY(0);
   }
 }
+@keyframes BounceToDown {
+  from{
+    transform: translateY(0);
+  }
+  50%{
+    transform: translateY(3px);
+  }
+  to{
+    transform: translateY(0);
+  }
+}

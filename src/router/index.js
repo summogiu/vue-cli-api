@@ -61,6 +61,11 @@ const routes = [
             component: () => import('../views/user/CustomizedMore.vue')
           }
         ]
+      },
+      {
+        path: 'company',
+        name: '公司資訊',
+        component: () => import('../views/user/CompanyView.vue')
       }
     ]
   },

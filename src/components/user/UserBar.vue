@@ -36,8 +36,8 @@
                 </div>
             </li>
             <li><router-link to="/customized"><p>CUSTOMIZED</p> <p class="subtitle">專屬訂製</p></router-link></li>
-            <li><a href="#"><p>COMPANY</p> <p class="subtitle">公司資訊</p></a></li>
-            <li><a href="#"><p>CONSULT</p> <p class="subtitle">線上諮詢</p></a></li>
+            <li><router-link to="/company"><p>COMPANY</p> <p class="subtitle">公司資訊</p></router-link></li>
+            <li><router-link to="/"><p>CONSULT</p> <p class="subtitle">線上諮詢</p></router-link></li>
         </ul>
         <a href="#" class="open-MBmenu" @click.prevent="openMBMenu">
           <transition name="rotate"><i class="bi bi-list" v-if="!MBmenuIsOpen"></i></transition>
@@ -58,8 +58,8 @@
                   </ul>
               </li>
               <li><router-link to="/customized"><span>CUSTOMIZED</span><span class="MB-subtitle">專屬訂製</span></router-link></li>
-              <li><a href="#"><span>COMPANY</span><span class="MB-subtitle">公司資訊</span></a></li>
-              <li><a href="#"><span>CONSULT</span><span class="MB-subtitle">線上諮詢</span></a></li>
+              <li><router-link to="/company"><span>COMPANY</span><span class="MB-subtitle">公司資訊</span></router-link></li>
+              <li><router-link to="/"><span>CONSULT</span><span class="MB-subtitle">線上諮詢</span></router-link></li>
           </ul>
         </transition>
     </div>

@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="about-page-content-box" ref="contentBox"
-        :class="[ isContentBoxIn ? 'transform0' : '' ]">
+        :class="[ isContentBoxIn ? 'transform0' : 'fadeOut' ]">
       <h3 class="about-page-content-box-topName"
               :class="[ isContentBoxIn ? 'toLeft-1' : '' ]">In My Light</h3>
       <CurrentPath/>
@@ -88,7 +88,7 @@
       <div class="other-link-box" ref="otherLinkBox2">
         <ul>
           <li>
-             <router-link to="/">
+             <router-link to="/company">
              <img src="@/assets/images/about-img/to-company.jpg">
              <div class="other-link-title">
                 <div class="to-more-icon">
@@ -108,6 +108,7 @@
 
 <style lang="scss">
 .about-page-frame{
+  overflow: hidden;
   background: $subColor3;
   transition: all .6s;
   opacity: 0;
@@ -185,7 +186,7 @@
       border-radius: 15px 15px 0 0;
       z-index: 5;
       transform: translateY(30%);
-      transition: transform .5s;
+      transition: transform .5s ,opacity .3s;
 
       .about-page-content-box-topName{
         position: absolute;
@@ -346,7 +347,7 @@
       line-height: 1;
       writing-mode: vertical-lr;
       left: 15px;
-      top: 15px;
+      top: -48px;
       font-size: 80px;
       z-index: 10;
     }
@@ -383,6 +384,15 @@
     .about-page-title{
       left: 50%;
       transform: translateX(-50%);
+    }
+    .marquee{
+      bottom: 0;
+      .marquee-content,.marquee-content-delay{
+        font-size: 80px;
+      }
+    }
+    .marquee-up{
+      transform: translateY(-300%);
     }
   }
   .about-page-content-box{
@@ -443,7 +453,7 @@ export default {
     getSectionTops () {
       this.sectionTops.contentBoxTops = this.$refs.contentBox.getBoundingClientRect().top + window.pageYOffset
     },
-    scrollTriggerAnim () {
+    aboitScrollTriggerAnim () {
       this.cTXB && this.cTXB.revert()
       const titleImg = this.$refs.titleImg
       this.ps = [...document.getElementsByClassName('about-page-content-p')]
@@ -455,6 +465,7 @@ export default {
       ScrollTrigger.create({
         trigger: titleImg,
         start: '-10% bottom',
+        end: 'bottom top',
         onEnter: () => {
           gsap.to(titleImg, { opacity: '1', translateY: '0px', duration: 0.5 })
         },
@@ -467,6 +478,7 @@ export default {
         ScrollTrigger.create({
           trigger: item,
           start: 'top bottom',
+          end: 'bottom top',
           onEnter: () => {
             gsap.to(item, { opacity: 1, translateY: '0%', duration: 1 })
           },
@@ -479,6 +491,7 @@ export default {
       ScrollTrigger.create({
         trigger: straightLine,
         start: 'center bottom',
+        end: 'bottom top',
         onEnter: () => {
           straightLine && straightLine.classList.add('straight-line')
         },
@@ -489,7 +502,8 @@ export default {
       // 特色
       point && ScrollTrigger.create({
         trigger: point,
-        start: '30% bottom',
+        start: '20% bottom',
+        end: 'bottom top',
         onEnter: () => {
           listItems.forEach(item => {
             gsap.to(item, { translateX: '0%', opacity: 1, duration: 1 })
@@ -506,6 +520,7 @@ export default {
         ScrollTrigger.create({
           trigger: item,
           start: 'center bottom',
+          end: 'bottom top',
           onEnter: () => {
             gsap.to(item, { translateY: '0%', opacity: 1, duration: 1 })
           },
@@ -516,17 +531,18 @@ export default {
       })
     },
     resetScrollTrigger () {
-      const scrollContainer = document.querySelector('.scroll-container')
-      if (scrollContainer) {
-        scrollContainer.style.height = `${window.innerHeight}px`
-      }
+      const contentBox = this.$refs.contentBox
+      gsap.set(contentBox, { translateY: '0px' })
       ScrollTrigger.refresh()
     }
   },
   mounted () {
     this.getSectionTops()
-    this.scrollTriggerAnim()
+    this.aboitScrollTriggerAnim()
     window.addEventListener('resize', this.resetScrollTrigger)
+  },
+  beforeUnmount () {
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill())
   }
 }
 </script>

@@ -129,10 +129,10 @@
               </tr>
             </table>
           </div>
-          <button class="connect-us-btn" type="button">
+          <router-link to="/company" class="connect-us-btn" type="button">
             <i class="bi bi-envelope"></i>
             聯絡我們
-          </button>
+          </router-link>
         </div>
         <div class="shadow company-shadow"></div>
       </div>
@@ -712,7 +712,6 @@ export default {
         ScrollTrigger.create({
           trigger: customized,
           start: 'bottom center',
-          end: 'bottom top',
           onUpdate: (self) => {
             // Y軸偏移
             const translateYV = self.progress * 200
@@ -727,7 +726,6 @@ export default {
         ScrollTrigger.create({
           trigger: company,
           start: 'bottom center',
-          end: 'bottom top',
           onUpdate: (self) => {
             // Y軸偏移
             const translateYV = self.progress * 200
@@ -785,6 +783,9 @@ export default {
 
     this.scrollTriggerAnim()
     window.addEventListener('resize', this.resetScrollTrigger)
+  },
+  beforeUnmount () {
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill())
   }
 }
 </script>

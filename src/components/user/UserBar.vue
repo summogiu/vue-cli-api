@@ -74,8 +74,8 @@
     position: fixed;
     display: flex;
     right: 0;
-    top: 0;
-    z-index: 50;
+    top: 5px;
+    z-index: 100;
     background: rgba(0, 0, 0, 0.75);
     border-radius: 50px 0 0 50px;
     padding-left: 20px;

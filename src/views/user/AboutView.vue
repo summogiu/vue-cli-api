@@ -1,5 +1,5 @@
 <template>
-  <div class="about-page-frame">
+  <div class="about-page-frame" ref="aboutView">
     <div class="about-page-bg">
       <div class="bg-circle" :class="[ isContentBoxIn ? 'changeColor' : '' ]"></div>
       <div class="about-page-title"
@@ -14,51 +14,38 @@
       </div>
     </div>
     <div class="about-page-content-box" ref="contentBox"
-            :class="[ isContentBoxIn ? 'transform0' : '' ]">
+        :class="[ isContentBoxIn ? 'transform0' : '' ]">
       <h3 class="about-page-content-box-topName"
               :class="[ isContentBoxIn ? 'toLeft-1' : '' ]">In My Light</h3>
       <CurrentPath/>
-      <img src="@/assets/images/background/pexels-tristan-paolo-4276607.jpg"
-              alt="" class="title-img"
-              :class="[ isContentBoxIn ? 'fadeIn toDown-1' : '' ]">
-      <p class="about-page-content-p to-up-p"
-              :class="[ isContentIn ? 'fadeIn toUp-1' : '' ]">
-              您好！還迎來到In My Light！
-              </p>
-      <p class="about-page-content-p to-up-p"
-              :class="[ isContentIn ? 'fadeIn toUp-2' : '' ]">
-              無論您是在為新家裝潢，還是想要給現有的空間注入新的生命力，<br>
-              In My Light都是您的最佳選擇。
-              </p>
-      <p class="about-page-content-p to-up-p"
-            :class="[ isPointFade ? 'fadeIn toUp-1' : '' ]">
-            在我們的店裡，您將會發現</p>
-            <div :class="[ isPointFade ? 'fadeIn straight-line' : '' ]"
-                    @animationend="lineAnimationJudge"></div>
-      <ul class="about-page-point" ref="point"
-            :class="[ islineAnimationEnd && isPointFade ? 'fadeIn' : '' ]">
-        <li :class="[ islineAnimationEnd && isPointFade ? 'toRight-1 point-fadeIn' : '' ]">
-          <img src="@/assets/images/about-img/point1.jpg" alt="">
+      <img src="@/assets/images/background/pexels-tristan-paolo-4276607.jpg" class="title-img" ref="titleImg">
+      <p class="about-page-content-p p1">您好！還迎來到In My Light！</p>
+      <p class="about-page-content-p">無論您是在為新家裝潢，還是想要給現有的空間注入新的生命力，<br>In My Light都是您的最佳選擇。</p>
+      <p class="about-page-content-p">在我們的店裡，您將會發現</p>
+      <div ref="straightLine"></div>
+      <ul class="about-page-point" ref="point">
+        <li>
+          <img src="@/assets/images/about-img/point1.jpg">
           <div class="about-page-point-text">
             <p>優質品質：</p>
             <span>我們精心挑選的每一盞燈飾都是由最高品質的材料製成，確保耐用性和可靠性。</span>
           </div>
           </li>
-        <li :class="[ islineAnimationEnd ? 'toRight-2 point-fadeIn' : '' ]">
+        <li>
           <img src="@/assets/images/about-img/point2.jpg">
           <div class="about-page-point-text">
             <p>獨特風格：</p>
             <span>無論您喜歡簡約時尚還是奢華經典，我們的燈具都能為您的空間增添獨特的魅力。</span>
           </div>
           </li>
-        <li :class="[ isPointFadeHalf && islineAnimationEnd ? 'toRight-1 point-fadeIn' : '' ]">
+        <li>
           <img src="@/assets/images/about-img/point3.jpg">
           <div class="about-page-point-text">
             <p>專業服務：</p>
             <span>我們擁有經驗豐富的照明設計師團隊，隨時為您提供專業的建議和指導，以確保您找到完美的照明解決方案。</span>
           </div>
           </li>
-        <li :class="[ isPointFadeHalf && islineAnimationEnd ? 'toRight-2 point-fadeIn' : '' ]">
+        <li>
           <img src="@/assets/images/about-img/point4.jpg">
           <div class="about-page-point-text">
             <p>個性定制：</p>
@@ -66,30 +53,29 @@
           </div>
         </li>
       </ul>
-      <p class="about-page-content-p"
-               :class="[ isOtherIn ? 'fadeIn toDown-1' : '' ]">
+      <p class="about-page-content-p">
         現在，歡迎探索我們的獨特產品，<br>讓我們一起為您的生活和空間帶來光芒璀璨的變化！
       </p>
       <div class="other-link-box" ref="otherLinkBox1">
         <ul>
-          <li :class="[ isOtherIn ? 'fadeIn toDown-1' : '' ]">
+          <li>
             <router-link to="/products/productslist">
               <img src="@/assets/images/about-img/to-products.jpg">
               <div class="other-link-title">
                 <div class="to-more-icon">
-                  <img src="@/assets/images/circle.png" alt="" class="circle">
+                  <img src="@/assets/images/circle.png"  class="circle">
                   <i class="bi bi-arrow-right user-bar-more-icon"></i>
                 </div>
                 <span>參觀產品列表</span>
               </div>
             </router-link>
           </li>
-          <li :class="[ isOtherIn ? 'fadeIn toDown-1' : '' ]">
+          <li>
             <router-link to="/customized">
             <img src="@/assets/images/about-img/to-customized.jpg">
             <div class="other-link-title">
                 <div class="to-more-icon">
-                  <img src="@/assets/images/circle.png" alt="" class="circle">
+                  <img src="@/assets/images/circle.png"  class="circle">
                   <i class="bi bi-arrow-right user-bar-more-icon"></i>
                 </div>
                 <span>查看過往訂製品</span>
@@ -98,15 +84,15 @@
           </li>
         </ul>
       </div>
-      <p class="about-page-content-p to-down-p" :class="[ isOther2In ? 'fadeIn toDown-2' : '' ]">或者</p>
+      <p class="about-page-content-p to-down-p">或者</p>
       <div class="other-link-box" ref="otherLinkBox2">
         <ul>
-          <li :class="[ isOther2In ? 'fadeIn toDown-1' : '' ]">
+          <li>
              <router-link to="/">
              <img src="@/assets/images/about-img/to-company.jpg">
              <div class="other-link-title">
                 <div class="to-more-icon">
-                  <img src="@/assets/images/circle.png" alt="" class="circle">
+                  <img src="@/assets/images/circle.png"  class="circle">
                   <i class="bi bi-arrow-right user-bar-more-icon"></i>
                 </div>
                 <span>更了解我們</span>
@@ -199,7 +185,7 @@
       border-radius: 15px 15px 0 0;
       z-index: 5;
       transform: translateY(30%);
-      transition: all .5s;
+      transition: transform .5s;
 
       .about-page-content-box-topName{
         position: absolute;
@@ -217,7 +203,7 @@
         object-position: top;
         margin: 100px 0;
         opacity: 0;
-        transition: all 1s;
+        transform: translateY(30%);
       }
       .about-page-content-p{
         margin: 50px 0;
@@ -225,12 +211,6 @@
         font-weight: bold;
         text-align: center;
         opacity: 0;
-        transition: all 1s;
-      }
-      .to-up-p{
-        transform: translateY(30%);
-      }
-      .to-down-p{
         transform: translateY(-30%);
       }
       .straight-line{
@@ -246,7 +226,7 @@
           top: 0;
           transform: translateX(-50%);
           transform-origin: top;
-          animation: lineDowm 1s linear forwards;
+          animation: lineDowm 1s;
         }
       }
       .about-page-point{
@@ -257,8 +237,6 @@
         width: 80%;
         margin: 0 auto;
         margin-top: 260px;
-        opacity: 0;
-        transition: all 1s;
 
         li{
           position: relative;
@@ -270,7 +248,7 @@
           background-color: black;
           transform: translateX(-20%);
           opacity: 0;
-          transition: all .5s;
+          transition: scale .5s;
 
           img{
             border-radius: 15px;
@@ -292,8 +270,7 @@
           }
 
           &:hover{
-            scale: 0.95;
-            opacity: 1;
+            scale: 0.95 !important;
           }
         }
         .point-fadeIn{
@@ -302,6 +279,9 @@
       }
       .other-link-box{
         padding: 30px;
+        transform: translateY(-20%);
+        opacity: 0;
+
         ul{
           display: flex;
           flex-wrap: wrap;
@@ -310,7 +290,6 @@
           li{
             padding: 0 15px;
             width: calc(50% - 30px);
-            opacity: 0;
             transition: all .5s;
 
             a{
@@ -372,7 +351,14 @@
       z-index: 10;
     }
     .about-page-point{
-      width: 60%;
+      flex-direction: column;
+      align-items: center;
+
+      li{
+        display: flex;
+        align-items: center;
+        width: 100%;
+      }
     }
     .other-link-box{
 
@@ -409,11 +395,6 @@
       text-orientation: upright;
       text-align: start;
     }
-    .about-page-point{
-      li{
-        width: 100%;
-      }
-    }
   }
 }
 </style>
@@ -422,6 +403,9 @@
 import scrollPosMixin from '@/mixins/scrollPosMixin'
 import ToPageTop from '@/components/user/ToPageTop.vue'
 import CurrentPath from '@/components/user/CurrentPath.vue'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
 
 export default {
   components: {
@@ -432,12 +416,11 @@ export default {
     return {
       scrollPosition: 0,
       sectionTops: {
-        contentBoxTops: 0,
-        pointTops: 0,
-        otherLinkBox1Tops: 0,
-        otherLinkBox2Tops: 0
+        contentBoxTops: 0
       },
-      islineAnimationEnd: false
+      cTXB: '',
+      ps: [],
+      otherLinkBoxs: []
     }
   },
   computed: {
@@ -446,22 +429,6 @@ export default {
     },
     isContentIn () {
       return this.scrollPosition >= this.sectionTops.contentBoxTops
-    },
-    isPointFade (
-    ) {
-      return this.scrollPosition >= this.sectionTops.pointTops / 1.5
-    },
-    isPointFadeHalf () {
-      return this.scrollPosition >= this.sectionTops.pointTops / 1.5
-    },
-    isToOther () {
-      return this.scrollPosition >= this.sectionTops.pointTops / 0.9
-    },
-    isOtherIn () {
-      return this.scrollPosition >= this.sectionTops.otherLinkBox1Tops / 1.2
-    },
-    isOther2In () {
-      return this.scrollPosition >= this.sectionTops.otherLinkBox2Tops / 1.2
     }
   },
   watch: {
@@ -475,31 +442,91 @@ export default {
   methods: {
     getSectionTops () {
       this.sectionTops.contentBoxTops = this.$refs.contentBox.getBoundingClientRect().top + window.pageYOffset
-      this.sectionTops.pointTops = this.$refs.point.getBoundingClientRect().top + window.pageYOffset
-
-      // 防止Tops變位
-      const otherLinkBox1 = this.$refs.otherLinkBox1.getBoundingClientRect().top + window.pageYOffset
-      if (otherLinkBox1 < 3000) {
-        this.sectionTops.otherLinkBox1Tops = otherLinkBox1 * 1.4
-      } else {
-        this.sectionTops.otherLinkBox1Tops = otherLinkBox1
-      }
-
-      const otherLinkBox2 = this.$refs.otherLinkBox2.getBoundingClientRect().top + window.pageYOffset
-      if (otherLinkBox2 < 3000) {
-        this.sectionTops.otherLinkBox2Tops = otherLinkBox2 * 1.5
-      } else {
-        this.sectionTops.otherLinkBox2Tops = otherLinkBox2
-      }
     },
-    lineAnimationJudge (event) {
-      if (event.animationName === 'lineDowm') {
-        this.islineAnimationEnd = true
+    scrollTriggerAnim () {
+      this.cTXB && this.cTXB.revert()
+      const titleImg = this.$refs.titleImg
+      this.ps = [...document.getElementsByClassName('about-page-content-p')]
+      const straightLine = this.$refs.straightLine
+      const point = this.$refs.point
+      const listItems = point.querySelectorAll('li')
+      this.otherLinkBoxs = [...document.getElementsByClassName('other-link-box')]
+      // 主圖片
+      ScrollTrigger.create({
+        trigger: titleImg,
+        start: '-10% bottom',
+        onEnter: () => {
+          gsap.to(titleImg, { opacity: '1', translateY: '0px', duration: 0.5 })
+        },
+        onLeaveBack: () => {
+          gsap.to(titleImg, { opacity: 0, translateY: '30%', duration: 0.5 })
+        }
+      })
+      // 文字
+      this.ps.forEach(item => {
+        ScrollTrigger.create({
+          trigger: item,
+          start: 'top bottom',
+          onEnter: () => {
+            gsap.to(item, { opacity: 1, translateY: '0%', duration: 1 })
+          },
+          onLeaveBack: () => {
+            gsap.to(item, { opacity: 0, translateY: '-30%', duration: 1 })
+          }
+        })
+      })
+      // Line
+      ScrollTrigger.create({
+        trigger: straightLine,
+        start: 'center bottom',
+        onEnter: () => {
+          straightLine && straightLine.classList.add('straight-line')
+        },
+        onLeaveBack: () => {
+          straightLine && straightLine.classList.remove('straight-line')
+        }
+      })
+      // 特色
+      point && ScrollTrigger.create({
+        trigger: point,
+        start: '30% bottom',
+        onEnter: () => {
+          listItems.forEach(item => {
+            gsap.to(item, { translateX: '0%', opacity: 1, duration: 1 })
+          })
+        },
+        onLeaveBack: () => {
+          listItems.forEach(item => {
+            gsap.to(item, { translateX: '-20%', opacity: 0, duration: 1 })
+          })
+        }
+      })
+      // 前往其他
+      this.otherLinkBoxs.forEach(item => {
+        ScrollTrigger.create({
+          trigger: item,
+          start: 'center bottom',
+          onEnter: () => {
+            gsap.to(item, { translateY: '0%', opacity: 1, duration: 1 })
+          },
+          onLeaveBack: () => {
+            gsap.to(item, { translateY: '-20%', opacity: 0, duration: 1 })
+          }
+        })
+      })
+    },
+    resetScrollTrigger () {
+      const scrollContainer = document.querySelector('.scroll-container')
+      if (scrollContainer) {
+        scrollContainer.style.height = `${window.innerHeight}px`
       }
+      ScrollTrigger.refresh()
     }
   },
   mounted () {
     this.getSectionTops()
+    this.scrollTriggerAnim()
+    window.addEventListener('resize', this.resetScrollTrigger)
   }
 }
 </script>

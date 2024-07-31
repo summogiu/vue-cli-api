@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="front-page-frame">
+    <div class="front-page-frame" ref="forntPage">
       <div class="bunner-box">
         <div class="swiper bannerSwiper" ref="bannerSwiper">
           <div class="swiper-wrapper banner-swiper-wrapper">
@@ -659,13 +659,15 @@
 
 <script>
 import Swiper from 'swiper'
+import { Pagination, Autoplay, EffectFade } from 'swiper/modules'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Pagination, Autoplay, EffectFade } from 'swiper/modules'
 
 Swiper.use(Pagination)
 Swiper.use(Autoplay)
 Swiper.use(EffectFade)
+
+gsap.registerPlugin(ScrollTrigger)
 
 export default {
   data () {
@@ -696,18 +698,14 @@ export default {
           trigger: productSwiper,
           start: 'top center',
           onEnter: () => {
-            if (productSwiper) {
-              productSwiper.classList.add('sectionSwiper-In')
-            }
+            productSwiper && productSwiper.classList.add('sectionSwiper-In')
           }
         })
         ScrollTrigger.create({
           trigger: customizedSwiper,
           start: 'top center',
           onEnter: () => {
-            if (customizedSwiper) {
-              customizedSwiper.classList.add('sectionSwiper-In')
-            }
+            customizedSwiper && customizedSwiper.classList.add('sectionSwiper-In')
           }
         })
         // customized區塊
@@ -718,9 +716,8 @@ export default {
           onUpdate: (self) => {
             // Y軸偏移
             const translateYV = self.progress * 200
-            if (customized) {
-              gsap.set(customized, { translateY: `${translateYV}px` })
-            }
+            customized && gsap.set(customized, { translateY: `${translateYV}px` })
+
             // 陰影透明度
             const opacityValue = self.progress
             gsap.set('.customized-shadow', { opacity: opacityValue })
@@ -734,22 +731,21 @@ export default {
           onUpdate: (self) => {
             // Y軸偏移
             const translateYV = self.progress * 200
-            if (company) {
-              gsap.set(company, { translateY: `${translateYV}px` })
-            }
+            company && gsap.set(company, { translateY: `${translateYV}px` })
+
             // 陰影透明度
             const opacityValue = self.progress
             gsap.set('.company-shadow', { opacity: opacityValue })
           }
         })
       })
-      ScrollTrigger.refresh(true)
     },
-    resetScrollTrigger () {
-      // 重置 ScrollTrigger 的狀態
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
-      // 重新初始化 ScrollTrigger
-      this.scrollTriggerAnim()
+    resetScrollTrigger () { // resize時執行 將translateY回復避免跑位
+      const customized = this.$refs.customized
+      const company = this.$refs.company
+      gsap.set(customized, { translateY: '0px' })
+      gsap.set(company, { translateY: '0px' })
+      ScrollTrigger.refresh(true)
     }
   },
   mounted () {

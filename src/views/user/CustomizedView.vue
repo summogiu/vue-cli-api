@@ -4,7 +4,7 @@
     <div class="articles-list-frame">
       <CurrentPath/>
       <div class="articles-list-content-box" v-if="!isArticleMore">
-        <div class="articles-list-title-box">
+        <div class="articles-list-title-box toRight-1">
           <h2>CUSTOMIZED</h2>
           <h3>訂製專欄</h3>
           <img src="@/assets/images/icon/anvil.png">
@@ -46,7 +46,7 @@
             </div>
           </div>
         </div>
-        <div class="articles-list-box">
+        <div class="articles-list-box toRight-1">
           <h4>HANDLER NOTES</h4>
           <div class="search-tip">
             <span v-if="selectedYearTab">{{ `"${selectedYearTab}"` }}</span>

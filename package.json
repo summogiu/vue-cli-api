@@ -12,6 +12,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/vue-fontawesome": "^3.0.8",
+    "@googlemaps/js-api-loader": "^1.16.8",
     "@vee-validate/i18n": "^4.13.1",
     "@vee-validate/rules": "^4.13.1",
     "@wangeditor/editor": "^5.1.23",

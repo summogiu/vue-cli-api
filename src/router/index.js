@@ -66,6 +66,11 @@ const routes = [
         path: 'company',
         name: '公司資訊',
         component: () => import('../views/user/CompanyView.vue')
+      },
+      {
+        path: 'consult',
+        name: '線上諮詢',
+        component: () => import('../views/user/ConsultView.vue')
       }
     ]
   },
@@ -106,5 +111,4 @@ const router = createRouter({
     return { left: 0, top: 0 }
   }
 })
-
 export default router

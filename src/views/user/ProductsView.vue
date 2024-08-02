@@ -375,8 +375,9 @@
               color: $subColor2;
             }
             .style-img{
-              width: 280px;
-              height: 195px;
+              width: 200px;
+              height: 200px;
+              border-radius: 50%;
               object-fit: cover;
               transition: all 0.5s;
             }
@@ -408,7 +409,6 @@
           transform: translateY(0);
           visibility: visible;
         }
-
         .tab-bottom-pullDown-SearchTab{
           display: flex;
           justify-content: center;
@@ -583,7 +583,7 @@
       justify-content: space-between;
       align-items: center;
       height: 100%;
-      padding: 50px;
+      padding: 50px 0;
       overflow-y: auto;
       overflow-x: hidden;
 
@@ -617,8 +617,8 @@
                 width: 40%;
 
                 .style-img{
-                  width: 140px;
-                  height: 97px;
+                  width: 100px;
+                  height: 100px;
                 }
                 .type-img{
                   width: 100px;
@@ -632,6 +632,9 @@
                   }
                 }
               }
+            }
+            &::before{
+              bottom: 0;
             }
           }
         }

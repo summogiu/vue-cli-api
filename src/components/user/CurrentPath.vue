@@ -23,8 +23,8 @@
     margin: 0 5px;
     background: $linearColor;
     -webkit-background-clip: text;
-    color: transparent;
     background-clip: text;
+    color: transparent;
   }
   .home-i{
     font-size: 26px;
@@ -82,6 +82,7 @@ export default {
     getCurrentPath () {
       this.currentPaths = this.$route.matched
       console.dir(this.$route)
+      console.dir(this.$router)
     },
     getCurrentPathName (name) { // 接收單一產品頁面的路徑名稱
       this.routeName = name

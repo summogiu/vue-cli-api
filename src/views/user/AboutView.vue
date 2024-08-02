@@ -428,9 +428,7 @@ export default {
       sectionTops: {
         contentBoxTops: 0
       },
-      cTXB: '',
-      ps: [],
-      otherLinkBoxs: []
+      cTXB: ''
     }
   },
   computed: {
@@ -456,11 +454,11 @@ export default {
     aboitScrollTriggerAnim () {
       this.cTXB && this.cTXB.revert()
       const titleImg = this.$refs.titleImg
-      this.ps = [...document.getElementsByClassName('about-page-content-p')]
+      const ps = [...document.getElementsByClassName('about-page-content-p')]
       const straightLine = this.$refs.straightLine
       const point = this.$refs.point
       const listItems = point.querySelectorAll('li')
-      this.otherLinkBoxs = [...document.getElementsByClassName('other-link-box')]
+      const otherLinkBoxs = [...document.getElementsByClassName('other-link-box')]
       // 主圖片
       ScrollTrigger.create({
         trigger: titleImg,
@@ -474,7 +472,7 @@ export default {
         }
       })
       // 文字
-      this.ps.forEach(item => {
+      ps.forEach(item => {
         ScrollTrigger.create({
           trigger: item,
           start: 'top bottom',
@@ -516,7 +514,7 @@ export default {
         }
       })
       // 前往其他
-      this.otherLinkBoxs.forEach(item => {
+      otherLinkBoxs.forEach(item => {
         ScrollTrigger.create({
           trigger: item,
           start: 'center bottom',
@@ -532,7 +530,11 @@ export default {
     },
     resetScrollTrigger () {
       const contentBox = this.$refs.contentBox
+      const otherLinkBoxs = [...document.getElementsByClassName('other-link-box')]
       gsap.set(contentBox, { translateY: '0px' })
+      otherLinkBoxs.forEach(item => {
+        gsap.to(item, { translateY: '-20%' })
+      })
       ScrollTrigger.refresh()
     }
   },
@@ -543,6 +545,7 @@ export default {
   },
   beforeUnmount () {
     ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+    window.removeEventListener('resize', this.resetScrollTrigger)
   }
 }
 </script>

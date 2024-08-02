@@ -129,7 +129,7 @@
               </tr>
             </table>
           </div>
-          <router-link to="/company" class="connect-us-btn" type="button">
+          <router-link to="/company" class="connect-us-btn">
             <i class="bi bi-envelope"></i>
             聯絡我們
           </router-link>
@@ -147,10 +147,10 @@
           </p>
           <p>信箱地址：info@inmylight.com</p>
           <span>或者</span>
-          <button class="common-problem-btn" type="button">
+          <router-link to="/consult" class="common-problem-btn">
             提交線上表單
             <img src="@/assets/images/icon/related-products-to.png" alt="to-about" class="to-more-btn">
-          </button>
+          </router-link>
           <button class="back-top-btn" type="button" @click="scrollToTop">
             <img src="@/assets/images/icon/up.png">
           </button>
@@ -675,7 +675,8 @@ export default {
       bannerSwiper: '',
       productSwiper: '',
       customizedSwiper: '',
-      cTX: ''
+      cTX: '',
+      isNavigating: false
     }
   },
   methods: {
@@ -780,12 +781,15 @@ export default {
       },
       effect: 'fade'
     })
-
-    this.scrollTriggerAnim()
+    // 避免切換路由時的scrollBehavior影響觸發
+    setTimeout(() => {
+      this.scrollTriggerAnim()
+    }, 600)
     window.addEventListener('resize', this.resetScrollTrigger)
   },
   beforeUnmount () {
     ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+    window.removeEventListener('resize', this.resetScrollTrigger)
   }
 }
 </script>

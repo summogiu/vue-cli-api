@@ -26,7 +26,7 @@
           </div>
           <div class="form-box">
             <h3>填寫收件資訊</h3>
-            <Form @submit="onSubmit" v-slot="{errors}">
+            <Form v-slot="{errors}">
               <div class="mb-3">
                 <label for="name" class="form-label">姓名<span class="must-tip">必須</span></label>
                 <Field id="name" name="姓名" type="name" class="form-control"
@@ -446,15 +446,15 @@ export default {
     return {
       form: {
         user: {
-          name: '123',
-          email: 'abc123456@abc.da',
-          tel: '0987654321',
+          name: '',
+          email: '',
+          tel: '',
           address: ''
         },
         message: ''
       },
       region: '',
-      other_address: '123',
+      other_address: '',
       carts: [],
       cartsData: {
         finalTotal: 0,
@@ -471,9 +471,6 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
-      console.log(this.form.user)
-    },
     placeOrder () {
       this.form.user.address = `${this.region}${this.other_address}` // 組合完整地址
 
@@ -486,7 +483,8 @@ export default {
             this.$router.push(`checkout/${res.data.orderId}`)
           } else {
             this.isLoading = false
-            alert(res.data.message) // .join('\n')
+            const message = typeof res.data.message === 'string' ? [res.data.message] : res.data.message
+            alert(message.join('\n'))
           }
         })
         .catch((error) => {

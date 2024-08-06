@@ -76,7 +76,7 @@ const routes = [
   },
   {
     path: '/login',
-    component: () => import('../views/LogIn.vue')
+    component: () => import('../views/backstage/LogIn.vue')
   },
   {
     path: '/dashboard',
@@ -93,6 +93,10 @@ const routes = [
       {
         path: 'article',
         component: () => import('../views/backstage/ArticleView.vue')
+      },
+      {
+        path: 'order',
+        component: () => import('../views/backstage/OrderView.vue')
       }
     ]
   },

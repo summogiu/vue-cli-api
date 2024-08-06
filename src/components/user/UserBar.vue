@@ -403,6 +403,8 @@
 </style>
 
 <script>
+import emitter from '@/methods/emitter'
+
 export default {
   data () {
     return {
@@ -410,6 +412,7 @@ export default {
       isHeaderMenuIn: false
     }
   },
+  mixins: [emitter],
   methods: {
     openMBMenu () {
       if (!this.MBmenuIsOpen) {

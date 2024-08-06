@@ -57,13 +57,13 @@ export default {
   data () {
     return {
       currentPaths: [],
-      routeName: this.$route.name
+      routeName: this.$route.params.category || this.$route.name
     }
   },
   watch: {
     '$route.params.category': {
       handler (category) {
-        if (category === 'all') {
+        if (!category) {
           this.$router.currentRoute.value.name = '所有產品'
         } else if (this.$route.params.category) {
           this.$router.currentRoute.value.name = this.$route.params.category

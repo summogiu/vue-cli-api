@@ -98,6 +98,15 @@
     }
   }
 }
+@media (max-width:919px){
+  .modal-content-box{
+    flex-direction: column;
+
+    .modal-content-left,.modal-content-right{
+      width: 100%;
+    }
+  }
+}
 </style>
 
 <script>

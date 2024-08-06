@@ -64,7 +64,7 @@
         </ul>
       </div>
       <div class="ask-box">
-        <a href="#" class="ask-link">
+        <a href="#" class="ask-link" @click.prevent="toConsultPage">
           <i class="bi bi-envelope"></i>
           <p>詢問此產品</p>
         </a>
@@ -505,6 +505,14 @@ export default {
     toProducts (item) {
       this.$router.push(`/products/productslist/product/${item.id}`)
       this.$emit('addRecentlyViewed', item)
+    },
+    toConsultPage () {
+      this.$router.push({
+        path: '/consult',
+        query: {
+          askType: '產品相關'
+        }
+      })
     },
     backProductList () {
       this.$router.push('/products/productslist')

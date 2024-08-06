@@ -15,7 +15,7 @@
           <div class="row">
             <div class="col-sm-4">
               <div class="mb-3">
-                <label for="customFile" class="form-label">上傳圖片
+                <label for="customFile" class="form-label">上傳封面
                   <div class="spinner-border spinner-border-sm" role="status" v-if="status.loadingItem">
                   </div>
                 </label>
@@ -25,21 +25,23 @@
                   @change="uploadFile" ref="fileInputMain"
                   :disabled="status.loadingItem">
                 </form>
-                <img :src="tempProduct.imageUrl" alt="" class="fileImg">
+                <span>封面預覽：</span>
+                <span v-if="!tempProduct.imageUrl">暫無封面</span>
+                <img :src="tempProduct.imageUrl" class="fileImg">
               </div>
-              <img class="img-fluid" alt="">
               <!-- 延伸技巧，多圖 -->
               <div class="mt-5">
+                <label>上傳其他圖片</label>
                 <div class="mb-3 input-group" >
                   <input type="file" class="form-control form-control"
-                  @change="uploadFiles1" ref="filesInput1">
+                          @change="uploadFiles1" ref="filesInput1">
                   <button type="button" class="btn btn-outline-danger">
                     移除
                   </button>
                 </div>
                 <div class="mb-3 input-group" >
                   <input type="file" class="form-control form-control"
-                  @change="uploadFiles2" ref="filesInput2">
+                          @change="uploadFiles2" ref="filesInput2">
                   <button type="button" class="btn btn-outline-danger">
                     移除
                   </button>
@@ -50,9 +52,9 @@
                     新增圖片
                   </button>
                 </div>
+                <span>圖片預覽：</span>
                 <div class="images">
-                  <img v-for="item in tempProduct.imagesUrl" :key="item" :src="item"
-                  alt="" class="thumbnail">
+                  <img v-for="item in tempProduct.imagesUrl" :key="item" :src="item" class="thumbnail">
                 </div>
               </div>
             </div>
@@ -127,6 +129,21 @@
     </div>
   </div>
 </template>
+
+<style lang="scss">
+.images{
+  img{
+    width: 50%;
+  }
+}
+@media (max-width:574px){
+  .mt-5{
+    padding-bottom: 20px;
+    margin-bottom: 50px;
+    border-bottom: 1px solid $subColor4;
+  }
+}
+</style>
 
 <script>
 import modalMixin from '@/mixins/ModalMixin'

@@ -2,21 +2,13 @@
   <div>
     <div class="consult-page-frame">
       <div class="consult-page-title-box">
-        <h2>CONSULT</h2>
-        <h3>線上諮詢</h3>
+        <h2><img src="@/assets/images/icon/consult-title-icon.png">CONSULT<h3>線上諮詢</h3></h2>
       </div>
-      <ul class="section-tag-list">
-          <li class="tag">產品資訊</li>
-          <li class="tag">訂單與配送</li>
-          <li class="tag">安裝與維護</li>
-          <li class="tag">公司資訊</li>
-          <li class="tag">線上提問表單</li>
-        </ul>
       <div class="consult-page-content-box">
         <div class="consult-page-section-box">
           <h4>FAQ</h4>
           <h5>常見問題</h5>
-          <div class="faq-box" v-for="item,i in faq" :key="i">
+          <div class="faq-box" v-for="item,i in faq" :key="i" :ref="item.refName">
             <h6>{{ item.name }}</h6>
             <ul>
               <li v-for="qa,qaIndex in item.qa" :key="qaIndex">
@@ -38,19 +30,19 @@
             </ul>
           </div>
         </div>
-        <div class="consult-page-section-box">
+        <div class="consult-page-section-box" ref="form">
           <h4>OTHER PROBLEMS</h4>
           <h5>線上提問表單</h5>
-          <Form action="" class="form-box">
+          <Form action="" class="form-box" @submit="toggleUserFormbox(true)">
             <label for="type">
               <span class="label-title">提問類別</span>
               <ErrorMessage name="類別" class="verify-tip"></ErrorMessage>
               <Field id="type" as="select" name="類別" rules="required" v-model="form.type">
                 <option value="" Fielded disabled>請選擇類別</option>
-                <option value="product">產品相關</option>
-                <option value="order">訂單、配送相關</option>
-                <option value="install">安裝、維修相關</option>
-                <option value="other">其他問題</option>
+                <option value="產品相關">產品相關</option>
+                <option value="訂單、配送相關">訂單、配送相關</option>
+                <option value="安裝、維修相關">安裝、維修相關</option>
+                <option value="其他問題">其他問題</option>
               </Field>
             </label>
             <label for="order-id">
@@ -80,24 +72,84 @@
           </Form>
         </div>
       </div>
+      <transition name="fadeScale">
+        <div class="user-form-box" v-if="isUserFormEnter">
+          <h6>親愛的{{form.name }}, 您好！<br>您的提問已送出, <br>我們將會儘快為您回覆！</h6>
+          <table>
+            <tr>
+              <th>提問類別</th>
+              <th>訂單編號</th>
+            </tr>
+            <tr>
+              <td>{{ form.type }}</td>
+              <td>{{ form.orderId }}</td>
+            </tr>
+            <tr>
+              <th>連絡電話</th>
+              <th>電子郵件</th>
+            </tr>
+            <tr>
+              <td>{{ form.phone }}</td>
+              <td>{{ form.email }}</td>
+            </tr>
+            <tr>
+              <th>提問內容</th>
+            </tr>
+            <tr>
+              <td>{{ form.questionContent }}</td>
+            </tr>
+          </table>
+          <button type="button" @click="toggleUserFormbox(false)">確定</button>
+        </div>
+      </transition>
     </div>
+    <ul class="section-tag-list" :class="[isMBTagListOpen ? 'open' : '']">
+        <li class="tag" @click="scrollToSection('product')">產品資訊</li>
+        <li class="tag" @click="scrollToSection('order')">訂單與配送</li>
+        <li class="tag" @click="scrollToSection('install')">安裝與維護</li>
+        <li class="tag" @click="scrollToSection('company')">公司資訊</li>
+        <li class="tag" @click="scrollToSection('form')">線上提問表單</li>
+    </ul>
+    <button class="MB-section-tag-open-btn" @click="MBTagListOpen"><i class="bi bi-tags-fill"></i></button>
   </div>
 </template>
 
 <style lang="scss">
+html,body {
+  scroll-behavior: auto !important;
+}
+.consult-page-frame{
+  opacity: 0;
+  animation: fadeIn .8s .5s forwards;
+}
 .consult-page-title-box{
-  padding: 100px 50px;
+  padding: 100px 5%;
+  background-size: 200px;
 
   h2{
     font-size: 60px;
     font-weight: bold;
     color: $subColor8;
+    max-width: 500px;
+    position: relative;
   }
   h3{
     font-size: 20px;
     color: $subColor8;
+    position: absolute;
+    bottom: -20px;
+    right: 0;
   }
 }
+@media (max-width:919px){
+  .consult-page-title-box{
+    h2{
+      max-width: 280px;
+      margin: 0 auto;
+    }
+  }
+}
+
 .section-tag-list{
   position: fixed;
   left: 5%;
@@ -110,6 +162,7 @@
     font-weight: bold;
     color: $subColor4;
     transition: color .5s;
+    cursor: pointer;
 
     &::before{
       content: '';
@@ -119,7 +172,7 @@
       height: 2px;
       width: 10px;
       background-color: $subColor4;
-      transition: background-color .5s;
+      transition: width .5s, background-color .5s;
     }
   }
   .tag.active{
@@ -131,8 +184,55 @@
     }
   }
 }
+.MB-section-tag-open-btn{
+  display: none;
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  background: $linearColor;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  z-index: 150;
+
+  i{
+    font-size: 24px;
+    color: white;
+  }
+}
+@media (max-width:919px){
+  .section-tag-list{
+    left: 50%;
+    bottom: 50%;
+    transform: translate(-50%, 50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .5s;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .tag{
+      &::before{
+        display: none;
+      }
+    }
+  }
+  .MB-section-tag-open-btn{
+    display: block;
+  }
+  .section-tag-list.open{
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
 .consult-page-content-box{
-  // background-image: url('@/assets/images/background/consult-baclground.png');
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -156,6 +256,17 @@
       h6{
         font-size: 30px;
         font-weight: bold;
+        position: relative;
+
+        &::before{
+          content: '';
+          height: 3px;
+          width: 60px;
+          background-color: $subColor8;
+          position: absolute;
+          bottom: -10px;
+          left: 0;
+        }
       }
       ul{
         li{
@@ -288,15 +399,113 @@
     }
   }
 }
+@media (max-width:919px){
+  .consult-page-content-box{
+    align-items: center;
+
+    .consult-page-section-box{
+      width: 90%;
+      margin: 0 5% 200px;
+
+      .faq-box{
+        ul{
+          li{
+            .questions{
+              padding: 30px 5px 30px 50px;
+            }
+            .answer.slide{
+              max-height: 200px;
+            }
+          }
+        }
+      }
+      .form-box{
+        label{
+          flex-direction: column;
+
+          .label-title{
+            border: none;
+          }
+          input, select{
+            border: 1px solid $subColor4;
+            width: 100%;
+            font-size: 16px;
+          }
+          textarea{
+            width: 100%;
+            font-size: 16px;
+          }
+        }
+        .submit-btn{
+          margin: 30px auto;
+        }
+      }
+    }
+  }
+}
+.user-form-box{
+  box-shadow: 0px 0px 15px gray;
+  border-radius: 25px;
+  width: 80%;
+  max-width: 800px;
+  background-color: white;
+  overflow: hidden;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  h6{
+    background: $linearColor2;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    padding: 20px;
+  }
+  table{
+    display: block;
+    padding: 20px;
+
+    tr{
+      display: flex;
+      justify-content: space-around;
+
+      th{
+        font-weight: bold;
+        color: $subColor8;
+      }
+      td{
+        text-align: center;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+    }
+  }
+  button{
+    display: block;
+    margin: 0 auto 20px;
+    background-color: $subColor8;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+  }
+}
 </style>
 
 <script>
+import { gsap } from 'gsap'
+import { ScrollToPlugin, ScrollTrigger } from 'gsap/all'
+gsap.registerPlugin(ScrollToPlugin, ScrollTrigger)
+
 export default {
   data () {
     return {
       faq: [
         {
           name: '產品資訊',
+          refName: 'product',
           qa: [
             {
               questions: '燈具有哪些種類？',
@@ -318,6 +527,7 @@ export default {
         },
         {
           name: '訂單與配送',
+          refName: 'order',
           qa: [
             {
               questions: '如何下訂單？',
@@ -339,6 +549,7 @@ export default {
         },
         {
           name: '安裝與維護',
+          refName: 'install',
           qa: [
             {
               questions: '燈具安裝是否提供服務？',
@@ -360,6 +571,7 @@ export default {
         },
         {
           name: '公司資訊',
+          refName: 'company',
           qa: [
             {
               questions: '你們的營業時間是什麼時候？',
@@ -380,7 +592,10 @@ export default {
         email: '',
         phone: '',
         questionContent: ''
-      }
+      },
+      nowTag: null,
+      isUserFormEnter: false,
+      isMBTagListOpen: false
     }
   },
   methods: {
@@ -390,6 +605,61 @@ export default {
       } else {
         this.activeQA.push(questions)
       }
+    },
+    scrollToSection (refName) { // 標籤滾動
+      this.isMBTagListOpen = false
+      const section = this.$refs[refName]
+      gsap.to(window, {
+        scrollTo: { y: section, offsetY: 50 },
+        duration: 1,
+        ease: 'power2.out'
+      })
+    },
+    addTagActive () { // Tag中的樣式
+      const refs = Object.values(this.$refs)
+      const tags = Array.from(document.getElementsByClassName('tag'))
+      console.log(refs.length, tags.length)
+      refs.forEach((ref, i) => {
+        ScrollTrigger.create({
+          trigger: ref,
+          start: 'top center',
+          end: 'center top',
+          onUpdate: () => {
+            if (this.nowTag !== null && this.nowTag !== i) {
+              tags[this.nowTag] && tags[this.nowTag].classList.remove('active')
+            }
+            this.nowTag = i
+            tags[i] && tags[this.nowTag].classList.add('active')
+          }
+        })
+      })
+    },
+    toggleUserFormbox (state) { // 提交表單後提示訊息
+      this.isUserFormEnter = state
+      if (!state) {
+        this.form.type = ''
+        this.form.orderId = ''
+        this.form.name = ''
+        this.form.email = ''
+        this.form.phone = ''
+        this.form.questionContent = ''
+      }
+    },
+    MBTagListOpen () {
+      this.isMBTagListOpen = !this.isMBTagListOpen
+    }
+  },
+  created () {
+    this.form.type = this.$route.query.askType
+  },
+  mounted () {
+    this.addTagActive()
+    if (this.form.type) {
+      gsap.to(window, {
+        scrollTo: { y: this.$refs.form, offsetY: 50 },
+        duration: 1,
+        ease: 'power2.out'
+      })
     }
   }
 }

@@ -970,6 +970,7 @@ export default {
           console.log('套用優惠券失敗', error)
         })
     },
+    // 切換選單狀態
     changeStyleTabOpen (event) {
       if (event.type === 'mouseleave' && window.innerWidth <= 919) {
         return // 於919斷點時，取消mouseleave的事件處發
@@ -1041,7 +1042,7 @@ export default {
       this.$router.push(`/products/productslist/product/${item.id}`)
       this.addRecentlyViewed(item)
     },
-    addRecentlyViewed (item) {
+    addRecentlyViewed (item) { // 最近瀏覽
       const index = this.recentlyViewed.findIndex(recentlyViewedItem => recentlyViewedItem.id === item.id)
       if (index !== -1) { // 避免重複相同產品
         this.recentlyViewed.splice(index, 1)
@@ -1053,7 +1054,6 @@ export default {
   },
   created () {
     this.getCart()
-    console.log(window.history)
   },
   mounted () {
     this.getSectionTops()

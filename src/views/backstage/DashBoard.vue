@@ -5,6 +5,16 @@
     <router-view/></div>
 </template>
 
+<style lang="scss">
+@media (max-width:919px){
+  .table{
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+</style>
+
 <script>
 import Navbar from '@/components/backstage/NavBar.vue'
 import emitter from '@/methods/emitter'
@@ -21,7 +31,6 @@ export default {
     const api = `${process.env.VUE_APP_API}api/user/check`
     this.$http.post(api, this.user)
       .then((res) => {
-        console.log(res)
         if (!res.data.success) { // 如果登入失敗
           this.$router.push('/logIn')
         }

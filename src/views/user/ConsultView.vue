@@ -8,8 +8,8 @@
         <div class="consult-page-section-box">
           <h4>FAQ</h4>
           <h5>常見問題</h5>
-          <div class="faq-box" v-for="item,i in faq" :key="i" :ref="item.refName">
-            <h6>{{ item.name }}</h6>
+          <div class="faq-box" v-for="item,i in faq" :key="i">
+            <h6 :ref="item.refName">{{ item.name }}</h6>
             <ul>
               <li v-for="qa,qaIndex in item.qa" :key="qaIndex">
                 <div class="questions" @click="toggleActive(qa.questions)">
@@ -30,8 +30,8 @@
             </ul>
           </div>
         </div>
-        <div class="consult-page-section-box" ref="form">
-          <h4>OTHER PROBLEMS</h4>
+        <div class="consult-page-section-box">
+          <h4 ref="form">OTHER PROBLEMS</h4>
           <h5>線上提問表單</h5>
           <Form action="" class="form-box" @submit="toggleUserFormbox(true)">
             <label for="type">
@@ -653,6 +653,7 @@ export default {
     this.form.type = this.$route.query.askType
   },
   mounted () {
+    document.title = '線上諮詢-In My Light'
     this.addTagActive()
     if (this.form.type) {
       gsap.to(window, {

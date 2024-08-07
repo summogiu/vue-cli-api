@@ -228,6 +228,7 @@
 
     li{
       margin-right: 20px;
+
       .fb-link, .ig-link, .x-link{
         position: relative;
         background: $linearColor;
@@ -236,6 +237,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        border-radius: 15px 0;
 
         &::before{
           content: '';
@@ -246,6 +248,7 @@
           height: 400px;
           opacity: 0;
           transition: opacity .5s;
+          border-radius: 15px 0;
         }
         i{
           color: white;
@@ -415,6 +418,7 @@ export default {
     }
   },
   mounted () {
+    document.title = '公司資訊-In My Light'
     setTimeout(() => {
       this.scrollTriggerAnim()
     }, 1000)

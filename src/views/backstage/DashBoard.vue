@@ -6,6 +6,20 @@
 </template>
 
 <style lang="scss">
+.table{
+  thead{
+    tr{
+      th{
+        font-weight: bold;
+      }
+    }
+  }
+  tbody{
+    tr{
+        border-top: 1px solid $subColor4;
+    }
+  }
+}
 @media (max-width:919px){
   .table{
     display: block;
@@ -44,6 +58,9 @@ export default {
     return {
       emitter
     }
+  },
+  mounted () {
+    document.title = '後檯管理-In My Light'
   }
 }
 </script>

@@ -14,7 +14,7 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-sm-4">
-              <div class="mb-3">
+              <div class="mb-3 main-img-upload-box">
                 <label for="customFile" class="form-label">上傳封面
                   <div class="spinner-border spinner-border-sm" role="status" v-if="status.loadingItem">
                   </div>
@@ -25,12 +25,14 @@
                   @change="uploadFile" ref="fileInputMain"
                   :disabled="status.loadingItem">
                 </form>
-                <span>封面預覽：</span>
-                <span v-if="!tempProduct.imageUrl">暫無封面</span>
-                <img :src="tempProduct.imageUrl" class="fileImg">
+                <div class="main-img-preview">
+                  <p v-if="!tempProduct.imageUrl">暫無封面</p>
+                  <img class="" :src="tempProduct.imageUrl">
+                </div>
               </div>
+              <hr>
               <!-- 延伸技巧，多圖 -->
-              <div class="mt-5">
+              <div class="mb-3 imgs-upload-box">
                 <label>上傳其他圖片</label>
                 <div class="mb-3 input-group" >
                   <input type="file" class="form-control form-control"
@@ -52,10 +54,12 @@
                     新增圖片
                   </button>
                 </div>
-                <span>圖片預覽：</span>
-                <div class="images">
-                  <img v-for="item in tempProduct.imagesUrl" :key="item" :src="item" class="thumbnail">
-                </div>
+                <ul class="imgs-box">
+                  <li v-if="tempProduct.imagesUrl && tempProduct.imagesUrl.length === 0"><p>暫無圖片</p></li>
+                  <li v-for="item in tempProduct.imagesUrl" :key="item" :src="item" class="thumbnail">
+                    <img :src="item">
+                  </li>
+                </ul>
               </div>
             </div>
             <div class="col-sm-8">
@@ -100,7 +104,7 @@
               </div>
               <div class="mb-3">
                 <label for="content" class="form-label">說明內容</label>
-                <textarea type="text" class="form-control" id="content"
+                <textarea type="text" class="form-control content-textarea" id="content"
                 placeholder="請輸入產品說明內容" v-model="tempProduct.content">
                 </textarea>
               </div>
@@ -131,17 +135,44 @@
 </template>
 
 <style lang="scss">
-.images{
-  img{
-    width: 50%;
+.main-img-upload-box{
+  .main-img-preview{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 300px;
+    max-height: 300px;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    border: 1px solid $subColor4;
+    margin: 20px auto;
   }
 }
-@media (max-width:574px){
-  .mt-5{
-    padding-bottom: 20px;
-    margin-bottom: 50px;
-    border-bottom: 1px solid $subColor4;
+
+.imgs-upload-box{
+  .imgs-box{
+    display: flex;
+    flex-wrap: wrap;
+
+    li{
+      max-width: 150px;
+      max-height: 150px;
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 1 / 1;
+      border: 1px solid $subColor4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px 20px 0 0;
+      overflow: hidden;
+    }
   }
+}
+
+.content-textarea{
+  height: 300px;
 }
 </style>
 

@@ -3,13 +3,12 @@
     <table class="table mt-4 article-list-table">
       <thead>
         <tr>
-          <th width="120">成立時間</th>
+          <th width="120">訂單成立時間</th>
           <th width="220">訂單編號</th>
-          <th>商品內容</th>
+          <th>客戶資訊</th>
           <th>訂單總額(NT$)</th>
           <th width="120">付款狀態</th>
-          <th>備註訊息</th>
-          <th width="120">編輯</th>
+          <th>編輯</th>
         </tr>
       </thead>
       <tbody>
@@ -18,19 +17,17 @@
           <td>{{ item.id }}</td>
           <td>
             <ul>
-              <li v-for="productContent,i in item.products" :key="i">
-                <span>▪︎ {{ productContent.product.title }}</span>
-                <span>NT${{ productContent.product.price }}</span>
-                <span>×{{ productContent.qty }}{{ productContent.product.unit }}</span>
-              </li>
+              <li>客戶名稱：{{ item.user.name }}</li>
+              <li>連絡電話：{{ item.user.tel }}</li>
+              <li>電子信箱：{{ item.user.email }}</li>
+              <li>寄送地址：{{ item.user.address }}</li>
             </ul>
           </td>
           <td>{{ $filters.currency(item.total) }}</td>
           <td :class="{ 'public' : item.is_paid }">{{ item.is_paid ? '已付款' : '未付款' }}</td>
-          <td>{{ item.message }}</td>
           <td>
             <div class="btn-group">
-              <button class="btn btn-outline-primary btn-sm" @click="openModal(item)">編輯</button>
+              <button class="btn btn-outline-primary btn-sm" @click="openModal(item)">訂單詳細</button>
               <button class="btn btn-outline-danger btn-sm" @click="deleteModal(item)">刪除</button>
             </div>
           </td>
@@ -51,18 +48,6 @@
 .table{
   tbody{
     tr{
-      td{
-        ul{
-          border: 1px solid $subColor4;
-          padding: 5px;
-
-          li{
-            span{
-              margin-right: 5px;
-            }
-          }
-        }
-      }
       .public{
         color: $subColor5;
       }
@@ -152,6 +137,9 @@ export default {
   },
   created () {
     this.getOrders()
+  },
+  mounted () {
+    document.title = '訂單管理-In My Light'
   }
 }
 </script>

@@ -96,14 +96,17 @@ export default {
         this.tempArticle = {
           create_at: new Date().getTime() / 1000
         }
+        this.$refs.articleModal.showModal()
       } else {
         const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article/${item.id}`
         this.$http.get(api)
           .then((res) => {
             if (res.data.success) {
               this.tempArticle = JSON.parse(JSON.stringify(res.data.article))
+              console.log(this.tempArticle)
               const tagsArray = this.tempArticle.tag.map(tag => `#${tag}`).join(' ') // 先將陣列轉回字串以便編輯
               this.tempArticle.tag = tagsArray
+              this.$refs.articleModal.showModal()
             } else {
               console.log('取得文章失敗')
             }
@@ -112,9 +115,6 @@ export default {
             console.log(error)
           })
       }
-
-      const articleModal = this.$refs.articleModal
-      articleModal.showModal()
     },
     updateArticle (item) {
       const tagsArray = (item.tag?.match(/#[^\s#]+/g) ?? []).map(tag => tag.substring(1)) // 提取每个#後面的詞彙
@@ -166,6 +166,9 @@ export default {
   },
   created () {
     this.getArticle()
+  },
+  mounted () {
+    document.title = '文章管理-In My Light'
   }
 }
 </script>

@@ -134,6 +134,9 @@ export default {
     CouponModal,
     DeleteModal,
     PaginationComponents
+  },
+  mounted () {
+    document.title = '優惠券管理-In My Light'
   }
 }
 </script>

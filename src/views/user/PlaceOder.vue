@@ -26,7 +26,7 @@
           </div>
           <div class="form-box">
             <h3>填寫收件資訊</h3>
-            <Form v-slot="{errors}">
+            <Form v-slot="{errors}" ref="userForm" @submit="placeOrder">
               <div class="mb-3">
                 <label for="name" class="form-label">姓名<span class="must-tip">必須</span></label>
                 <Field id="name" name="姓名" type="name" class="form-control"
@@ -157,7 +157,7 @@
           <br>
           <p>對於造成您的不便，我們深表歉意，但感謝您的理解。如果訂單狀況有異，我們將與您聯繫。</p>
         </div>
-        <button class="confirm-btn" type="submit" @click.prevent="placeOrder">
+        <button class="confirm-btn" type="submit" @click="handleSubmit">
           我已確認內容，確定下單
         </button>
         <router-link to="/products/productslist" class="back-btn">
@@ -471,6 +471,10 @@ export default {
     }
   },
   methods: {
+    handleSubmit () { // 手動觸發表單的submit事件
+      const userForm = this.$refs.userForm
+      userForm && userForm.$el.dispatchEvent(new Event('submit', { bubbles: true }))
+    },
     placeOrder () {
       this.form.user.address = `${this.region}${this.other_address}` // 組合完整地址
 
@@ -562,6 +566,9 @@ export default {
   },
   created () {
     this.getCart()
+  },
+  mounted () {
+    document.title = '填寫收件資訊-In My Light'
   }
 }
 </script>

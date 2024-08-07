@@ -2,7 +2,8 @@
   <div>
     <div class="logIn-page-frame">
       <div class="logIn-box">
-        <h1>In My Light<br>後檯管理系統</h1>
+        <img src="@/assets/images/logo.png">
+        <h1>後檯管理系統</h1>
         <p>請登入您的帳戶</p>
         <form class="logInForm">
           <div class="mb-3">
@@ -34,10 +35,12 @@
   display: flex;
   align-items: center;
   height: 100vh;
+  padding: 5%;
   background: $linearColor;
 }
 .logIn-box{
-  max-width: 300px;
+  max-width: 500px;
+  width: 100%;
   padding: 50px;
   margin: 0 auto;
   display: flex;
@@ -47,10 +50,14 @@
   border-radius: 25px;
   box-shadow: 2px 2px 10px gray;
 
+  img{
+    width: 200px;
+  }
   h1{
     font-size: 24px;
     font-weight: bold;
     text-align: center;
+    margin-top: 10px;
   }
   p{
     margin: 10px 0 30px;
@@ -100,6 +107,9 @@ export default {
           console.log(error)
         })
     }
+  },
+  mounted () {
+    document.title = '後臺登入-In My Light'
   }
 }
 </script>

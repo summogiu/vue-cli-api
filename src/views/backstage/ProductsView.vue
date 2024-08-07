@@ -48,6 +48,11 @@ import DeleteModal from '@/components/backstage/DeleteModal.vue'
 import PaginationComponents from '@/components/backstage/PaginationComponents.vue'
 
 export default {
+  components: {
+    ProductModal,
+    DeleteModal,
+    PaginationComponents
+  },
   data () {
     return {
       products: [],
@@ -130,10 +135,8 @@ export default {
   created () {
     this.getProducts()
   },
-  components: {
-    ProductModal,
-    DeleteModal,
-    PaginationComponents
+  mounted () {
+    document.title = '商品管理-In My Light'
   }
 }
 </script>

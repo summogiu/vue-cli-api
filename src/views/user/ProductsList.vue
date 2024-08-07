@@ -267,6 +267,7 @@ export default {
             }
             this.getTotlePage()
             this.getPagination()
+            document.title = `${this.$route.params.category}商品列表-In My Light`
           }
         })
         .catch((error) => {

@@ -325,7 +325,7 @@
 }
 @media (max-width:919px){
   .product-content-frame{
-    margin: 0 auto 100px auto;
+    margin: 50px auto 100px auto;
     width: 90%;
 
     .content-title-box{
@@ -367,6 +367,11 @@
       button{
         width: 100%;
         justify-content: center;
+      }
+    }
+    .ask-box{
+      .ask-link{
+        margin-top: 30px;
       }
     }
   }
@@ -455,6 +460,8 @@ export default {
 
             this.getrelatedProducts()
             emitter.emit('pageName', this.product.title) // 傳送當前路徑名稱
+
+            document.title = `${this.product.title}-商品列表-In My Light`
           } else {
             console.log(res.data.message)
           }

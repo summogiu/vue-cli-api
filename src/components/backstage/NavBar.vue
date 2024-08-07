@@ -93,7 +93,7 @@
 export default {
   data () {
     return {
-      isActive: '商品管理'
+      isActive: this.$route.name
     }
   },
   methods: {

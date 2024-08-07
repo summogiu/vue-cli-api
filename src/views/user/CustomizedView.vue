@@ -486,6 +486,18 @@ export default {
         return true
       }
       return false
+    },
+    title () {
+      if (!this.isArticleMore) {
+        return '訂製專欄-In My Light'
+      } else {
+        return '-'
+      }
+    }
+  },
+  watch: {
+    title () {
+      document.title = this.title
     }
   },
   mixins: [scrollPosMixin],
@@ -527,6 +539,7 @@ export default {
     this.getArticles()
   },
   mounted () {
+    document.title = this.title
     this.getSectionTops()
   }
 }

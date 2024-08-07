@@ -112,6 +112,7 @@ export default {
             const content = document.querySelector('.article-content')
             content.innerHTML = this.article.content
             emitter.emit('pageName', this.article.title)
+            document.title = `${this.article.title}-訂製專欄-In My Light`
           } else {
             console.log('取得文章失敗', res.data.message)
           }

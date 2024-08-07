@@ -539,6 +539,7 @@ export default {
     }
   },
   mounted () {
+    document.title = '關於我們-In My Light'
     this.getSectionTops()
     this.aboitScrollTriggerAnim()
     window.addEventListener('resize', this.resetScrollTrigger)

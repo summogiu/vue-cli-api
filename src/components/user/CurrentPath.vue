@@ -3,7 +3,7 @@
     <ul class="current-path">
         <li><router-link to="/frontPage"><i class="bi bi-house home-i"></i></router-link></li>
         <li v-for="(item, i) in currentPaths" :key="i" >
-          <div v-if="i !== currentPaths.length - 1 && i !== 0 && item.name !== this.$route.name">
+          <div v-if="i !== currentPaths.length - 1 && i !== 0 && item.name !== this.routeName">
             <i class="bi bi-chevron-right"></i>
             <a href="#" @click.prevent="toPath(item.path)">{{item.name}}</a>
           </div>

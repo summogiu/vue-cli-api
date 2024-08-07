@@ -748,6 +748,7 @@ export default {
     }
   },
   mounted () {
+    document.title = 'In My Light 照亮生活'
     // bannerSwiper
     this.bannerSwiper = new Swiper(this.$refs.bannerSwiper, {
       pagination: {

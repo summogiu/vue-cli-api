@@ -84,18 +84,22 @@ const routes = [
     children: [
       {
         path: 'products',
+        name: '商品管理',
         component: () => import('../views/backstage/ProductsView.vue')
       },
       {
         path: 'coupons',
+        name: '優惠券管理',
         component: () => import('../views/backstage/CouponsView.vue')
       },
       {
         path: 'article',
+        name: '文章管理',
         component: () => import('../views/backstage/ArticleView.vue')
       },
       {
         path: 'order',
+        name: '訂單管理',
         component: () => import('../views/backstage/OrderView.vue')
       }
     ]

@@ -41,20 +41,7 @@
                   </label>
                 </div>
               </div>
-              <div class="mb-3">
-                <label for="title" class="form-label">商品內容</label>
-                <ul>
-                  <li v-for="productContent,i in tempOrder.products" :key="i">
-                    <span>▪︎ {{ productContent.product.title }}</span>
-                    <span>NT${{ productContent.product.price }}</span>
-                    <span>×<input type="number" v-model.number="productContent.qty" @input="validateQty(productContent)" class="form-control product-qty-input">{{ productContent.product.unit }}</span>
-                  </li>
-                </ul>
-              </div>
-              <div class="mb-3 message-box">
-                <label for="message" class="form-label">備註訊息</label>
-                <textarea id="message" v-model="tempOrder.message" class="form-control message-textarea"></textarea>
-              </div>
+              <hr>
               <div class="row gx-2">
                 <div class="mb-3 col-md-6">
                   <label class="form-label">客戶名稱</label>
@@ -74,6 +61,21 @@
                   <label class="form-label">寄送地址</label>
                   <input v-if="tempOrder.user" v-model="tempOrder.user.address" class="form-control">
                 </div>
+              </div>
+              <div class="mb-3 message-box">
+                <label for="message" class="form-label">備註訊息</label>
+                <textarea id="message" v-model="tempOrder.message" class="form-control message-textarea"></textarea>
+              </div>
+              <hr>
+              <div class="mb-3">
+                <label for="title" class="form-label">商品內容</label>
+                <ul>
+                  <li v-for="productContent,i in tempOrder.products" :key="i">
+                    <span>▪︎ {{ productContent.product.title }}</span>
+                    <span>NT${{ productContent.product.price }}</span>
+                    <span>×<input type="number" v-model.number="productContent.qty" @input="validateQty(productContent)" class="form-control product-qty-input">{{ productContent.product.unit }}</span>
+                  </li>
+                </ul>
               </div>
           </div>
         </div>

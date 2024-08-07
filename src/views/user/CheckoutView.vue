@@ -231,6 +231,9 @@ export default {
   created () {
     this.oderId = this.$route.params.oderid
     this.getOder()
+  },
+  mounted () {
+    document.title = '結帳頁面-In My Light'
   }
 }
 </script>

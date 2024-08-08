@@ -14,16 +14,15 @@
       </div>
     </div>
     <div class="about-page-content-box" ref="contentBox"
-        :class="[ isContentBoxIn ? 'transform0' : 'fadeOut' ]">
+         :class="[ isContentBoxIn ? 'transform0' : '' ]">
       <h3 class="about-page-content-box-topName"
-              :class="[ isContentBoxIn ? 'toLeft-1' : '' ]">In My Light</h3>
+          :class="[ isContentBoxIn ? 'toLeft-1' : '' ]">In My Light</h3>
       <CurrentPath/>
-      <img src="@/assets/images/background/pexels-tristan-paolo-4276607.jpg" class="title-img" ref="titleImg">
-      <p class="about-page-content-p p1">您好！還迎來到In My Light！</p>
-      <p class="about-page-content-p">無論您是在為新家裝潢，還是想要給現有的空間注入新的生命力，<br>In My Light都是您的最佳選擇。</p>
-      <p class="about-page-content-p">在我們的店裡，您將會發現</p>
-      <div ref="straightLine"></div>
-      <ul class="about-page-point" ref="point">
+      <img src="@/assets/images/background/pexels-tristan-paolo-4276607.jpg" class="title-img" ref="titleImg" data-aos="fade-down" data-aos-duration="1000">
+      <p class="about-page-content-p" data-aos="fade-up" data-aos-duration="1000"> fade-up您好！還迎來到In My Light！</p>
+      <p class="about-page-content-p" data-aos="fade-up" data-aos-duration="1000">無論您是在為新家裝潢，還是想要給現有的空間注入新的生命力，<br>In My Light都是您的最佳選擇。</p>
+      <p class="about-page-content-p" data-aos="fade-up" data-aos-duration="1000">在我們的店裡，您將會發現</p>
+      <ul class="about-page-point" ref="point" data-aos="fade-right" data-aos-duration="1000">
         <li>
           <img src="@/assets/images/about-img/point1.jpg">
           <div class="about-page-point-text">
@@ -53,10 +52,10 @@
           </div>
         </li>
       </ul>
-      <p class="about-page-content-p">
+      <p class="about-page-content-p" data-aos="fade-up" data-aos-duration="1000">
         現在，歡迎探索我們的獨特產品，<br>讓我們一起為您的生活和空間帶來光芒璀璨的變化！
       </p>
-      <div class="other-link-box" ref="otherLinkBox1">
+      <div class="other-link-box" data-aos="fade-down" data-aos-duration="1000" ref="otherLinkBox1">
         <ul>
           <li>
             <router-link to="/products/productslist">
@@ -84,8 +83,8 @@
           </li>
         </ul>
       </div>
-      <p class="about-page-content-p to-down-p">或者</p>
-      <div class="other-link-box" ref="otherLinkBox2">
+      <p class="about-page-content-p" data-aos="fade-up" data-aos-duration="1000">或者</p>
+      <div class="other-link-box" data-aos="fade-down" data-aos-duration="1000" ref="otherLinkBox2">
         <ul>
           <li>
              <router-link to="/company">
@@ -204,7 +203,6 @@
         object-position: top;
         margin: 100px 0;
         opacity: 0;
-        transform: translateY(30%);
       }
       .about-page-content-p{
         margin: 50px 0;
@@ -212,23 +210,6 @@
         font-weight: bold;
         text-align: center;
         opacity: 0;
-        transform: translateY(-30%);
-      }
-      .straight-line{
-        position: relative;
-
-        &::before{
-          content:"";
-          position: absolute;
-          width: 2px;
-          height: 160px;
-          background: $linearColor3;
-          left: 50%;
-          top: 0;
-          transform: translateX(-50%);
-          transform-origin: top;
-          animation: lineDowm 1s;
-        }
       }
       .about-page-point{
         display: flex;
@@ -237,23 +218,24 @@
         max-width: 850px;
         width: 80%;
         margin: 0 auto;
-        margin-top: 260px;
+        margin-top: 100px;
 
         li{
           position: relative;
           width: 45%;
           max-width: 400px;
+          height: 500px;
           border-radius: 15px;
           box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
           margin-bottom: 30px;
           background-color: black;
-          transform: translateX(-20%);
-          opacity: 0;
           transition: scale .5s;
 
           img{
             border-radius: 15px;
             height: 100%;
+            width: 100%;
+            object-fit: cover;
             opacity: 0.8;
           }
           .about-page-point-text{
@@ -280,8 +262,6 @@
       }
       .other-link-box{
         padding: 30px;
-        transform: translateY(-20%);
-        opacity: 0;
 
         ul{
           display: flex;
@@ -413,9 +393,8 @@
 import scrollPosMixin from '@/mixins/scrollPosMixin'
 import ToPageTop from '@/components/user/ToPageTop.vue'
 import CurrentPath from '@/components/user/CurrentPath.vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-gsap.registerPlugin(ScrollTrigger)
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 export default {
   components: {
@@ -426,17 +405,14 @@ export default {
     return {
       scrollPosition: 0,
       sectionTops: {
-        contentBoxTops: 0
-      },
-      cTXB: ''
+        contentBoxTops: 0,
+        slidelineTops: 0
+      }
     }
   },
   computed: {
     isContentBoxIn () {
       return this.scrollPosition >= this.sectionTops.contentBoxTops / 5
-    },
-    isContentIn () {
-      return this.scrollPosition >= this.sectionTops.contentBoxTops
     }
   },
   watch: {
@@ -450,103 +426,12 @@ export default {
   methods: {
     getSectionTops () {
       this.sectionTops.contentBoxTops = this.$refs.contentBox.getBoundingClientRect().top + window.pageYOffset
-    },
-    aboitScrollTriggerAnim () {
-      this.cTXB && this.cTXB.revert()
-      const titleImg = this.$refs.titleImg
-      const ps = [...document.getElementsByClassName('about-page-content-p')]
-      const straightLine = this.$refs.straightLine
-      const point = this.$refs.point
-      const listItems = point.querySelectorAll('li')
-      const otherLinkBoxs = [...document.getElementsByClassName('other-link-box')]
-      // 主圖片
-      ScrollTrigger.create({
-        trigger: titleImg,
-        start: '-10% bottom',
-        end: 'bottom top',
-        onEnter: () => {
-          gsap.to(titleImg, { opacity: '1', translateY: '0px', duration: 0.5 })
-        },
-        onLeaveBack: () => {
-          gsap.to(titleImg, { opacity: 0, translateY: '30%', duration: 0.5 })
-        }
-      })
-      // 文字
-      ps.forEach(item => {
-        ScrollTrigger.create({
-          trigger: item,
-          start: 'top bottom',
-          end: 'bottom top',
-          onEnter: () => {
-            gsap.to(item, { opacity: 1, translateY: '0%', duration: 1 })
-          },
-          onLeaveBack: () => {
-            gsap.to(item, { opacity: 0, translateY: '-30%', duration: 1 })
-          }
-        })
-      })
-      // Line
-      ScrollTrigger.create({
-        trigger: straightLine,
-        start: 'center bottom',
-        end: 'bottom top',
-        onEnter: () => {
-          straightLine && straightLine.classList.add('straight-line')
-        },
-        onLeaveBack: () => {
-          straightLine && straightLine.classList.remove('straight-line')
-        }
-      })
-      // 特色
-      point && ScrollTrigger.create({
-        trigger: point,
-        start: '20% bottom',
-        end: 'bottom top',
-        onEnter: () => {
-          listItems.forEach(item => {
-            gsap.to(item, { translateX: '0%', opacity: 1, duration: 1 })
-          })
-        },
-        onLeaveBack: () => {
-          listItems.forEach(item => {
-            gsap.to(item, { translateX: '-20%', opacity: 0, duration: 1 })
-          })
-        }
-      })
-      // 前往其他
-      otherLinkBoxs.forEach(item => {
-        ScrollTrigger.create({
-          trigger: item,
-          start: 'center bottom',
-          end: 'bottom top',
-          onEnter: () => {
-            gsap.to(item, { translateY: '0%', opacity: 1, duration: 1 })
-          },
-          onLeaveBack: () => {
-            gsap.to(item, { translateY: '-20%', opacity: 0, duration: 1 })
-          }
-        })
-      })
-    },
-    resetScrollTrigger () {
-      const contentBox = this.$refs.contentBox
-      const otherLinkBoxs = [...document.getElementsByClassName('other-link-box')]
-      gsap.set(contentBox, { translateY: '0px' })
-      otherLinkBoxs.forEach(item => {
-        gsap.to(item, { translateY: '-20%' })
-      })
-      ScrollTrigger.refresh()
     }
   },
   mounted () {
     document.title = '關於我們-In My Light'
     this.getSectionTops()
-    this.aboitScrollTriggerAnim()
-    window.addEventListener('resize', this.resetScrollTrigger)
-  },
-  beforeUnmount () {
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill())
-    window.removeEventListener('resize', this.resetScrollTrigger)
+    AOS.init()
   }
 }
 </script>

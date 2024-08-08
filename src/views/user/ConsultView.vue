@@ -623,7 +623,7 @@ export default {
         ScrollTrigger.create({
           trigger: ref,
           start: 'top center',
-          end: 'center top',
+          end: 'bottom top',
           onUpdate: () => {
             if (this.nowTag !== null && this.nowTag !== i) {
               tags[this.nowTag] && tags[this.nowTag].classList.remove('active')

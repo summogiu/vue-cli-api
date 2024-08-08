@@ -159,7 +159,7 @@
               @use-coupon="useCoupon" :isCoupon="isCoupon"></UserCart>
       <router-view @getCart="getCart" @toCategory="toCategory" @openMore="toProduct"
               @addRecentlyViewed="addRecentlyViewed"></router-view>
-      <div class="follow-box" v-if="followProducts.length !== 0">
+      <div class="follow-box" v-if="followProducts && followProducts.length !== 0">
         <h3>關注的產品</h3>
         <ul class="follow-list">
           <li v-for="item in followProducts.slice(0, 6)" :key="item.id">
@@ -176,7 +176,7 @@
           </li>
         </ul>
       </div>
-      <div class="recently-viewed-box" v-if="recentlyViewed.length !== 0">
+      <div class="recently-viewed-box" v-if="recentlyViewed && recentlyViewed.length !== 0">
         <h3>最近瀏覽過</h3>
         <ul class="recently-viewed-list">
           <li v-for="item in recentlyViewed" :key="item.id">

@@ -14,7 +14,7 @@ export default {
   },
   methods: {
     addFollow (item) { // 增加、移除關注
-      const index = this.followProducts.findIndex(followedItem => followedItem.id === item.id)
+      const index = this.followProducts ? this.followProducts.findIndex(followedItem => followedItem.id === item.id) : -1
 
       if (index !== -1) {
         this.followProducts.splice(index, 1)
@@ -29,7 +29,7 @@ export default {
       }
     },
     isFollowed (item) { // 判斷是否為關注狀態
-      return this.followProducts.some(followedItem => followedItem.id === item.id)
+      return this.followProducts ? this.followProducts.some(followedItem => followedItem.id === item.id) : false
     }
   },
   created () {

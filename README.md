@@ -6,6 +6,6 @@
 
 技術：HTML、SCSS、JavaScript、RWD響應式網站、API串接
 
-<a herf="https://summogiu.github.io/vue-cli-api/dist/#/frontPage">Demo連結</a>
+<a href="https://summogiu.github.io/vue-cli-api/dist/#/frontPage">Demo連結</a>
 
 後臺連結：https://summogiu.github.io/vue-cli-api/dist/#/login

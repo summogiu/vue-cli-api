@@ -74,6 +74,9 @@
 </template>
 
 <style lang="scss">
+html,body {
+  scroll-behavior: auto !important;
+}
 .articles-list-frame{
   margin-top: 100px;
   opacity: 0;
@@ -440,6 +443,9 @@ import PaginationComponents from '@/components/backstage/PaginationComponents.vu
 import CurrentPath from '@/components/user/CurrentPath.vue'
 import ToPageTop from '@/components/user/ToPageTop.vue'
 import scrollPosMixin from '@/mixins/scrollPosMixin'
+import { gsap } from 'gsap'
+import { ScrollToPlugin, ScrollTrigger } from 'gsap/all'
+gsap.registerPlugin(ScrollToPlugin, ScrollTrigger)
 
 export default {
   components: {
@@ -470,7 +476,14 @@ export default {
       })
       // 篩選
       if (this.selectedYearTab || this.keywordContent) {
-        window.scrollTo(0, this.sectionTops.articlesListBoxTops)
+        // 滾動到文章列表
+        const articlesListTop = this.$refs.articlesListBox
+        gsap.to(window, {
+          scrollTo: { y: articlesListTop, offsetY: 50 },
+          duration: 1,
+          ease: 'power2.out'
+        })
+        // 篩選邏輯
         const filterList = copyList.filter(item => item.create_at.includes(this.selectedYearTab)) // 年份
         return filterList.filter(item => {
           return item.title.includes(this.keywordContent) || item.tag.join('').includes(this.keywordContent) // 關鍵字

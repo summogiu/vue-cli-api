@@ -4,7 +4,7 @@
 
 使用套件：VeeValidate、bootstrap、GSAP、AOS、Swiper
 
-技術：HTML、SCSS、JavaScript、RWD響應式網站
+技術：HTML、SCSS、JavaScript、RWD響應式網站、API串接
 
 Demo連結：https://summogiu.github.io/vue-cli-api/dist/#/frontPage
 

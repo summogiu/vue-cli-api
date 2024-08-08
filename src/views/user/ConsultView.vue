@@ -664,6 +664,9 @@ export default {
         ease: 'power2.out'
       })
     }
+  },
+  beforeUnmount () {
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill())
   }
 }
 </script>

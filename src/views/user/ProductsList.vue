@@ -257,7 +257,7 @@ export default {
             if (!this.$route.params.category) { // 不分類
               this.products = res.data.products
             } else if (this.$route.params.category === '正在關注') {
-              this.products = this.followProducts
+              this.products = this.followProducts || []
             } else if (res.data.products.some(item => item.category.includes(this.$route.params.category))) { // 風格
               const categoryList = res.data.products.filter(item => item.category.includes(this.$route.params.category))
               this.products = categoryList

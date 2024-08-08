@@ -654,7 +654,9 @@ export default {
   },
   mounted () {
     document.title = '線上諮詢-In My Light'
-    this.addTagActive()
+    setTimeout(() => {
+      this.addTagActive()
+    }, 500)
     if (this.form.type) {
       gsap.to(window, {
         scrollTo: { y: this.$refs.form, offsetY: 50 },

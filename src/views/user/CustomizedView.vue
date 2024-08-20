@@ -73,6 +73,126 @@
   </div>
 </template>
 
+<script>
+import PaginationComponents from '@/components/backstage/PaginationComponents.vue'
+import CurrentPath from '@/components/user/CurrentPath.vue'
+import ToPageTop from '@/components/user/ToPageTop.vue'
+import scrollPosMixin from '@/mixins/scrollPosMixin'
+import { gsap } from 'gsap'
+import { ScrollToPlugin, ScrollTrigger } from 'gsap/all'
+gsap.registerPlugin(ScrollToPlugin, ScrollTrigger)
+
+export default {
+  components: {
+    PaginationComponents,
+    CurrentPath,
+    ToPageTop
+  },
+  data () {
+    return {
+      articles: [],
+      isLoading: false,
+      pagination: {},
+      isYearLabelBoxOpen: false,
+      selectedYearTab: '',
+      keywordContent: '',
+      sectionTops: {
+        articlesListBoxTops: 0
+      }
+    }
+  },
+  computed: {
+    showArticles () {
+      // 轉換日期格式
+      const copyList = JSON.parse(JSON.stringify(this.articles))
+      copyList.forEach(item => {
+        const date = new Date(item.create_at * 1000).toISOString().split('T')
+        item.create_at = date[0]
+      })
+      // 篩選
+      if (this.selectedYearTab || this.keywordContent) {
+        const articlesListTop = this.$refs.articlesListBox
+        gsap.to(window, {
+          scrollTo: { y: articlesListTop, offsetY: 50 },
+          duration: 1,
+          ease: 'power2.out'
+        })
+
+        const filterList = copyList.filter(item => item.create_at.includes(this.selectedYearTab)) // 年份
+        return filterList.filter(item => {
+          return item.title.includes(this.keywordContent) || item.tag.join('').includes(this.keywordContent) // 關鍵字
+        })
+      }
+      return copyList
+    },
+    isBackToTopBtnShow () {
+      return this.scrollPosition >= 500 / 1.5 || false
+    },
+    isArticleMore () {
+      if (this.$route.params.articleid) {
+        return true
+      }
+      return false
+    },
+    title () {
+      if (!this.isArticleMore) {
+        return '訂製專欄-In My Light'
+      } else {
+        return '-'
+      }
+    }
+  },
+  watch: {
+    title () {
+      document.title = this.title
+    }
+  },
+  mixins: [scrollPosMixin],
+  methods: {
+    getArticles (page = 1) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/articles?page=${page}`
+      this.isLoading = true
+      this.$http.get(api)
+        .then((res) => {
+          this.isLoading = false
+          if (res.data.success) {
+            this.articles = res.data.articles
+            this.pagination = res.data.pagination
+          } else {
+            console.log(res.data)
+          }
+        })
+        .catch((error) => {
+          console.log('取得文章列表失敗', error)
+        })
+    },
+    changeYearLabelBoxOpen () {
+      this.isYearLabelBoxOpen = !this.isYearLabelBoxOpen
+    },
+    searchKeyword () {
+      // 沒有內容就回到全部結果
+      if (!this.$refs.keywordInput.value) {
+        this.selectedYearTab = ''
+      }
+      this.keywordContent = this.$refs.keywordInput.value
+      this.$refs.keywordInput.value = ''
+    },
+    getSectionTops () {
+      if (this.$refs.articlesListBox) {
+        this.sectionTops.articlesListBoxTops = this.$refs.articlesListBox.getBoundingClientRect().top + window.pageYOffset
+      }
+    }
+  },
+  created () {
+    this.getArticles()
+  },
+  mounted () {
+    document.title = this.title
+    this.getSectionTops()
+  }
+}
+</script>
+
 <style lang="scss">
 html,body {
   scroll-behavior: auto !important;
@@ -93,7 +213,6 @@ html,body {
   }
 }
 
-// 標題列
 .articles-list-title-box{
   width: 90%;
   margin: 0 auto;
@@ -134,7 +253,6 @@ html,body {
   }
 }
 
-// 條件搜尋列
 .articles-list-tab-box{
   margin: 100px auto;
   width: 90%;
@@ -307,7 +425,6 @@ html,body {
   }
 }
 
-//文章列
 .articles-list-box{
   width: 90%;
   margin: 200px auto 0;
@@ -437,123 +554,3 @@ html,body {
 }
 
 </style>
-
-<script>
-import PaginationComponents from '@/components/backstage/PaginationComponents.vue'
-import CurrentPath from '@/components/user/CurrentPath.vue'
-import ToPageTop from '@/components/user/ToPageTop.vue'
-import scrollPosMixin from '@/mixins/scrollPosMixin'
-import { gsap } from 'gsap'
-import { ScrollToPlugin, ScrollTrigger } from 'gsap/all'
-gsap.registerPlugin(ScrollToPlugin, ScrollTrigger)
-
-export default {
-  components: {
-    PaginationComponents,
-    CurrentPath,
-    ToPageTop
-  },
-  data () {
-    return {
-      articles: [],
-      isLoading: false,
-      pagination: {},
-      isYearLabelBoxOpen: false,
-      selectedYearTab: '',
-      keywordContent: '',
-      sectionTops: {
-        articlesListBoxTops: 0
-      }
-    }
-  },
-  computed: {
-    showArticles () {
-      // 轉換日期格式
-      const copyList = JSON.parse(JSON.stringify(this.articles))
-      copyList.forEach(item => {
-        const date = new Date(item.create_at * 1000).toISOString().split('T')
-        item.create_at = date[0]
-      })
-      // 篩選
-      if (this.selectedYearTab || this.keywordContent) {
-        // 滾動到文章列表
-        const articlesListTop = this.$refs.articlesListBox
-        gsap.to(window, {
-          scrollTo: { y: articlesListTop, offsetY: 50 },
-          duration: 1,
-          ease: 'power2.out'
-        })
-        // 篩選邏輯
-        const filterList = copyList.filter(item => item.create_at.includes(this.selectedYearTab)) // 年份
-        return filterList.filter(item => {
-          return item.title.includes(this.keywordContent) || item.tag.join('').includes(this.keywordContent) // 關鍵字
-        })
-      }
-      return copyList
-    },
-    isBackToTopBtnShow () {
-      return this.scrollPosition >= 500 / 1.5 || false
-    },
-    isArticleMore () { // 判斷是否開啟文章內容
-      if (this.$route.params.articleid) {
-        return true
-      }
-      return false
-    },
-    title () {
-      if (!this.isArticleMore) {
-        return '訂製專欄-In My Light'
-      } else {
-        return '-'
-      }
-    }
-  },
-  watch: {
-    title () {
-      document.title = this.title
-    }
-  },
-  mixins: [scrollPosMixin],
-  methods: {
-    getArticles (page = 1) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/articles?page=${page}`
-      this.isLoading = true
-      this.$http.get(api)
-        .then((res) => {
-          this.isLoading = false
-          if (res.data.success) {
-            this.articles = res.data.articles
-            this.pagination = res.data.pagination
-          } else {
-            console.log(res.data)
-          }
-        })
-        .catch((error) => {
-          console.log('取得文章列表失敗', error)
-        })
-    },
-    changeYearLabelBoxOpen () { // 開關年份選單
-      this.isYearLabelBoxOpen = !this.isYearLabelBoxOpen
-    },
-    searchKeyword () {
-      if (!this.$refs.keywordInput.value) { // 沒有輸入內容就按下搜尋 回到全部結果
-        this.selectedYearTab = ''
-      }
-      this.keywordContent = this.$refs.keywordInput.value
-      this.$refs.keywordInput.value = ''
-    },
-    getSectionTops () {
-      if (this.$refs.articlesListBox) {
-        this.sectionTops.articlesListBoxTops = this.$refs.articlesListBox.getBoundingClientRect().top + window.pageYOffset
-      }
-    }
-  },
-  created () {
-    this.getArticles()
-  },
-  mounted () {
-    document.title = this.title
-    this.getSectionTops()
-  }
-}
-</script>

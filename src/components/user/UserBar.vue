@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </li>
-            <li><router-link to="/customized"><p>CUSTOMIZED</p> <p class="subtitle">專屬訂製</p></router-link></li>
+            <li><router-link to="/customized"><p>CUSTOMIZED</p> <p class="subtitle">訂製專欄</p></router-link></li>
             <li><router-link to="/company"><p>COMPANY</p> <p class="subtitle">公司資訊</p></router-link></li>
             <li><router-link to="/consult"><p>CONSULT</p> <p class="subtitle">線上諮詢</p></router-link></li>
         </ul>
@@ -57,7 +57,7 @@
                       <li><a href="#" @click.prevent="toCategory('燈泡')"><div class="MB-replace-anim">- <span class="MB-original-text">光源專區</span><span class="MB-replace-text">光源專區</span></div></a></li>
                   </ul>
               </li>
-              <li><router-link to="/customized"><span>CUSTOMIZED</span><span class="MB-subtitle">專屬訂製</span></router-link></li>
+              <li><router-link to="/customized"><span>CUSTOMIZED</span><span class="MB-subtitle">訂製專欄</span></router-link></li>
               <li><router-link to="/company"><span>COMPANY</span><span class="MB-subtitle">公司資訊</span></router-link></li>
               <li><router-link to="/consult"><span>CONSULT</span><span class="MB-subtitle">線上諮詢</span></router-link></li>
           </ul>
@@ -81,7 +81,7 @@
     padding-left: 20px;
     transform: translateX(92%);
     opacity: 0;
-    animation: fadeIn .5s 2.5s ease-in forwards;
+    animation: fadeIn .5s 1.8s ease-in forwards;
     transition: transform .5s cubic-bezier(0.2, 1, 0.3, 1);
 
     >li{

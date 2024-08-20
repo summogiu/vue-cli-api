@@ -16,7 +16,9 @@
           </div>
           <div class="swiper-pagination banner-swiper-pagination"></div>
         </div>
-        <h1 class="bunner-title">IN MY LIGHT</h1>
+        <div class="title-box">
+          <h1 class="bunner-title">IN MY LIGHT</h1>
+        </div>
         <img src="@/assets/images/icon/bunner-icon.png" class="bunner-title-icon">
         <div class="about-box">
           <div class="about-title">
@@ -174,7 +176,6 @@
 // Swiper樣式
 .bannerSwiper{
   width: 90%;
-  animation: mask-title 2s ease-in forwards;
 
   .banner-swiper-wrapper{
     border-radius: 0 0 50% 50%;
@@ -264,22 +265,30 @@
   position: relative;
   overflow: hidden;
 
-  .bunner-title{
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    font-size: 80px;
-    color: $subColor;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    opacity: 0;
-    animation: fadeIn 2s .5s ease-in forwards;
+  .title-box{
     position: absolute;
     top: 40%;
     left: 50%;
     transform: translateX(-50%);
     z-index: 20;
+    width: 0;
+    overflow: hidden;
+    animation: titleSlide 1s .8s forwards;
+
+    .bunner-title{
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      white-space: nowrap;
+      font-size: 80px;
+      color: $subColor;
+      font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      opacity: 0;
+      animation: fadeIn 1s .5s ease-in forwards;
+    }
   }
+
   .bunner-title-icon{
     height: 300px;
     position: absolute;
@@ -297,7 +306,7 @@
     background-color: white;
     border-radius: 150px 0 0 150px;
     transform: translateX(100%);
-    animation: out-to-Left 1.5s 2.5s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+    animation: out-to-Left 1.5s 1.8s cubic-bezier(0.2, 1, 0.3, 1) forwards;
     position: absolute;
     bottom: 20%;
     right: 0;
@@ -337,17 +346,27 @@
     }
   }
 }
+@keyframes titleSlide{
+  0% {
+    width: 0px;
+  }
+  100% {
+    width: 400px;
+  }
+}
 @media (max-width:919px){
   .bunner-box{
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    .bunner-title{
-      font-size: 40px;
-      white-space: nowrap;
-      top: 25%;
+    .title-box{
+      top: 30%;
+      .bunner-title{
+        font-size: 40px;
+      }
     }
+
     .bunner-title-icon{
       height: 200px;
     }
@@ -378,6 +397,14 @@
       }
     }
   }
+  @keyframes titleSlide{
+  0% {
+    width: 0px;
+  }
+  100% {
+    width: 200px;
+  }
+}
 }
 
 // product及customized的通用樣式
@@ -482,6 +509,9 @@
 
   .product-section-box{
     flex-direction: column-reverse;
+  }
+  .customized-section-box{
+    padding-bottom: 40px;
   }
 }
 
@@ -627,6 +657,8 @@
 }
 @media (max-width:919px){
   .consult-section-box{
+    padding: 20px;
+
     .little-title{
       transform: translateX(-50%);
       left: 50%;

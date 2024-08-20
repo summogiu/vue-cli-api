@@ -242,6 +242,7 @@
         &::before{
           content: '';
           position: absolute;
+          z-index: 2;
           top: 0;
           left: 0;
           width: 200px;
@@ -251,6 +252,8 @@
           border-radius: 15px 0;
         }
         i{
+          position: relative;
+          z-index: 5;
           color: white;
           font-size: 50px;
           display: inline-block;

@@ -1,24 +1,9 @@
-# vue-cli-api
+作品集： In My Light 照明燈飾
 
-## Project setup
-```
-npm install
-```
+使用VUE CLI框架開發，模擬一間燈具店所製作的網站，
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+使用套件：VeeValidate、bootstrap、GSAP、AOS、Swiper
 
-### Compiles and minifies for production
-```
-npm run build
-```
+技術：HTML、SCSS、JavaScript、RWD響應式網站、API串接
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+<a href="https://summogiu.github.io/vue-cli-api/dist/#/frontPage">Demo連結</a>

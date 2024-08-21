@@ -19,6 +19,11 @@ $linearColor3:linear-gradient(45deg, rgb(197, 235, 222), rgb(75, 176, 184), rgb(
 $disabledColor:gray;
 $more-linkColor:rgb(158, 158, 158);
 
+body {
+	a{
+    color: $subColor2;
+  }
+}
 //背景灰字
 .background-text{
     position: absolute;

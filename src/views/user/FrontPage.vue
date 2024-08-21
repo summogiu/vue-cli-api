@@ -273,7 +273,7 @@
     z-index: 20;
     width: 0;
     overflow: hidden;
-    animation: titleSlide 1s .8s forwards;
+    animation: titleSlide 2s .8s ease-in forwards;
 
     .bunner-title{
       user-select: none;
@@ -284,6 +284,7 @@
       font-size: 80px;
       color: $subColor;
       font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      text-align: center;
       opacity: 0;
       animation: fadeIn 1s .5s ease-in forwards;
     }
@@ -348,10 +349,10 @@
 }
 @keyframes titleSlide{
   0% {
-    width: 0px;
+    width: 0;
   }
   100% {
-    width: 400px;
+    width: 100%;
   }
 }
 @media (max-width:919px){

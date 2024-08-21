@@ -130,15 +130,14 @@ html,body {
     font-size: 60px;
     font-weight: bold;
     color: $subColor8;
-    max-width: 500px;
     position: relative;
+    display: flex;
+    align-items: flex-end;
+    line-height: 0.7;
   }
   h3{
     font-size: 20px;
     color: $subColor8;
-    position: absolute;
-    bottom: -20px;
-    right: 0;
   }
 }
 @media (max-width:919px){
@@ -146,6 +145,9 @@ html,body {
     h2{
       max-width: 280px;
       margin: 0 auto;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.5;
     }
   }
 }

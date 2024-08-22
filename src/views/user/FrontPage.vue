@@ -90,8 +90,8 @@
           </router-link>
         </div>
         <span class="little-title">- 訂製專欄 -</span>
-        <div class="shadow customized-shadow"></div>
       </div>
+      <div class="shadow customized-shadow"></div>
 
       <div class="company-section-box" ref="company">
         <img src="@/assets/images/background/company1.jpg" alt="company">
@@ -136,8 +136,8 @@
             聯絡我們
           </router-link>
         </div>
-        <div class="shadow company-shadow"></div>
       </div>
+      <div class="shadow company-shadow"></div>
 
       <div class="consult-section-frame" ref="consult">
         <div class="consult-section-box">
@@ -352,7 +352,7 @@
     width: 0;
   }
   100% {
-    width: 100%;
+    width: 100vw;
   }
 }
 @media (max-width:919px){
@@ -398,14 +398,6 @@
       }
     }
   }
-  @keyframes titleSlide{
-  0% {
-    width: 0px;
-  }
-  100% {
-    width: 200px;
-  }
-}
 }
 
 // product及customized的通用樣式
@@ -521,6 +513,7 @@
   overflow: hidden;
   background-color: $subColor7;
   position: relative;
+  z-index: 30;
   padding-bottom: 160px;
   transform: translateY(0);
 
@@ -595,6 +588,8 @@
   border-radius: 50px 50px 0 0;
   background-color: $subColor4;
   position: relative;
+  z-index: 40;
+  top: -50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -671,12 +666,17 @@
 .shadow{
     background-color: rgba(0, 0, 0, 0.6);
     position: fixed;
-    z-index: 25;
     top: 0;
     width: 100%;
     height: 100%;
     opacity: 0;
     pointer-events: none;
+}
+.customized-shadow{
+  z-index: 25;
+}
+.company-shadow{
+  z-index: 35;
 }
 
 .to-more-btn{

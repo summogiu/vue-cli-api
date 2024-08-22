@@ -670,7 +670,7 @@
 // customized及consult的覆蓋效果
 .shadow{
     background-color: rgba(0, 0, 0, 0.6);
-    position: absolute;
+    position: fixed;
     z-index: 25;
     top: 0;
     width: 100%;

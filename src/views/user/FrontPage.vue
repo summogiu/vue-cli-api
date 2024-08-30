@@ -589,7 +589,6 @@
   background-color: $subColor4;
   position: relative;
   z-index: 40;
-  top: -50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -746,6 +745,7 @@ export default {
         ScrollTrigger.create({
           trigger: customized,
           start: 'bottom center',
+          end: 'bottom top',
           onUpdate: (self) => {
             // Y軸偏移
             const translateYV = self.progress * 200
@@ -754,6 +754,9 @@ export default {
             // 陰影透明度
             const opacityValue = self.progress
             gsap.set('.customized-shadow', { opacity: opacityValue })
+          },
+          onLeave: () => {
+            gsap.set('.customized-shadow', { opacity: 0 })
           }
         })
         // company區塊

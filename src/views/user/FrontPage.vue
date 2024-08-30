@@ -514,7 +514,7 @@
   background-color: $subColor7;
   position: relative;
   z-index: 30;
-  padding-bottom: 160px;
+  padding-bottom: 100px;
   transform: translateY(0);
 
   >img{
@@ -745,7 +745,7 @@ export default {
         ScrollTrigger.create({
           trigger: customized,
           start: 'bottom center',
-          end: 'bottom top',
+          end: '120% top',
           onUpdate: (self) => {
             // Y軸偏移
             const translateYV = self.progress * 200
